@@ -4,43 +4,60 @@
 
 @layer base {
   body {
-    @apply bg-white dark:bg-primary text-primary dark:text-secondary;
+    @apply bg-white dark:bg-primary text-primary dark:text-white;
   }
 }
 
 @layer components {
   /* Button Base Styles */
   .btn {
-    @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:-translate-y-1;
+    @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300 
+           transform hover:-translate-y-1 active:translate-y-0
+           focus:outline-none focus:ring-2 focus:ring-offset-2
+           bg-white dark:bg-primary-dark text-primary dark:text-white;
   }
 
-  /* Primary Button - Light Green */
+  /* Primary Button */
   .btn-primary {
-    @apply bg-[#009900] text-white hover:bg-[#00B300] shadow-lg hover:shadow-xl;
+    @apply bg-white dark:bg-primary-dark text-primary dark:text-white
+           hover:bg-primary/10 dark:hover:bg-primary/20
+           focus:ring-primary/50
+           shadow-lg hover:shadow-xl;
   }
 
-  /* Secondary Button - Bright Green */
+  /* Secondary Button */
   .btn-secondary {
-    @apply bg-[#33FF33] text-[#004D00] hover:bg-[#66FF66] shadow-md hover:shadow-lg;
+    @apply bg-white dark:bg-primary-dark text-primary dark:text-white
+           hover:bg-secondary/10 dark:hover:bg-secondary/20
+           focus:ring-secondary/50
+           shadow-md hover:shadow-lg;
   }
 
-  /* Accent Button - Bright Gold */
+  /* Accent Button */
   .btn-accent {
-    @apply bg-[#FFE44D] text-[#004D00] hover:bg-[#FFEB80] shadow-lg hover:shadow-xl;
+    @apply bg-white dark:bg-primary-dark text-primary dark:text-white
+           hover:bg-accent/10 dark:hover:bg-accent/20
+           focus:ring-accent/50
+           shadow-lg hover:shadow-xl;
   }
 
-  /* Outline Button - Light Green Border */
+  /* Outline Button */
   .btn-outline {
-    @apply bg-transparent border-2 border-[#009900] text-[#009900] hover:bg-[#009900] hover:text-white dark:border-[#33FF33] dark:text-[#33FF33] dark:hover:bg-[#33FF33] dark:hover:text-[#004D00];
+    @apply bg-transparent border-2 border-primary text-primary 
+           dark:border-white dark:text-white
+           hover:bg-primary/10 dark:hover:bg-white/10
+           focus:ring-primary/50;
   }
 
-  /* Ghost Button - Transparent */
+  /* Ghost Button */
   .btn-ghost {
-    @apply bg-transparent text-[#009900] hover:bg-[#009900]/10 dark:text-[#33FF33] dark:hover:bg-[#33FF33]/10;
+    @apply bg-transparent text-primary dark:text-white
+           hover:bg-primary/5 dark:hover:bg-white/5
+           focus:ring-primary/50;
   }
 
   /* Text Gradient */
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#009900] to-[#33FF33];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-[#e6b800];
   }
 }
