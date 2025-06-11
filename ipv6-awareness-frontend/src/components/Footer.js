@@ -8,28 +8,32 @@ function Footer() {
 
   const footerLinks = {
     company: [
-      { label: 'About Us', path: '/about' },
-      { label: 'Our Mission', path: '/mission' },
-      { label: 'Team', path: '/team' },
-      { label: 'Careers', path: '/careers' }
+      { label: 'About IPv6', path: '/AboutIPv6' },
+      { label: 'Our Mission', path: '/OurMission' },
+      { label: 'Team', path: '/Team' },
+      { label: 'Careers', path: '/Careers' }
     ],
     resources: [
-      { label: 'Documentation', path: '/docs' },
-      { label: 'Tutorials', path: '/tutorials' },
-      { label: 'Blog', path: '/blog' },
-      { label: 'Events', path: '/events' }
+      { label: 'Documentation', path: '/Documentation' },
+      { label: 'Tutorials', path: '/Tutorials' },
+      { label: 'Blog', path: '/Blog' },
+      { label: 'Events', path: '/Events' },
+      { label: 'Resources', path: '/Resources' },
+      { label: 'Get Involved', path: '/GetInvolved' }
     ],
     support: [
-      { label: 'Contact Us', path: '/contact' },
-      { label: 'FAQ', path: '/faq' },
-      { label: 'Help Center', path: '/help' },
-      { label: 'Community', path: '/community' }
+      { label: 'Contact Us', path: '/Contact' },
+      { label: 'FAQ', path: '/FAQ' },
+      { label: 'Help Center', path: '/HelpCenter' },
+      { label: 'Community', path: '/Community' },
+      { label: 'IPv6 Dashboard', path: '/IPv6Dashboard' },
+      { label: 'Test IPv6', path: '/TestIPv6' }
     ],
     legal: [
-      { label: 'Privacy Policy', path: '/privacy' },
-      { label: 'Terms of Service', path: '/terms' },
-      { label: 'Cookie Policy', path: '/cookies' },
-      { label: 'GDPR', path: '/gdpr' }
+      { label: 'Privacy Policy', path: '/PrivacyPolicy' },
+      { label: 'Terms of Service', path: '/TermsOfService' },
+      { label: 'Cookie Policy', path: '/CookiePolicy' },
+      { label: 'GDPR', path: '/GDPR' }
     ]
   };
 
@@ -78,7 +82,9 @@ function Footer() {
       <div className="border-b border-primary/10 dark:border-secondary/10">
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-4xl mx-auto text-center">
-            <h3 className="text-2xl font-bold mb-4 text-accent">Stay Updated</h3>
+            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">
+              Stay Updated
+            </h3>
             <p className="text-primary/80 dark:text-secondary/80 mb-6">
               Subscribe to our newsletter for the latest updates on IPv6 adoption and technology.
             </p>
@@ -86,11 +92,11 @@ function Footer() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-2 rounded-lg border border-primary/20 dark:border-secondary/20 bg-white dark:bg-primary/5 focus:outline-none focus:ring-2 focus:ring-accent"
+                className="flex-1 px-4 py-2 rounded-lg border border-primary/20 dark:border-secondary/20 bg-white dark:bg-primary/5 focus:outline-none focus:ring-2 focus:ring-accent transition-all duration-300"
               />
               <button
                 type="submit"
-                className="px-6 py-2 bg-accent text-primary font-semibold rounded-lg hover:bg-accent-light transition-colors duration-200"
+                className="px-6 py-2 bg-gradient-to-r from-accent to-accent-light text-white font-semibold rounded-lg hover:from-accent-light hover:to-accent transform hover:scale-105 transition-all duration-300"
               >
                 Subscribe
               </button>
@@ -104,10 +110,16 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Logo and Description */}
           <div className="lg:col-span-2">
-            <div className="flex items-center space-x-3 mb-6">
-              <img src={logo} alt="IPv6 Logo" className="h-12 w-auto" />
+            <div className="flex items-center space-x-3 mb-6 group">
+              <img 
+                src={logo} 
+                alt="IPv6 Logo" 
+                className="h-12 w-auto transform group-hover:scale-105 transition-transform duration-300" 
+              />
               <div>
-                <h3 className="text-xl font-bold text-accent">IPv6 Awareness</h3>
+                <h3 className="text-xl font-bold bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent group-hover:from-accent-light group-hover:to-accent transition-all duration-300">
+                  IPv6 Awareness
+                </h3>
                 <p className="text-sm text-primary/60 dark:text-secondary/60">Empowering the future of internet connectivity</p>
               </div>
             </div>
@@ -119,7 +131,7 @@ function Footer() {
                 <a
                   key={social.name}
                   href={social.url}
-                  className="text-primary/60 dark:text-secondary/60 hover:text-accent transition-colors"
+                  className="text-primary/60 dark:text-secondary/60 hover:text-accent transform hover:scale-110 transition-all duration-300"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.name}
@@ -133,13 +145,15 @@ function Footer() {
           {/* Footer Links */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h4 className="text-lg font-semibold mb-6 text-accent capitalize">{category}</h4>
+              <h4 className="text-lg font-semibold mb-6 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent capitalize">
+                {category}
+              </h4>
               <ul className="space-y-4">
                 {links.map(({ label, path }) => (
                   <li key={path}>
                     <Link
                       to={path}
-                      className="text-primary/80 dark:text-secondary/80 hover:text-accent transition-colors"
+                      className="text-primary/80 dark:text-secondary/80 hover:text-accent transform hover:translate-x-1 transition-all duration-300 inline-block"
                     >
                       {label}
                     </Link>
@@ -159,13 +173,22 @@ function Footer() {
               &copy; {currentYear} IPv6 Awareness. All rights reserved.
             </p>
             <div className="flex space-x-6">
-              <Link to="/privacy" className="text-primary/60 dark:text-secondary/60 hover:text-accent text-sm transition-colors">
+              <Link 
+                to="/privacy" 
+                className="text-primary/60 dark:text-secondary/60 hover:text-accent text-sm transition-all duration-300 hover:translate-x-1 inline-block"
+              >
                 Privacy Policy
               </Link>
-              <Link to="/terms" className="text-primary/60 dark:text-secondary/60 hover:text-accent text-sm transition-colors">
+              <Link 
+                to="/terms" 
+                className="text-primary/60 dark:text-secondary/60 hover:text-accent text-sm transition-all duration-300 hover:translate-x-1 inline-block"
+              >
                 Terms of Service
               </Link>
-              <Link to="/cookies" className="text-primary/60 dark:text-secondary/60 hover:text-accent text-sm transition-colors">
+              <Link 
+                to="/cookies" 
+                className="text-primary/60 dark:text-secondary/60 hover:text-accent text-sm transition-all duration-300 hover:translate-x-1 inline-block"
+              >
                 Cookie Policy
               </Link>
             </div>
