@@ -1,35 +1,83 @@
 // === src/components/Navbar.js ===
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+import logo from '../assets/images/Ipv6.jpg.png';
 
 function Navbar() {
   const { darkMode, toggleDarkMode } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="bg-white dark:bg-primary-dark text-primary dark:text-white shadow-lg transition-colors duration-200 sticky top-0 z-50">
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${
+      isScrolled 
+        ? 'bg-white/95 dark:bg-primary-dark/95 backdrop-blur-md shadow-lg' 
+        : 'bg-white dark:bg-primary-dark'
+    }`}>
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex items-center space-x-2">
-            <h1 className="text-2xl font-bold">
-              <span className="text-accent">IPv6</span>
-              <span className="text-primary dark:text-secondary">Awareness</span>
-            </h1>
+        <div className="flex justify-between items-center h-20">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-3 group">
+            <img 
+              src={logo} 
+              alt="IPv6 Logo" 
+              className="h-12 w-auto object-contain transform group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="flex flex-col">
+              <span className="text-xl font-bold text-primary dark:text-white group-hover:text-accent transition-colors">
+                IPv6
+              </span>
+              <span className="text-sm text-primary/80 dark:text-secondary/80 group-hover:text-accent/80 transition-colors">
+                Awareness
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <ul className="flex space-x-6">
-              <li><Link to="/" className="hover:text-accent transition-colors font-medium">Home</Link></li>
-              <li><Link to="/about" className="hover:text-accent transition-colors font-medium">About IPv6</Link></li>
-              <li><Link to="/resources" className="hover:text-accent transition-colors font-medium">Resources</Link></li>
-              <li><Link to="/events" className="hover:text-accent transition-colors font-medium">Events</Link></li>
-              <li><Link to="/get-involved" className="hover:text-accent transition-colors font-medium">Get Involved</Link></li>
-              <li><Link to="/dashboard" className="hover:text-accent transition-colors font-medium">Dashboard</Link></li>
-              <li><Link to="/blog" className="hover:text-accent transition-colors font-medium">Blog</Link></li>
-              <li><Link to="/contact" className="hover:text-accent transition-colors font-medium">Contact</Link></li>
+              {[
+                { path: '/', label: 'Home' },
+                { path: '/about', label: 'About IPv6' },
+                { path: '/resources', label: 'Resources' },
+                { path: '/events', label: 'Events' },
+                { path: '/get-involved', label: 'Get Involved' },
+                { path: '/dashboard', label: 'Dashboard' },
+                { path: '/blog', label: 'Blog' },
+                { path: '/contact', label: 'Contact' }
+              ].map(({ path, label }) => (
+                <li key={path}>
+                  <Link
+                    to={path}
+                    className={`relative px-2 py-1 font-medium transition-colors ${
+                      isActive(path)
+                        ? 'text-accent'
+                        : 'text-primary/80 dark:text-secondary/80 hover:text-accent'
+                    }`}
+                  >
+                    {label}
+                    {isActive(path) && (
+                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent transform scale-x-100 transition-transform" />
+                    )}
+                  </Link>
+                </li>
+              ))}
             </ul>
+            
+            {/* Theme Toggle */}
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-lg bg-primary/10 dark:bg-white/10 hover:bg-accent/20 dark:hover:bg-accent/20 transition-colors duration-200"
@@ -59,20 +107,36 @@ function Navbar() {
         </div>
 
         {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4">
-            <ul className="space-y-4">
-              <li><Link to="/" className="block hover:text-accent transition-colors font-medium">Home</Link></li>
-              <li><Link to="/about" className="block hover:text-accent transition-colors font-medium">About IPv6</Link></li>
-              <li><Link to="/resources" className="block hover:text-accent transition-colors font-medium">Resources</Link></li>
-              <li><Link to="/events" className="block hover:text-accent transition-colors font-medium">Events</Link></li>
-              <li><Link to="/get-involved" className="block hover:text-accent transition-colors font-medium">Get Involved</Link></li>
-              <li><Link to="/dashboard" className="block hover:text-accent transition-colors font-medium">Dashboard</Link></li>
-              <li><Link to="/blog" className="block hover:text-accent transition-colors font-medium">Blog</Link></li>
-              <li><Link to="/contact" className="block hover:text-accent transition-colors font-medium">Contact</Link></li>
-            </ul>
-          </div>
-        )}
+        <div className={`md:hidden transition-all duration-300 ease-in-out ${
+          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        } overflow-hidden`}>
+          <ul className="py-4 space-y-4">
+            {[
+              { path: '/', label: 'Home' },
+              { path: '/about', label: 'About IPv6' },
+              { path: '/resources', label: 'Resources' },
+              { path: '/events', label: 'Events' },
+              { path: '/get-involved', label: 'Get Involved' },
+              { path: '/dashboard', label: 'Dashboard' },
+              { path: '/blog', label: 'Blog' },
+              { path: '/contact', label: 'Contact' }
+            ].map(({ path, label }) => (
+              <li key={path}>
+                <Link
+                  to={path}
+                  className={`block px-4 py-2 rounded-lg transition-colors ${
+                    isActive(path)
+                      ? 'bg-accent/10 text-accent'
+                      : 'text-primary/80 dark:text-secondary/80 hover:bg-primary/10 dark:hover:bg-white/10'
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </nav>
   );

@@ -14,7 +14,7 @@ module.exports = {
           dark: '#003300',
         },
         secondary: {
-          DEFAULT: '#00FF00', // Lime Green
+          DEFAULT: '#009900', // Lime Green
           light: '#33FF33',
           dark: '#00CC00',
         },

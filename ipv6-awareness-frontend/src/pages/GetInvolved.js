@@ -1,272 +1,256 @@
 // === src/pages/GetInvolved.js ===
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { FaHandshake, FaDownload, FaShareAlt, FaGithub } from 'react-icons/fa';
+import { FaUsers, FaHandshake, FaLightbulb, FaCode, FaBook, FaGlobe, FaArrowRight, FaExternalLinkAlt, FaGithub, FaDiscord, FaTwitter, FaLinkedin, FaEnvelope, FaHandshakeAlt, FaRocket, FaGraduationCap } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 function GetInvolved() {
-  const [showStoryForm, setShowStoryForm] = useState(false);
+  const handleExternalLink = (url) => {
+    window.open(url, '_blank');
+  };
 
-  const volunteerRoles = [
+  const sections = [
     {
-      title: "Content Writer",
-      description: "Create educational content about IPv6",
-      icon: <FaHandshake className="text-blue-500" />
+      title: "Join Our Community",
+      description: "Connect with IPv6 enthusiasts and experts worldwide",
+      icon: <FaUsers className="w-8 h-8" />,
+      items: [
+        {
+          title: 'IPv6 Forum',
+          description: 'Join the global IPv6 community',
+          link: 'https://www.ipv6forum.com/',
+          icon: <FaGlobe />
+        },
+        {
+          title: 'Discord Server',
+          description: 'Chat with community members',
+          link: 'https://discord.gg/ipv6',
+          icon: <FaDiscord />
+        },
+        {
+          title: 'Twitter',
+          description: 'Follow IPv6 updates',
+          link: 'https://twitter.com/ipv6forum',
+          icon: <FaTwitter />
+        }
+      ]
     },
     {
-      title: "Beta Tester",
-      description: "Test and provide feedback on IPv6 tools",
-      icon: <FaHandshake className="text-green-500" />
+      title: "Contribute to IPv6",
+      description: "Help improve IPv6 adoption through code and documentation",
+      icon: <FaCode className="w-8 h-8" />,
+      items: [
+        {
+          title: 'GitHub Repository',
+          description: 'Contribute to our open-source projects',
+          link: 'https://github.com/ipv6',
+          icon: <FaGithub />
+        },
+        {
+          title: 'Documentation',
+          description: 'Help improve our guides and tutorials',
+          link: 'https://www.ietf.org/',
+          icon: <FaBook />
+        },
+        {
+          title: 'Bug Reports',
+          description: 'Report issues and suggest improvements',
+          link: 'https://github.com/ipv6/issues',
+          icon: <FaExternalLinkAlt />
+        }
+      ]
     },
     {
-      title: "Community Ambassador",
-      description: "Spread awareness in your network",
-      icon: <FaHandshake className="text-purple-500" />
-    }
-  ];
-
-  const advocacyTools = [
-    {
-      title: "Social Media Kit",
-      description: "Ready-to-use graphics and posts",
-      icon: <FaDownload className="text-red-500" />
-    },
-    {
-      title: "Presentation Deck",
-      description: "Educational slides for schools and companies",
-      icon: <FaDownload className="text-yellow-500" />
-    },
-    {
-      title: "Infographics",
-      description: "Visual guides for IPv6 adoption",
-      icon: <FaDownload className="text-blue-500" />
-    }
-  ];
-
-  const githubIssues = [
-    {
-      title: "Add IPv6 test tool",
-      label: "good first issue",
-      description: "Create a simple tool to test IPv6 connectivity"
-    },
-    {
-      title: "Update documentation",
-      label: "documentation",
-      description: "Update README with new features"
-    },
-    {
-      title: "Fix mobile layout",
-      label: "bug",
-      description: "Improve responsive design on mobile devices"
+      title: "Learn & Share",
+      description: "Expand your knowledge and share it with others",
+      icon: <FaBook className="w-8 h-8" />,
+      items: [
+        {
+          title: 'Tutorials',
+          description: 'Access our learning resources',
+          link: 'https://www.ietf.org/',
+          icon: <FaBook />
+        },
+        {
+          title: 'Webinars',
+          description: 'Join our educational sessions',
+          link: 'https://www.worldipv6launch.org/',
+          icon: <FaExternalLinkAlt />
+        },
+        {
+          title: 'Blog',
+          description: 'Read and share articles',
+          link: 'https://www.ipv6forum.com/',
+          icon: <FaExternalLinkAlt />
+        }
+      ]
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4">
-      <div className="container mx-auto">
-        <motion.h1 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600"
-        >
-          Be an IPv6 Hero
-        </motion.h1>
-
-        {/* Join the Mission Section */}
-        <section className="mb-16">
-          <motion.h2 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-2xl font-bold mb-8"
-          >
-            Join the Mission
-          </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {volunteerRoles.map((role, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-              >
-                <div className="text-3xl mb-4">{role.icon}</div>
-                <h3 className="text-xl font-semibold mb-2">{role.title}</h3>
-                <p className="text-gray-600 mb-4">{role.description}</p>
-                <button className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300">
-                  Apply Now
-                </button>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        {/* Advocacy Toolkit Section */}
-        <section className="mb-16">
-          <motion.h2 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-2xl font-bold mb-8"
-          >
-            Advocacy Toolkit
-          </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {advocacyTools.map((tool, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-              >
-                <div className="text-3xl mb-4">{tool.icon}</div>
-                <h3 className="text-xl font-semibold mb-2">{tool.title}</h3>
-                <p className="text-gray-600 mb-4">{tool.description}</p>
-                <button className="w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-300 flex items-center justify-center">
-                  <FaDownload className="mr-2" />
-                  Download
-                </button>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        {/* Share Your Story Section */}
-        <section className="mb-16">
+    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-primary-dark dark:to-primary/10">
+      {/* Hero Section */}
+      <section className="relative py-20 px-4 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20"></div>
+        <div className="container mx-auto relative z-10">
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="bg-white p-8 rounded-xl shadow-lg"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center max-w-3xl mx-auto"
           >
-            <div className="text-center mb-8">
-              <FaShareAlt className="text-4xl text-blue-500 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold mb-4">Your Story Matters</h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                Share your IPv6 migration journey and inspire others to make the transition.
-                Your experience could help organizations overcome their challenges.
-              </p>
-            </div>
-            <button
-              onClick={() => setShowStoryForm(true)}
-              className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300 mx-auto block"
-            >
-              Share Your Story
-            </button>
+            <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-white mb-6">
+              Get Involved with IPv6
+            </h1>
+            <p className="text-lg text-primary/80 dark:text-secondary/80 mb-8">
+              Join our community and help shape the future of the internet
+            </p>
           </motion.div>
-        </section>
+        </div>
+      </section>
 
-        {/* Open Source Contribution Section */}
-        <section>
-          <motion.h2 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-2xl font-bold mb-8"
-          >
-            Open Source Contribution
-          </motion.h2>
-          <div className="bg-white p-6 rounded-xl shadow-lg">
-            <div className="flex items-center mb-6">
-              <FaGithub className="text-4xl mr-4" />
-              <div>
-                <h3 className="text-xl font-semibold">Contribute to Our GitHub Project</h3>
-                <p className="text-gray-600">Help us improve the IPv6 ecosystem</p>
+      {/* Main Content */}
+      <section className="py-12 px-4">
+        <div className="container mx-auto">
+          {sections.map((section, sectionIndex) => (
+            <motion.div
+              key={sectionIndex}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: sectionIndex * 0.2 }}
+              className="mb-16"
+            >
+              <div className="flex items-center gap-4 mb-8">
+                <div className="p-4 bg-accent/10 rounded-xl text-accent">
+                  {section.icon}
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-primary dark:text-white">
+                    {section.title}
+                  </h2>
+                  <p className="text-primary/80 dark:text-secondary/80">
+                    {section.description}
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {section.items.map((item, itemIndex) => (
+                  <motion.div
+                    key={itemIndex}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: (sectionIndex * 0.2) + (itemIndex * 0.1) }}
+                    className="bg-white dark:bg-primary/5 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className="p-3 bg-accent/10 rounded-xl text-accent">
+                        {item.icon}
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-primary dark:text-white mb-2">
+                          {item.title}
+                        </h3>
+                        <p className="text-primary/80 dark:text-secondary/80">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <button
+                        onClick={() => handleExternalLink(item.link)}
+                        className="group w-full flex items-center justify-center gap-2 bg-accent text-primary px-6 py-3 rounded-xl font-semibold hover:bg-accent-light transition-all duration-300"
+                      >
+                        <span>Get Started</span>
+                        <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                      </button>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="py-12 px-4 bg-white dark:bg-primary/5">
+        <div className="container mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-primary dark:text-white mb-6">
+              Have Questions?
+            </h2>
+            <p className="text-lg text-primary/80 dark:text-secondary/80 mb-8">
+              Reach out to our team for more information about getting involved
+            </p>
+            <div className="flex items-center gap-4">
+              <Link to="/contact" className="btn btn-primary">
+                Contact Us
+              </Link>
+              <Link to="/resources" className="btn btn-outline">
+                View Resources
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 px-4 bg-white dark:bg-primary/5">
+        <div className="container mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-primary dark:text-white mb-6">
+              Join IPv6 Working Groups
+            </h2>
+            <p className="text-lg text-primary/80 dark:text-secondary/80 mb-8">
+              Join our working groups to contribute to IPv6 development
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <a href="https://www.ietf.org/participate/working-groups/" target="_blank" rel="noopener noreferrer" className="btn btn-accent">
+                Join Working Group
+              </a>
+              <div className="flex items-center gap-4">
+                <a
+                  href="https://www.ietf.org/mailman/listinfo/ipv6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-accent"
+                >
+                  Join Mailing List
+                </a>
+                <a
+                  href="https://www.ietf.org/mailman/listinfo/ipv6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-ghost"
+                >
+                  View Archives
+                </a>
               </div>
             </div>
-            <div className="space-y-4">
-              {githubIssues.map((issue, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="border rounded-lg p-4 hover:bg-gray-50 transition-colors duration-300"
-                >
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-semibold">{issue.title}</h4>
-                    <span className={`px-2 py-1 rounded-full text-sm ${
-                      issue.label === 'good first issue' ? 'bg-green-100 text-green-600' :
-                      issue.label === 'documentation' ? 'bg-blue-100 text-blue-600' :
-                      'bg-red-100 text-red-600'
-                    }`}>
-                      {issue.label}
-                    </span>
-                  </div>
-                  <p className="text-gray-600 mt-2">{issue.description}</p>
-                </motion.div>
-              ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 px-4 bg-white dark:bg-primary/5">
+        <div className="container mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-primary dark:text-white mb-6">
+              Attend IPv6 Meetings
+            </h2>
+            <p className="text-lg text-primary/80 dark:text-secondary/80 mb-8">
+              Attend IPv6 meetings to learn and network
+            </p>
+            <div className="flex items-center gap-4">
+              <Link to="/events" className="btn btn-primary">
+                Attend Meeting
+              </Link>
+              <Link to="/events" className="btn btn-outline">
+                Register for Event
+              </Link>
             </div>
           </div>
-        </section>
-
-        {/* Story Submission Modal */}
-        {showStoryForm && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="bg-white rounded-xl p-6 max-w-2xl w-full"
-            >
-              <h3 className="text-2xl font-bold mb-4">Share Your IPv6 Story</h3>
-              <form className="space-y-4">
-                <div>
-                  <label className="block text-gray-700 mb-2">Name</label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-700 mb-2">Organization</label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-700 mb-2">Your Story</label>
-                  <textarea
-                    rows="6"
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  ></textarea>
-                </div>
-                <div>
-                  <label className="block text-gray-700 mb-2">Upload Image (Optional)</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="w-full"
-                  />
-                </div>
-                <div className="flex justify-end space-x-4">
-                  <button
-                    type="button"
-                    onClick={() => setShowStoryForm(false)}
-                    className="px-4 py-2 text-gray-600 hover:text-gray-800"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                  >
-                    Submit Story
-                  </button>
-                </div>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-      </div>
+        </div>
+      </section>
     </div>
   );
 }

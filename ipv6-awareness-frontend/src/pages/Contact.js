@@ -1,170 +1,233 @@
 // === src/pages/Contact.js ===
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin, FaTwitter, FaGithub } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGlobe, FaLinkedin, FaTwitter, FaGithub, FaArrowRight } from 'react-icons/fa';
 
 function Contact() {
-  const [formStatus, setFormStatus] = useState('idle'); // idle, submitting, success, error
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormStatus('submitting');
-    // Simulate form submission
-    setTimeout(() => {
-      setFormStatus('success');
-    }, 1500);
+    // Handle form submission
+    console.log('Form submitted:', formData);
   };
 
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const contactInfo = [
+    {
+      icon: <FaEnvelope className="w-6 h-6" />,
+      title: 'Email',
+      value: 'contact@ipv6forum.com',
+      link: 'mailto:contact@ipv6forum.com'
+    },
+    {
+      icon: <FaPhone className="w-6 h-6" />,
+      title: 'Phone',
+      value: '+1 (555) 123-4567',
+      link: 'tel:+15551234567'
+    },
+    {
+      icon: <FaMapMarkerAlt className="w-6 h-6" />,
+      title: 'Address',
+      value: '123 IPv6 Street, Tech City, TC 12345',
+      link: 'https://maps.google.com'
+    }
+  ];
+
+  const socialLinks = [
+    {
+      icon: <FaLinkedin className="w-6 h-6" />,
+      title: 'LinkedIn',
+      link: 'https://www.linkedin.com/company/ipv6-forum'
+    },
+    {
+      icon: <FaTwitter className="w-6 h-6" />,
+      title: 'Twitter',
+      link: 'https://twitter.com/ipv6forum'
+    },
+    {
+      icon: <FaGithub className="w-6 h-6" />,
+      title: 'GitHub',
+      link: 'https://github.com/ipv6'
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4">
-      <div className="container mx-auto">
-        <motion.h1 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600"
-        >
-          Let's Connect
-        </motion.h1>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Contact Form */}
-          <motion.section
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="bg-white rounded-xl shadow-lg p-8"
+    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-primary-dark dark:to-primary/10">
+      {/* Hero Section */}
+      <section className="relative py-20 px-4 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20"></div>
+        <div className="container mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center max-w-3xl mx-auto"
           >
-            <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-gray-700 mb-2">Name</label>
-                <input
-                  type="text"
-                  required
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 mb-2">Email</label>
-                <input
-                  type="email"
-                  required
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 mb-2">Subject</label>
-                <input
-                  type="text"
-                  required
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 mb-2">Message</label>
-                <textarea
-                  required
-                  rows="6"
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                ></textarea>
-              </div>
-              <button
-                type="submit"
-                disabled={formStatus === 'submitting'}
-                className={`w-full px-6 py-3 rounded-lg text-white transition-colors duration-300 ${
-                  formStatus === 'submitting'
-                    ? 'bg-blue-400 cursor-not-allowed'
-                    : 'bg-blue-600 hover:bg-blue-700'
-                }`}
-              >
-                {formStatus === 'submitting' ? 'Sending...' : 'Send Message'}
-              </button>
-              {formStatus === 'success' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-green-600 text-center"
-                >
-                  Message sent successfully! We'll get back to you soon.
-                </motion.div>
-              )}
-            </form>
-          </motion.section>
-
-          {/* Contact Information */}
-          <motion.section
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="space-y-8"
-          >
-            {/* Office Location */}
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold mb-6">Office Location</h2>
-              <div className="aspect-w-16 aspect-h-9 bg-gray-100 rounded-lg mb-6">
-                {/* Add your Google Maps embed here */}
-                <div className="flex items-center justify-center text-gray-500">
-                  Google Maps Embed
-                </div>
-              </div>
-              <div className="flex items-center text-gray-600">
-                <FaMapMarkerAlt className="text-blue-500 mr-3" />
-                <span>123 IPv6 Street, Tech City, TC 12345</span>
-              </div>
-            </div>
-
-            {/* Contact Details */}
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold mb-6">Contact Details</h2>
-              <div className="space-y-4">
-                <div className="flex items-center text-gray-600">
-                  <FaEnvelope className="text-blue-500 mr-3" />
-                  <span>contact@ipv6awareness.org</span>
-                </div>
-                <div className="flex items-center text-gray-600">
-                  <FaPhone className="text-blue-500 mr-3" />
-                  <span>+1 (555) 123-4567</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Social Links */}
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold mb-6">Connect With Us</h2>
-              <div className="flex space-x-6">
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-blue-500 transition-colors duration-300"
-                >
-                  <FaLinkedin className="text-2xl" />
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-blue-500 transition-colors duration-300"
-                >
-                  <FaTwitter className="text-2xl" />
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-blue-500 transition-colors duration-300"
-                >
-                  <FaGithub className="text-2xl" />
-                </a>
-              </div>
-            </div>
-
-            {/* Response Time Notice */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="bg-blue-50 rounded-xl p-6 text-center"
-            >
-              <p className="text-blue-600">
-                We typically respond within 48 hours
-              </p>
-            </motion.div>
-          </motion.section>
+            <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-white mb-6">
+              Contact Us
+            </h1>
+            <p className="text-lg text-primary/80 dark:text-secondary/80">
+              Get in touch with our team for any questions about IPv6
+            </p>
+          </motion.div>
         </div>
-      </div>
+      </section>
+
+      {/* Contact Form and Info */}
+      <section className="py-12 px-4">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Contact Form */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white dark:bg-primary/5 rounded-xl p-8 shadow-lg"
+            >
+              <h2 className="text-2xl font-bold text-primary dark:text-white mb-6">
+                Send us a Message
+              </h2>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-primary dark:text-white mb-2">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-primary/5 border-2 border-secondary/20 focus:border-accent outline-none text-primary dark:text-secondary"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-primary dark:text-white mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-primary/5 border-2 border-secondary/20 focus:border-accent outline-none text-primary dark:text-secondary"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-primary dark:text-white mb-2">
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-primary/5 border-2 border-secondary/20 focus:border-accent outline-none text-primary dark:text-secondary"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-primary dark:text-white mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows="4"
+                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-primary/5 border-2 border-secondary/20 focus:border-accent outline-none text-primary dark:text-secondary"
+                    required
+                  ></textarea>
+                </div>
+                <button
+                  type="submit"
+                  className="btn btn-primary w-full"
+                >
+                  Send Message
+                </button>
+              </form>
+            </motion.div>
+
+            {/* Contact Info */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="space-y-8"
+            >
+              {/* Contact Information */}
+              <div className="bg-white dark:bg-primary/5 rounded-xl p-8 shadow-lg">
+                <h2 className="text-2xl font-bold text-primary dark:text-white mb-6">
+                  Contact Information
+                </h2>
+                <div className="space-y-6">
+                  {contactInfo.map((info, index) => (
+                    <motion.a
+                      key={index}
+                      href={info.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-4 p-4 rounded-xl hover:bg-accent/10 transition-all duration-300"
+                      whileHover={{ x: 10 }}
+                    >
+                      <div className="p-3 bg-accent/10 rounded-xl text-accent">
+                        {info.icon}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-primary dark:text-white">
+                          {info.title}
+                        </h3>
+                        <p className="text-primary/80 dark:text-secondary/80">
+                          {info.value}
+                        </p>
+                      </div>
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Social Links */}
+              <div className="bg-white dark:bg-primary/5 rounded-xl p-8 shadow-lg">
+                <h2 className="text-2xl font-bold text-primary dark:text-white mb-6">
+                  Connect With Us
+                </h2>
+                <div className="grid grid-cols-3 gap-4">
+                  {socialLinks.map((social, index) => (
+                    <motion.a
+                      key={index}
+                      href={social.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-ghost flex flex-col items-center gap-2 p-4"
+                      whileHover={{ y: -5 }}
+                    >
+                      <div className="p-3 bg-accent/10 rounded-xl text-accent">
+                        {social.icon}
+                      </div>
+                      <span className="text-primary dark:text-white font-semibold">
+                        {social.title}
+                      </span>
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

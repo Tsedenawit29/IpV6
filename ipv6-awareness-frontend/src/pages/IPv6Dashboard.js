@@ -1,191 +1,254 @@
 // === src/pages/IPv6Dashboard.js ===
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaGlobe, FaChartLine, FaTable } from 'react-icons/fa';
+import { FaGlobe, FaChartLine, FaNetworkWired, FaShieldAlt, FaMobileAlt, FaCloud, FaArrowUp, FaArrowDown, FaInfoCircle } from 'react-icons/fa';
 
 function IPv6Dashboard() {
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [activeTab, setActiveTab] = useState('map');
+  const [stats, setStats] = useState({
+    globalAdoption: 35.2,
+    regionalAdoption: {
+      northAmerica: 45.8,
+      europe: 42.3,
+      asia: 38.7,
+      southAmerica: 28.4,
+      africa: 15.6,
+      oceania: 32.9
+    },
+    growth: 2.4,
+    security: 98.5,
+    mobile: 85.2,
+    cloud: 92.7
+  });
 
-  const adoptionData = [
-    { country: "United States", adoption: 45.2, growth: 2.1, isp: "Comcast" },
-    { country: "Germany", adoption: 56.8, growth: 1.8, isp: "Deutsche Telekom" },
-    { country: "Japan", adoption: 38.5, growth: 3.2, isp: "NTT" },
-    { country: "Brazil", adoption: 42.3, growth: 4.5, isp: "Vivo" },
-    { country: "India", adoption: 28.7, growth: 5.2, isp: "Reliance Jio" }
-  ];
-
-  const yearlyGrowth = [
-    { year: 2020, adoption: 25.3 },
-    { year: 2021, adoption: 32.1 },
-    { year: 2022, adoption: 38.7 },
-    { year: 2023, adoption: 45.2 },
-    { year: 2024, adoption: 52.8 }
+  const regions = [
+    { name: 'North America', value: stats.regionalAdoption.northAmerica, trend: 1.2 },
+    { name: 'Europe', value: stats.regionalAdoption.europe, trend: 1.5 },
+    { name: 'Asia', value: stats.regionalAdoption.asia, trend: 2.1 },
+    { name: 'South America', value: stats.regionalAdoption.southAmerica, trend: 0.8 },
+    { name: 'Africa', value: stats.regionalAdoption.africa, trend: 1.7 },
+    { name: 'Oceania', value: stats.regionalAdoption.oceania, trend: 0.9 }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4">
-      <div className="container mx-auto">
-        <motion.h1 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600"
-        >
-          Visualize the IPv6 Revolution
-        </motion.h1>
+    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-primary-dark dark:to-primary/10">
+      {/* Hero Section */}
+      <section className="relative py-12 px-4 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20"></div>
+        <div className="container mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center max-w-3xl mx-auto"
+          >
+            <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-white mb-6">
+              IPv6 Adoption Dashboard
+            </h1>
+            <p className="text-lg text-primary/80 dark:text-secondary/80">
+              Real-time statistics and insights on global IPv6 deployment
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
-        {/* Navigation Tabs */}
-        <div className="flex justify-center mb-8">
-          <div className="inline-flex rounded-lg border border-gray-200 p-1 bg-white">
-            {[
-              { id: 'map', icon: <FaGlobe />, label: 'Global Map' },
-              { id: 'charts', icon: <FaChartLine />, label: 'Charts' },
-              { id: 'table', icon: <FaTable />, label: 'Data Table' }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-6 py-2 rounded-lg transition-all duration-300 flex items-center space-x-2 ${
-                  activeTab === tab.id
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-600 hover:bg-gray-100'
-                }`}
-              >
-                {tab.icon}
-                <span>{tab.label}</span>
-              </button>
-            ))}
+      {/* Global Stats */}
+      <section className="py-8 px-4">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-white dark:bg-primary/5 rounded-xl p-6 shadow-lg"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="p-3 bg-accent/10 rounded-xl text-accent">
+                  <FaGlobe className="w-6 h-6" />
+                </div>
+                <span className="text-sm text-primary/60 dark:text-secondary/60">Global</span>
+              </div>
+              <h3 className="text-3xl font-bold text-primary dark:text-white mb-2">
+                {stats.globalAdoption}%
+              </h3>
+              <div className="flex items-center text-accent">
+                <FaArrowUp className="w-4 h-4 mr-1" />
+                <span>{stats.growth}% this year</span>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="bg-white dark:bg-primary/5 rounded-xl p-6 shadow-lg"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="p-3 bg-accent/10 rounded-xl text-accent">
+                  <FaShieldAlt className="w-6 h-6" />
+                </div>
+                <span className="text-sm text-primary/60 dark:text-secondary/60">Security</span>
+              </div>
+              <h3 className="text-3xl font-bold text-primary dark:text-white mb-2">
+                {stats.security}%
+              </h3>
+              <div className="flex items-center text-accent">
+                <FaArrowUp className="w-4 h-4 mr-1" />
+                <span>2.1% this month</span>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="bg-white dark:bg-primary/5 rounded-xl p-6 shadow-lg"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="p-3 bg-accent/10 rounded-xl text-accent">
+                  <FaMobileAlt className="w-6 h-6" />
+                </div>
+                <span className="text-sm text-primary/60 dark:text-secondary/60">Mobile</span>
+              </div>
+              <h3 className="text-3xl font-bold text-primary dark:text-white mb-2">
+                {stats.mobile}%
+              </h3>
+              <div className="flex items-center text-accent">
+                <FaArrowUp className="w-4 h-4 mr-1" />
+                <span>3.2% this month</span>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="bg-white dark:bg-primary/5 rounded-xl p-6 shadow-lg"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="p-3 bg-accent/10 rounded-xl text-accent">
+                  <FaCloud className="w-6 h-6" />
+                </div>
+                <span className="text-sm text-primary/60 dark:text-secondary/60">Cloud</span>
+              </div>
+              <h3 className="text-3xl font-bold text-primary dark:text-white mb-2">
+                {stats.cloud}%
+              </h3>
+              <div className="flex items-center text-accent">
+                <FaArrowUp className="w-4 h-4 mr-1" />
+                <span>1.8% this month</span>
+              </div>
+            </motion.div>
           </div>
         </div>
+      </section>
 
-        {/* Global Map Section */}
-        {activeTab === 'map' && (
-          <motion.section
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="bg-white p-6 rounded-xl shadow-lg mb-8"
-          >
-            <h2 className="text-2xl font-bold mb-6">Global IPv6 Adoption Map</h2>
-            <div className="aspect-w-16 aspect-h-9 bg-gray-100 rounded-lg mb-6">
-              {/* Add your world map visualization here */}
-              <div className="flex items-center justify-center text-gray-500">
-                Interactive World Map Visualization
-              </div>
-            </div>
-            {selectedCountry && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-blue-50 p-4 rounded-lg"
-              >
-                <h3 className="font-semibold mb-2">{selectedCountry.country} Statistics</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-gray-600">Adoption Rate</p>
-                    <p className="text-xl font-bold">{selectedCountry.adoption}%</p>
+      {/* Regional Stats */}
+      <section className="py-8 px-4">
+        <div className="container mx-auto">
+          <div className="bg-white dark:bg-primary/5 rounded-xl p-8 shadow-lg">
+            <h2 className="text-2xl font-bold text-primary dark:text-white mb-8">
+              Regional Adoption
+            </h2>
+            <div className="space-y-6">
+              {regions.map((region, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-4">
+                    <span className="text-primary dark:text-white font-semibold w-32">
+                      {region.name}
+                    </span>
+                    <div className="flex-1 h-2 bg-primary/10 dark:bg-primary/20 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${region.value}%` }}
+                        transition={{ duration: 1, delay: index * 0.1 }}
+                        className="h-full bg-accent"
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Yearly Growth</p>
-                    <p className="text-xl font-bold">{selectedCountry.growth}%</p>
+                  <div className="flex items-center gap-2">
+                    <span className="text-primary dark:text-white font-semibold">
+                      {region.value}%
+                    </span>
+                    <div className="flex items-center text-accent">
+                      <FaArrowUp className="w-4 h-4" />
+                      <span className="text-sm">{region.trend}%</span>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            )}
-          </motion.section>
-        )}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
-        {/* Charts Section */}
-        {activeTab === 'charts' && (
-          <motion.section
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-6"
-          >
-            <div className="bg-white p-6 rounded-xl shadow-lg">
-              <h2 className="text-2xl font-bold mb-6">Year-over-Year Growth</h2>
-              <div className="aspect-w-16 aspect-h-9 bg-gray-100 rounded-lg">
-                {/* Add your line chart here */}
-                <div className="flex items-center justify-center text-gray-500">
-                  Line Chart Visualization
+      {/* Insights Section */}
+      <section className="py-8 px-4">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="bg-white dark:bg-primary/5 rounded-xl p-6 shadow-lg"
+            >
+              <h3 className="text-xl font-bold text-primary dark:text-white mb-4">
+                Key Insights
+              </h3>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3">
+                  <FaInfoCircle className="text-accent mt-1" />
+                  <span className="text-primary/80 dark:text-secondary/80">
+                    Mobile networks are leading IPv6 adoption with {stats.mobile}% implementation
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <FaInfoCircle className="text-accent mt-1" />
+                  <span className="text-primary/80 dark:text-secondary/80">
+                    Cloud providers show strong IPv6 support at {stats.cloud}%
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <FaInfoCircle className="text-accent mt-1" />
+                  <span className="text-primary/80 dark:text-secondary/80">
+                    Security features are widely implemented with {stats.security}% adoption
+                  </span>
+                </li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="bg-white dark:bg-primary/5 rounded-xl p-6 shadow-lg"
+            >
+              <h3 className="text-xl font-bold text-primary dark:text-white mb-4">
+                Growth Trends
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-primary/80 dark:text-secondary/80">Global Growth</span>
+                  <span className="text-accent font-semibold">+{stats.growth}%</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-primary/80 dark:text-secondary/80">Mobile Growth</span>
+                  <span className="text-accent font-semibold">+3.2%</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-primary/80 dark:text-secondary/80">Cloud Growth</span>
+                  <span className="text-accent font-semibold">+1.8%</span>
                 </div>
               </div>
-            </div>
-            <div className="bg-white p-6 rounded-xl shadow-lg">
-              <h2 className="text-2xl font-bold mb-6">Device Compatibility</h2>
-              <div className="aspect-w-16 aspect-h-9 bg-gray-100 rounded-lg">
-                {/* Add your pie chart here */}
-                <div className="flex items-center justify-center text-gray-500">
-                  Pie Chart Visualization
-                </div>
-              </div>
-            </div>
-          </motion.section>
-        )}
-
-        {/* Data Table Section */}
-        {activeTab === 'table' && (
-          <motion.section
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="bg-white p-6 rounded-xl shadow-lg"
-          >
-            <h2 className="text-2xl font-bold mb-6">Detailed Adoption Statistics</h2>
-            <div className="overflow-x-auto">
-              <table className="min-w-full">
-                <thead>
-                  <tr className="bg-gray-50">
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Country
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      ISP
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Adoption Rate
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Growth Rate
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {adoptionData.map((row, index) => (
-                    <motion.tr
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="hover:bg-gray-50"
-                    >
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">{row.country}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-500">{row.isp}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{row.adoption}%</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{row.growth}%</div>
-                      </td>
-                    </motion.tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </motion.section>
-        )}
-
-        {/* Data Source Attribution */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-center text-gray-500 mt-8"
-        >
-          Data sourced from Google IPv6 Statistics and APNIC Labs
-        </motion.div>
-      </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
