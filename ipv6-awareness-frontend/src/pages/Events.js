@@ -1,11 +1,10 @@
 // === src/pages/Events.js ===
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaCalendarAlt, FaMapMarkerAlt, FaGlobe, FaExternalLinkAlt, FaSearch, FaFilter, FaArrowRight, FaUsers, FaVideo, FaBookmark, FaShare, FaClock, FaTag } from 'react-icons/fa';
+import { FaCalendarAlt, FaMapMarkerAlt, FaGlobe, FaExternalLinkAlt, FaUsers, FaVideo, FaBookmark, FaShare, FaClock, FaTag } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 function Events() {
-  const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState('all');
 
   const filters = [
@@ -91,11 +90,7 @@ function Events() {
   ];
 
   const filteredEvents = events.filter(event => {
-    const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         event.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         event.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-    const matchesFilter = activeFilter === 'all' || event.type === activeFilter;
-    return matchesSearch && matchesFilter;
+    return activeFilter === 'all' || event.type === activeFilter;
   });
 
   const handleExternalLink = (url) => {
@@ -108,36 +103,23 @@ function Events() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-[#121212] dark:to-[#1E1E1E]">
-      {/* Hero Section */}
-      <section className="relative py-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#FFD700]/10 to-[#FFD700]/5 dark:from-[#FFD700]/5 dark:to-transparent"></div>
-        <div className="container mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <h1 className="text-4xl md:text-5xl font-bold text-[#121212] dark:text-white mb-6">
-              IPv6 Events
-            </h1>
-            <p className="text-lg text-[#121212]/80 dark:text-white/80 mb-8">
-              Stay updated with the latest IPv6 conferences, workshops, and webinars
-            </p>
-            <div className="relative max-w-2xl mx-auto">
-              <input
-                type="text"
-                placeholder="Search events..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-6 py-4 rounded-xl bg-white dark:bg-[#1E1E1E] border-2 border-[#FFD700]/20 focus:border-[#FFD700] outline-none text-[#121212] dark:text-white placeholder-[#121212]/50 dark:placeholder-white/50"
-              />
-              <FaSearch className="absolute right-6 top-1/2 transform -translate-y-1/2 text-[#121212]/40 dark:text-white/40" />
-            </div>
-          </motion.div>
+    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-[#121212] dark:to-[#1E1E1E] pt-20">
+      {/* Page Title */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-center py-12 bg-white dark:bg-[#1E1E1E] shadow-lg"
+      >
+        <div className="container mx-auto px-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#121212] dark:text-white mb-4">
+            IPv6 Events
+          </h1>
+          <p className="text-lg text-[#121212]/80 dark:text-white/80 max-w-2xl mx-auto">
+            Stay updated with the latest IPv6 conferences, workshops, and webinars
+          </p>
         </div>
-      </section>
+      </motion.div>
 
       {/* Filters Section */}
       <section className="py-8 px-4 bg-white dark:bg-[#1E1E1E]">
@@ -231,7 +213,6 @@ function Events() {
           </div>
         </div>
       </section>
-
     </div>
   );
 }

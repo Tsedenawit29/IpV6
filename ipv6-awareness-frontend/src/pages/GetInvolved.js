@@ -1,7 +1,7 @@
 // === src/pages/GetInvolved.js ===
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaUsers, FaHandshake, FaLightbulb, FaCode, FaBook, FaGlobe, FaArrowRight, FaExternalLinkAlt, FaGithub, FaDiscord, FaTwitter, FaLinkedin, FaEnvelope, FaHandshakeAlt, FaRocket, FaGraduationCap } from 'react-icons/fa';
+import { FaUsers, FaHandshake, FaLightbulb, FaCode, FaBook, FaGlobe, FaArrowRight, FaExternalLinkAlt, FaGithub, FaDiscord, FaTwitter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 function GetInvolved() {
@@ -88,192 +88,113 @@ function GetInvolved() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-primary-dark dark:to-primary/10">
-      {/* Hero Section */}
-      <section className="relative py-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20"></div>
-        <div className="container mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-white mb-6">
-              Get Involved with IPv6
-            </h1>
-            <p className="text-lg text-primary/80 dark:text-secondary/80 mb-8">
-              Join our community and help shape the future of the internet
-            </p>
-          </motion.div>
+    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-[#121212] dark:to-[#1E1E1E] pt-20">
+      {/* Page Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-center py-12 bg-white dark:bg-[#1E1E1E] shadow-lg"
+      >
+        <div className="container mx-auto px-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#121212] dark:text-white mb-4">
+            Get Involved
+          </h1>
+          <p className="text-lg text-[#121212]/80 dark:text-white/80 max-w-2xl mx-auto">
+            Join our community and help shape the future of IPv6
+          </p>
         </div>
-      </section>
+      </motion.div>
 
       {/* Main Content */}
-      <section className="py-12 px-4">
-        <div className="container mx-auto">
+      <div className="container mx-auto px-4 py-12">
+        {/* Sections Grid */}
+        <div className="grid grid-cols-1 gap-8">
           {sections.map((section, sectionIndex) => (
-            <motion.div
+            <motion.section
               key={sectionIndex}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: sectionIndex * 0.2 }}
-              className="mb-16"
+              className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-8 shadow-lg border border-[#FFD700]/10"
             >
               <div className="flex items-center gap-4 mb-8">
-                <div className="p-4 bg-accent/10 rounded-xl text-accent">
+                <div className="p-4 bg-[#FFD700]/10 rounded-xl text-[#FFD700] border border-[#FFD700]/20">
                   {section.icon}
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-primary dark:text-white">
+                  <h2 className="text-2xl font-bold text-[#121212] dark:text-white">
                     {section.title}
                   </h2>
-                  <p className="text-primary/80 dark:text-secondary/80">
+                  <p className="text-[#121212]/80 dark:text-white/80">
                     {section.description}
                   </p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Minimized Feature Display */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {section.items.map((item, itemIndex) => (
-                  <motion.div
+                  <div
                     key={itemIndex}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: (sectionIndex * 0.2) + (itemIndex * 0.1) }}
-                    className="bg-white dark:bg-primary/5 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                    className="flex flex-col p-4 rounded-xl transition-all duration-300 border border-[#FFD700]/10" // Simplified styling
                   >
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className="p-3 bg-accent/10 rounded-xl text-accent">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="text-[#FFD700]">
                         {item.icon}
                       </div>
-                      <div>
-                        <h3 className="text-xl font-semibold text-primary dark:text-white mb-2">
-                          {item.title}
-                        </h3>
-                        <p className="text-primary/80 dark:text-secondary/80">
-                          {item.description}
-                        </p>
-                      </div>
+                      <h3 className="text-lg font-semibold text-[#121212] dark:text-white">
+                        {item.title}
+                      </h3>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <button
-                        onClick={() => handleExternalLink(item.link)}
-                        className="btn-primary w-full"
-                      >
-                        <span className="flex items-center justify-center gap-2">
-                          Get Started
-                          <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                        </span>
-                      </button>
-                    </div>
-                  </motion.div>
+                    <p className="text-sm text-[#121212]/80 dark:text-white/80 mb-4">
+                      {item.description}
+                    </p>
+                    <button
+                      onClick={() => handleExternalLink(item.link)}
+                      className="btn btn-primary w-full flex items-center justify-center gap-2 text-sm py-2" // Smaller button
+                    >
+                      Visit {item.title.split(' ')[0]} {/* More concise button text */}
+                      <FaArrowRight className="w-3 h-3" />
+                    </button>
+                  </div>
                 ))}
               </div>
-            </motion.div>
+            </motion.section>
           ))}
         </div>
-      </section>
 
-      {/* Contact Section */}
-      <section className="py-12 px-4 bg-white dark:bg-primary/5">
-        <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-primary dark:text-white mb-6">
-              Have Questions?
+        {/* Call to Action */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="text-center mt-12"
+        >
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-12 shadow-lg border border-[#FFD700]/10">
+            <h2 className="text-3xl font-bold text-[#121212] dark:text-white mb-4">
+              Ready to Make a Difference?
             </h2>
-            <p className="text-lg text-primary/80 dark:text-secondary/80 mb-8">
-              Reach out to our team for more information about getting involved
+            <p className="text-lg text-[#121212]/80 dark:text-white/80 mb-8 max-w-2xl mx-auto">
+              Join our community today and help shape the future of IPv6 adoption
             </p>
-            <div className="flex items-center gap-4">
-              <Link to="/contact" className="btn-primary">
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link
+                to="/signup"
+                className="btn btn-primary"
+              >
+                Get Started
+              </Link>
+              <Link
+                to="/contact"
+                className="btn btn-secondary"
+              >
                 Contact Us
               </Link>
-              <Link to="/resources" className="btn-secondary">
-                View Resources
-              </Link>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="py-12 px-4 bg-white dark:bg-primary/5">
-        <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-primary dark:text-white mb-6">
-              Join IPv6 Working Groups
-            </h2>
-            <p className="text-lg text-primary/80 dark:text-secondary/80 mb-8">
-              Join our working groups to contribute to IPv6 development
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <a href="https://www.ietf.org/participate/working-groups/" target="_blank" rel="noopener noreferrer" className="btn-primary">
-                Join Working Group
-              </a>
-              <div className="flex items-center gap-4">
-                <a
-                  href="https://www.ietf.org/mailman/listinfo/ipv6"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary"
-                >
-                  Join Mailing List
-                </a>
-                <a
-                  href="https://www.ietf.org/mailman/listinfo/ipv6"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-secondary"
-                >
-                  View Archives
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-12 px-4 bg-white dark:bg-primary/5">
-        <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-primary dark:text-white mb-6">
-              Attend IPv6 Meetings
-            </h2>
-            <p className="text-lg text-primary/80 dark:text-secondary/80 mb-8">
-              Attend IPv6 meetings to learn and network
-            </p>
-            <div className="flex items-center gap-4">
-              <Link to="/community" className="btn-primary">
-                Join Community
-              </Link>
-              <Link to="/events" className="btn-secondary">
-                View Events
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-12 px-4 bg-white dark:bg-primary/5">
-        <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-primary dark:text-white mb-6">
-              Read IPv6 Documentation
-            </h2>
-            <p className="text-lg text-primary/80 dark:text-secondary/80 mb-8">
-              Access IPv6 documentation to learn more about the protocol
-            </p>
-            <div className="flex items-center gap-4">
-              <Link to="/documentation" className="btn-primary">
-                Read Documentation
-              </Link>
-              <Link to="/tutorials" className="btn-secondary">
-                Start Learning
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+        </motion.section>
+      </div>
     </div>
   );
 }
