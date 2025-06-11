@@ -1,7 +1,7 @@
 // === src/pages/Events.js ===
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaCalendarAlt, FaMapMarkerAlt, FaGlobe, FaExternalLinkAlt, FaSearch, FaFilter, FaArrowRight, FaUsers, FaVideo, FaBookmark, FaShare } from 'react-icons/fa';
+import { FaCalendarAlt, FaMapMarkerAlt, FaGlobe, FaExternalLinkAlt, FaSearch, FaFilter, FaArrowRight, FaUsers, FaVideo, FaBookmark, FaShare, FaClock, FaTag } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 function Events() {
@@ -22,6 +22,7 @@ function Events() {
       description: "The world's largest gathering of IPv6 experts and enthusiasts",
       type: "conference",
       date: "2024-06-15",
+      time: "09:00 AM - 05:00 PM",
       location: "San Francisco, USA",
       link: "https://www.ipv6forum.com/",
       tags: ["conference", "networking", "expert-talks"],
@@ -33,6 +34,7 @@ function Events() {
       description: "Hands-on workshop for network engineers and administrators",
       type: "workshop",
       date: "2024-05-20",
+      time: "10:00 AM - 04:00 PM",
       location: "Online",
       link: "https://www.ietf.org/",
       tags: ["workshop", "hands-on", "implementation"],
@@ -44,6 +46,7 @@ function Events() {
       description: "Best practices for securing IPv6 networks",
       type: "webinar",
       date: "2024-04-10",
+      time: "02:00 PM - 04:00 PM",
       location: "Online",
       link: "https://www.worldipv6launch.org/",
       tags: ["webinar", "security", "best-practices"],
@@ -55,6 +58,7 @@ function Events() {
       description: "Conference focusing on IPv6 deployment in cloud infrastructure",
       type: "conference",
       date: "2024-07-05",
+      time: "09:00 AM - 06:00 PM",
       location: "London, UK",
       link: "https://www.ipv6forum.com/",
       tags: ["conference", "cloud", "deployment"],
@@ -66,6 +70,7 @@ function Events() {
       description: "Implementing IPv6 in mobile networks",
       type: "workshop",
       date: "2024-05-25",
+      time: "10:00 AM - 05:00 PM",
       location: "Berlin, Germany",
       link: "https://www.ietf.org/",
       tags: ["workshop", "mobile", "implementation"],
@@ -77,6 +82,7 @@ function Events() {
       description: "Webinar on planning and executing IPv6 migration",
       type: "webinar",
       date: "2024-04-15",
+      time: "01:00 PM - 03:00 PM",
       location: "Online",
       link: "https://www.worldipv6launch.org/",
       tags: ["webinar", "migration", "planning"],
@@ -102,10 +108,10 @@ function Events() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-primary-dark dark:to-primary/10">
+    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-[#121212] dark:to-[#1E1E1E]">
       {/* Hero Section */}
       <section className="relative py-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#FFD700]/10 to-[#FFD700]/5 dark:from-[#FFD700]/5 dark:to-transparent"></div>
         <div className="container mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -113,10 +119,10 @@ function Events() {
             transition={{ duration: 0.5 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-white mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-[#121212] dark:text-white mb-6">
               IPv6 Events
             </h1>
-            <p className="text-lg text-primary/80 dark:text-secondary/80 mb-8">
+            <p className="text-lg text-[#121212]/80 dark:text-white/80 mb-8">
               Stay updated with the latest IPv6 conferences, workshops, and webinars
             </p>
             <div className="relative max-w-2xl mx-auto">
@@ -125,16 +131,16 @@ function Events() {
                 placeholder="Search events..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-6 py-4 rounded-xl bg-white dark:bg-primary/5 border-2 border-secondary/20 focus:border-accent outline-none text-primary dark:text-secondary"
+                className="w-full px-6 py-4 rounded-xl bg-white dark:bg-[#1E1E1E] border-2 border-[#FFD700]/20 focus:border-[#FFD700] outline-none text-[#121212] dark:text-white placeholder-[#121212]/50 dark:placeholder-white/50"
               />
-              <FaSearch className="absolute right-6 top-1/2 transform -translate-y-1/2 text-primary/40 dark:text-secondary/40" />
+              <FaSearch className="absolute right-6 top-1/2 transform -translate-y-1/2 text-[#121212]/40 dark:text-white/40" />
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Filters Section */}
-      <section className="py-8 px-4 bg-white dark:bg-primary/5">
+      <section className="py-8 px-4 bg-white dark:bg-[#1E1E1E]">
         <div className="container mx-auto">
           <div className="flex flex-wrap justify-center gap-4">
             {filters.map((filter) => (
@@ -143,8 +149,8 @@ function Events() {
                 onClick={() => setActiveFilter(filter.id)}
                 className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
                   activeFilter === filter.id
-                    ? 'bg-accent text-primary shadow-lg'
-                    : 'bg-white dark:bg-primary/5 text-primary/80 dark:text-secondary/80 hover:bg-accent/10'
+                    ? 'btn-primary'
+                    : 'btn-secondary'
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -167,7 +173,7 @@ function Events() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="bg-white dark:bg-primary/5 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-white dark:bg-[#1E1E1E] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <div className="relative h-48">
                   <img
@@ -178,23 +184,27 @@ function Events() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                   <div className="absolute bottom-4 left-4 text-white">
                     <div className="flex items-center gap-2">
-                      <FaCalendarAlt className="text-accent" />
+                      <FaCalendarAlt className="text-[#FFD700]" />
                       <span>{formatDate(event.date)}</span>
                     </div>
                     <div className="flex items-center gap-2 mt-2">
-                      <FaMapMarkerAlt className="text-accent" />
+                      <FaClock className="text-[#FFD700]" />
+                      <span>{event.time}</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <FaMapMarkerAlt className="text-[#FFD700]" />
                       <span>{event.location}</span>
                     </div>
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold text-primary dark:text-white mb-2">{event.title}</h3>
-                  <p className="text-primary/80 dark:text-secondary/80 mb-4">{event.description}</p>
+                  <h3 className="text-xl font-semibold text-[#121212] dark:text-white mb-2">{event.title}</h3>
+                  <p className="text-[#121212]/80 dark:text-white/80 mb-4">{event.description}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {event.tags.map((tag, index) => (
                       <span
                         key={index}
-                        className="px-3 py-1 bg-accent/10 text-accent rounded-full text-sm"
+                        className="px-3 py-1 bg-[#FFD700]/10 text-[#FFD700] rounded-full text-sm"
                       >
                         {tag}
                       </span>
@@ -203,14 +213,14 @@ function Events() {
                   <div className="flex gap-4">
                     <button
                       onClick={() => handleExternalLink(event.link)}
-                      className="group flex-1 flex items-center justify-center gap-2 bg-accent text-primary px-6 py-3 rounded-xl font-semibold hover:bg-accent-light transition-all duration-300"
+                      className="group flex-1 flex items-center justify-center gap-2 btn-primary"
                     >
                       <span>Register Now</span>
                       <FaExternalLinkAlt className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                     </button>
                     <button
                       onClick={() => handleExternalLink(event.link)}
-                      className="group p-3 bg-white dark:bg-primary text-primary dark:text-secondary border-2 border-secondary rounded-xl hover:bg-secondary hover:text-white dark:hover:bg-secondary dark:hover:text-primary transition-all duration-300"
+                      className="group p-3 btn-secondary"
                     >
                       <FaShare className="w-5 h-5" />
                     </button>
@@ -222,35 +232,6 @@ function Events() {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-12 px-4 bg-white dark:bg-primary/5">
-        <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-primary dark:text-white mb-6">
-              Want to Host an Event?
-            </h2>
-            <p className="text-lg text-primary/80 dark:text-secondary/80 mb-8">
-              Join our community of IPv6 event organizers and share your knowledge
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link to="/get-involved" className="btn btn-primary">
-                Get Involved
-              </Link>
-              <Link to="/contact" className="btn btn-outline">
-                Contact Us
-              </Link>
-            </div>
-            <div className="flex flex-wrap gap-4">
-              <a href="https://www.ietf.org/meeting/next/" target="_blank" rel="noopener noreferrer" className="btn btn-accent">
-                Register for IETF
-              </a>
-              <a href="https://www.ietf.org/meeting/next/registration/" target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
-                View Registration
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

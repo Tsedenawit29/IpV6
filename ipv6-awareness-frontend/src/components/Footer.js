@@ -78,55 +78,28 @@ function Footer() {
 
   return (
     <footer className="bg-white dark:bg-primary-dark text-primary dark:text-white">
-      {/* Newsletter Section */}
-      <div className="border-b border-primary/10 dark:border-secondary/10">
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-4xl mx-auto text-center">
-            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">
-              Stay Updated
-            </h3>
-            <p className="text-primary/80 dark:text-secondary/80 mb-6">
-              Subscribe to our newsletter for the latest updates on IPv6 adoption and technology.
-            </p>
-            <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-2 rounded-lg border border-primary/20 dark:border-secondary/20 bg-white dark:bg-primary/5 focus:outline-none focus:ring-2 focus:ring-accent transition-all duration-300"
-              />
-              <button
-                type="submit"
-                className="px-6 py-2 bg-gradient-to-r from-accent to-accent-light text-white font-semibold rounded-lg hover:from-accent-light hover:to-accent transform hover:scale-105 transition-all duration-300"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+      <div className="container mx-auto px-8 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Logo and Description */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center space-x-3 mb-6 group">
+          <div className="lg:col-span-4">
+            <div className="flex items-center space-x-4 mb-8 group">
               <img 
                 src={logo} 
                 alt="IPv6 Logo" 
-                className="h-12 w-auto transform group-hover:scale-105 transition-transform duration-300" 
+                className="h-16 w-auto transform group-hover:scale-105 transition-transform duration-300" 
               />
               <div>
-                <h3 className="text-xl font-bold bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent group-hover:from-accent-light group-hover:to-accent transition-all duration-300">
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent group-hover:from-accent-light group-hover:to-accent transition-all duration-300">
                   IPv6 Awareness
                 </h3>
-                <p className="text-sm text-primary/60 dark:text-secondary/60">Empowering the future of internet connectivity</p>
+                <p className="text-base text-primary/60 dark:text-secondary/60">Empowering the future of internet connectivity</p>
               </div>
             </div>
-            <p className="text-primary/80 dark:text-secondary/80 mb-6">
+            <p className="text-lg text-primary/80 dark:text-secondary/80 mb-8">
               Promoting IPv6 adoption and education worldwide through comprehensive resources, training, and community engagement.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-6">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
@@ -143,51 +116,55 @@ function Footer() {
           </div>
 
           {/* Footer Links */}
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
-              <h4 className="text-lg font-semibold mb-6 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent capitalize">
-                {category}
-              </h4>
-              <ul className="space-y-4">
-                {links.map(({ label, path }) => (
-                  <li key={path}>
-                    <Link
-                      to={path}
-                      className="text-primary/80 dark:text-secondary/80 hover:text-accent transform hover:translate-x-1 transition-all duration-300 inline-block"
-                    >
-                      {label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+          <div className="lg:col-span-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              {Object.entries(footerLinks).map(([category, links]) => (
+                <div key={category} className="flex flex-col">
+                  <h4 className="text-lg font-semibold mb-4 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent capitalize">
+                    {category}
+                  </h4>
+                  <ul className="space-y-3">
+                    {links.map(({ label, path }) => (
+                      <li key={path}>
+                        <Link
+                          to={path}
+                          className="text-primary/80 dark:text-secondary/80 hover:text-accent transform hover:translate-x-1 transition-all duration-300 inline-block text-base"
+                        >
+                          {label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
 
       {/* Bottom Bar */}
       <div className="border-t border-primary/10 dark:border-secondary/10">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-primary/60 dark:text-secondary/60 text-sm">
+        <div className="container mx-auto px-8 py-8">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+            <p className="text-base text-primary/60 dark:text-secondary/60">
               &copy; {currentYear} IPv6 Awareness. All rights reserved.
             </p>
-            <div className="flex space-x-6">
+            <div className="flex space-x-8">
               <Link 
                 to="/privacy" 
-                className="text-primary/60 dark:text-secondary/60 hover:text-accent text-sm transition-all duration-300 hover:translate-x-1 inline-block"
+                className="text-primary/60 dark:text-secondary/60 hover:text-accent text-base transition-all duration-300 hover:translate-x-1 inline-block"
               >
                 Privacy Policy
               </Link>
               <Link 
                 to="/terms" 
-                className="text-primary/60 dark:text-secondary/60 hover:text-accent text-sm transition-all duration-300 hover:translate-x-1 inline-block"
+                className="text-primary/60 dark:text-secondary/60 hover:text-accent text-base transition-all duration-300 hover:translate-x-1 inline-block"
               >
                 Terms of Service
               </Link>
               <Link 
                 to="/cookies" 
-                className="text-primary/60 dark:text-secondary/60 hover:text-accent text-sm transition-all duration-300 hover:translate-x-1 inline-block"
+                className="text-primary/60 dark:text-secondary/60 hover:text-accent text-base transition-all duration-300 hover:translate-x-1 inline-block"
               >
                 Cookie Policy
               </Link>

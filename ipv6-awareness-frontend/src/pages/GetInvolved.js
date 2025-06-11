@@ -159,10 +159,12 @@ function GetInvolved() {
                     <div className="flex items-center gap-4">
                       <button
                         onClick={() => handleExternalLink(item.link)}
-                        className="group w-full flex items-center justify-center gap-2 bg-accent text-primary px-6 py-3 rounded-xl font-semibold hover:bg-accent-light transition-all duration-300"
+                        className="btn-primary w-full"
                       >
-                        <span>Get Started</span>
-                        <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                        <span className="flex items-center justify-center gap-2">
+                          Get Started
+                          <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                        </span>
                       </button>
                     </div>
                   </motion.div>
@@ -184,10 +186,10 @@ function GetInvolved() {
               Reach out to our team for more information about getting involved
             </p>
             <div className="flex items-center gap-4">
-              <Link to="/contact" className="btn btn-primary">
+              <Link to="/contact" className="btn-primary">
                 Contact Us
               </Link>
-              <Link to="/resources" className="btn btn-outline">
+              <Link to="/resources" className="btn-secondary">
                 View Resources
               </Link>
             </div>
@@ -205,7 +207,7 @@ function GetInvolved() {
               Join our working groups to contribute to IPv6 development
             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="https://www.ietf.org/participate/working-groups/" target="_blank" rel="noopener noreferrer" className="btn btn-accent">
+              <a href="https://www.ietf.org/participate/working-groups/" target="_blank" rel="noopener noreferrer" className="btn-primary">
                 Join Working Group
               </a>
               <div className="flex items-center gap-4">
@@ -213,7 +215,7 @@ function GetInvolved() {
                   href="https://www.ietf.org/mailman/listinfo/ipv6"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-accent"
+                  className="btn-primary"
                 >
                   Join Mailing List
                 </a>
@@ -221,7 +223,7 @@ function GetInvolved() {
                   href="https://www.ietf.org/mailman/listinfo/ipv6"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-ghost"
+                  className="btn-secondary"
                 >
                   View Archives
                 </a>
@@ -241,11 +243,32 @@ function GetInvolved() {
               Attend IPv6 meetings to learn and network
             </p>
             <div className="flex items-center gap-4">
-              <Link to="/events" className="btn btn-primary">
-                Attend Meeting
+              <Link to="/community" className="btn-primary">
+                Join Community
               </Link>
-              <Link to="/events" className="btn btn-outline">
-                Register for Event
+              <Link to="/events" className="btn-secondary">
+                View Events
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 px-4 bg-white dark:bg-primary/5">
+        <div className="container mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-primary dark:text-white mb-6">
+              Read IPv6 Documentation
+            </h2>
+            <p className="text-lg text-primary/80 dark:text-secondary/80 mb-8">
+              Access IPv6 documentation to learn more about the protocol
+            </p>
+            <div className="flex items-center gap-4">
+              <Link to="/documentation" className="btn-primary">
+                Read Documentation
+              </Link>
+              <Link to="/tutorials" className="btn-secondary">
+                Start Learning
               </Link>
             </div>
           </div>
