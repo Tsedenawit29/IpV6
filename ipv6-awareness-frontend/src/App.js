@@ -42,8 +42,8 @@ import NotFound from './pages/NotFound';
 
 // Global styles
 const globalStyles = {
-  mainContent: "flex-grow min-h-screen",
-  contentWrapper: "container mx-auto px-4 py-8",
+  mainContent: "flex-grow min-h-screen w-full",
+  contentWrapper: "w-full h-full",
   transitions: "transition-all duration-300 ease-in-out"
 };
 
@@ -88,7 +88,7 @@ const PageTransition = ({ children }) => {
             ease: [0.4, 0, 1, 1]
           }
         }}
-        className="min-h-screen"
+        className="w-full h-full"
       >
         {children}
       </div>
@@ -102,7 +102,7 @@ function App() {
     <ThemeProvider>
       <Router>
         <ScrollToTop />
-        <div className="min-h-screen flex flex-col bg-gradient-to-br from-white to-[#004D00]/5 dark:from-[#004D00]/5 dark:to-[#004D00]/10">
+        <div className="min-h-screen w-full flex flex-col bg-gradient-to-br from-white to-[#004D00]/5 dark:from-[#004D00]/5 dark:to-[#004D00]/10">
           <Navbar />
           <main className={globalStyles.mainContent}>
             <div className={globalStyles.contentWrapper}>
