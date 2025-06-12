@@ -250,7 +250,7 @@ function Events() {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('events')
+        .from('ipv6.events')
         .select('*')
         .order('date', { ascending: false });
 
@@ -267,7 +267,7 @@ function Events() {
   async function handleSubmit(eventData) {
     try {
       const { error } = await supabase
-        .from('events')
+        .from('ipv6.events')
         .insert([{
           ...eventData,
           created_at: new Date().toISOString(),
@@ -288,7 +288,7 @@ function Events() {
     try {
       const { id, ...updates } = eventData;
       const { error } = await supabase
-        .from('events')
+        .from('ipv6.events')
         .update(updates)
         .eq('id', id);
 
@@ -309,7 +309,7 @@ function Events() {
 
     try {
       const { error } = await supabase
-        .from('events')
+        .from('ipv6.events')
         .delete()
         .eq('id', id);
 

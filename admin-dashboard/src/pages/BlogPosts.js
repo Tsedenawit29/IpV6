@@ -27,7 +27,7 @@ function BlogPosts() {
       setLoading(true);
       setError(null);
       const { data, error } = await supabase
-        .from('blogs')
+        .from('ipv6.blogs')
         .select('*')
         .order('created_at', { ascending: false });
 
@@ -79,7 +79,7 @@ function BlogPosts() {
     e.preventDefault();
     try {
       const { error } = await supabase
-        .from('blogs')
+        .from('ipv6.blogs')
         .insert([{
           ...formData,
           tags: formData.tags.length > 0 ? formData.tags : []
@@ -109,7 +109,7 @@ function BlogPosts() {
 
     try {
       const { error } = await supabase
-        .from('blogs')
+        .from('ipv6.blogs')
         .delete()
         .eq('id', id);
 

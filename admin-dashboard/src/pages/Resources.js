@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
-import { PlusIcon, TrashIcon, LinkIcon, DocumentTextIcon, TagIcon, StarIcon, UserIcon } from '@heroicons/react/24/outline';
+import { PlusIcon, TrashIcon, LinkIcon, DocumentTextIcon, TagIcon, StarIcon, UserIcon, PencilIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 
 function Resources() {
@@ -21,6 +21,8 @@ function Resources() {
   });
   const [selectedImageFile, setSelectedImageFile] = useState(null);
   const [selectedFileFile, setSelectedFileFile] = useState(null);
+  const [selectedResource, setSelectedResource] = useState(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   const categories = ['Documentation', 'Tool', 'Article', 'Video', 'Tutorial', 'Course'];
   const types = ['Link', 'Image Upload', 'File Upload'];
@@ -33,7 +35,7 @@ function Resources() {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('resources')
+        .from('ipv6.resources')
         .select('*')
         .order('created_at', { ascending: false });
 
@@ -55,16 +57,16 @@ function Resources() {
 
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
-      const filePath = `resource-${type}s/${fileName}`;
+      const filePath = `${type === 'image' ? 'resource-images' : 'resource-files'}/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
-        .from(`resource-${type}s`)
+        .from(type === 'image' ? 'resource-images' : 'resource-files')
         .upload(filePath, file);
 
       if (uploadError) throw uploadError;
 
       const { data: { publicUrl } } = supabase.storage
-        .from(`resource-${type}s`)
+        .from(type === 'image' ? 'resource-images' : 'resource-files')
         .getPublicUrl(filePath);
 
       if (type === 'image') {
@@ -88,7 +90,7 @@ function Resources() {
     e.preventDefault();
     try {
       const { data, error } = await supabase
-        .from('resources')
+        .from('ipv6.resources')
         .insert([{
           ...formData,
           tags: formData.tags.length > 0 ? formData.tags : [],
@@ -113,9 +115,30 @@ function Resources() {
       setSelectedImageFile(null);
       setSelectedFileFile(null);
       fetchResources();
+      setIsFormOpen(false);
     } catch (error) {
       console.error('Error creating resource:', error);
       toast.error(error.message || 'Failed to create resource');
+    }
+  }
+
+  async function handleUpdate(resourceData) {
+    try {
+      const { id, ...updates } = resourceData;
+      const { error } = await supabase
+        .from('ipv6.resources')
+        .update(updates)
+        .eq('id', id);
+
+      if (error) throw error;
+
+      toast.success('Resource updated successfully');
+      setIsFormOpen(false);
+      setSelectedResource(null);
+      fetchResources();
+    } catch (error) {
+      console.error('Error updating resource:', error);
+      toast.error(error.message || 'Failed to update resource');
     }
   }
 
@@ -124,7 +147,7 @@ function Resources() {
 
     try {
       const { error } = await supabase
-        .from('resources')
+        .from('ipv6.resources')
         .delete()
         .eq('id', id);
 
@@ -156,392 +179,344 @@ function Resources() {
             Manage your educational resources and tools
           </p>
         </div>
+        <button
+          onClick={() => {
+            setSelectedResource(null);
+            setIsFormOpen(true);
+          }}
+          className="btn btn-primary flex items-center"
+        >
+          <PlusIcon className="h-5 w-5 mr-2" />
+          Add Resource
+        </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-1">
-          <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg p-6 border border-gray-100 dark:border-dark-border">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
-              Create New Resource
-            </h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Title */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                  Title
-                </label>
-                <input
-                  type="text"
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                  required
-                />
-              </div>
+      {isFormOpen && (
+        <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg p-6 border border-gray-100 dark:border-dark-border mb-8">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
+            {selectedResource ? 'Edit Resource' : 'Create New Resource'}
+          </h2>
+          <form onSubmit={selectedResource ? (e) => handleUpdate({ ...formData, id: selectedResource.id }) : handleSubmit} className="space-y-6">
+            {/* Title */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
+                Title
+              </label>
+              <input
+                type="text"
+                value={formData.title}
+                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                required
+              />
+            </div>
 
-              {/* Description */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                  Description
-                </label>
-                <textarea
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  rows="3"
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                  required
-                />
-              </div>
+            {/* Description */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
+                Description
+              </label>
+              <textarea
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                rows="3"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                required
+              />
+            </div>
 
-              {/* Category */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                  Category
-                </label>
-                <select
-                  value={formData.category}
-                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                  required
-                >
-                  <option value="">Select Category</option>
-                  {categories.map(cat => (
-                    <option key={cat} value={cat}>{cat}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Type */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                  Type
-                </label>
-                <select
-                  value={formData.type}
-                  onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                  required
-                >
-                  <option value="">Select Type</option>
-                  {types.map(type => (
-                    <option key={type} value={type}>{type}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* URL Input (conditional) */}
-              {formData.type === 'Link' && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                    URL
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <LinkIcon className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input
-                      type="url"
-                      value={formData.url}
-                      onChange={(e) => setFormData({ ...formData, url: e.target.value })}
-                      className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                      placeholder="https://example.com"
-                      required
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* Image Upload (conditional) */}
-              {formData.type === 'Image Upload' && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                    Upload Image
-                  </label>
-                  <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-dark-border border-dashed rounded-lg hover:border-primary dark:hover:border-primary transition-colors">
-                    <div className="space-y-1 text-center">
-                      {formData.image_url && !selectedImageFile ? (
-                        <div className="relative">
-                          <img
-                            src={formData.image_url}
-                            alt="Preview"
-                            className="mx-auto h-32 w-auto rounded-lg object-cover"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => setFormData({ ...formData, image_url: '' })}
-                            className="absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
-                          >
-                            <TrashIcon className="h-4 w-4" />
-                          </button>
-                        </div>
-                      ) : selectedImageFile ? (
-                        <div className="relative">
-                          <img
-                            src={URL.createObjectURL(selectedImageFile)}
-                            alt="Preview"
-                            className="mx-auto h-32 w-auto rounded-lg object-cover"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setFormData({ ...formData, image_url: '' });
-                              setSelectedImageFile(null);
-                            }}
-                            className="absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
-                          >
-                            <TrashIcon className="h-4 w-4" />
-                          </button>
-                        </div>
-                      ) : (
-                        <>
-                          <DocumentTextIcon className="mx-auto h-12 w-12 text-gray-400" />
-                          <div className="flex text-sm text-gray-600 dark:text-dark-text-secondary">
-                            <label
-                              htmlFor="image-upload"
-                              className="relative cursor-pointer bg-white dark:bg-dark-bg-secondary rounded-md font-medium text-primary hover:text-primary-dark focus-within:outline-none focus-within:ring-2 focus-within:ring-primary"
-                            >
-                              <span>Upload image</span>
-                              <input
-                                id="image-upload"
-                                name="image-upload"
-                                type="file"
-                                className="sr-only"
-                                accept="image/*"
-                                onChange={(e) => handleFileUpload(e, 'image')}
-                              />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                          </div>
-                          <p className="text-xs text-gray-500 dark:text-dark-text-secondary">
-                            PNG, JPG, GIF up to 10MB
-                          </p>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                  <input
-                    type="url"
-                    value={formData.image_url}
-                    onChange={(e) => setFormData({ ...formData, image_url: e.target.value, type: 'Image Upload' })}
-                    placeholder="Or enter image URL"
-                    className="mt-2 w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                  />
-                </div>
-              )}
-
-              {/* File Upload (conditional) */}
-              {formData.type === 'File Upload' && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                    Upload File
-                  </label>
-                  <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-dark-border border-dashed rounded-lg hover:border-primary dark:hover:border-primary transition-colors">
-                    <div className="space-y-1 text-center">
-                      {formData.file_url && !selectedFileFile ? (
-                        <div className="relative">
-                          <p className="text-primary">{formData.file_url.split('/').pop()}</p>
-                          <button
-                            type="button"
-                            onClick={() => setFormData({ ...formData, file_url: '' })}
-                            className="absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
-                          >
-                            <TrashIcon className="h-4 w-4" />
-                          </button>
-                        </div>
-                      ) : selectedFileFile ? (
-                        <div className="relative">
-                          <p className="text-primary">{selectedFileFile.name}</p>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setFormData({ ...formData, file_url: '' });
-                              setSelectedFileFile(null);
-                            }}
-                            className="absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
-                          >
-                            <TrashIcon className="h-4 w-4" />
-                          </button>
-                        </div>
-                      ) : (
-                        <>
-                          <DocumentTextIcon className="mx-auto h-12 w-12 text-gray-400" />
-                          <div className="flex text-sm text-gray-600 dark:text-dark-text-secondary">
-                            <label
-                              htmlFor="file-upload"
-                              className="relative cursor-pointer bg-white dark:bg-dark-bg-secondary rounded-md font-medium text-primary hover:text-primary-dark focus-within:outline-none focus-within:ring-2 focus-within:ring-primary"
-                            >
-                              <span>Upload file</span>
-                              <input
-                                id="file-upload"
-                                name="file-upload"
-                                type="file"
-                                className="sr-only"
-                                onChange={(e) => handleFileUpload(e, 'file')}
-                              />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                          </div>
-                          <p className="text-xs text-gray-500 dark:text-dark-text-secondary">
-                            Any file up to 50MB
-                          </p>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                  <input
-                    type="url"
-                    value={formData.file_url}
-                    onChange={(e) => setFormData({ ...formData, file_url: e.target.value, type: 'File Upload' })}
-                    placeholder="Or enter file URL"
-                    className="mt-2 w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                  />
-                </div>
-              )}
-
-              {/* Tags */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                  Tags (comma-separated)
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <TagIcon className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type="text"
-                    value={formData.tags.join(', ')}
-                    onChange={(e) => setFormData({ ...formData, tags: e.target.value.split(',').map(tag => tag.trim()) })}
-                    className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                    placeholder="e.g., security, networking"
-                  />
-                </div>
-              </div>
-
-              {/* Rating */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                  Rating
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <StarIcon className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type="number"
-                    value={formData.rating}
-                    onChange={(e) => setFormData({ ...formData, rating: parseInt(e.target.value) || 0 })}
-                    className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                    min="0"
-                    max="5"
-                  />
-                </div>
-              </div>
-
-              {/* Author */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                  Author
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <UserIcon className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type="text"
-                    value={formData.author}
-                    onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-                    className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={uploading}
-                className="w-full bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            {/* Category */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
+                Category
+              </label>
+              <select
+                value={formData.category}
+                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                required
               >
-                {uploading ? 'Creating...' : 'Create Resource'}
-              </button>
-            </form>
-          </div>
-        </div>
+                <option value="">Select Category</option>
+                {categories.map(cat => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            </div>
 
-        <div className="lg:col-span-2">
-          <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-dark-border">
-            {resources.length === 0 ? (
-              <div className="p-8 text-center">
-                <DocumentTextIcon className="mx-auto h-12 w-12 text-gray-400" />
-                <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">No resources</h3>
-                <p className="mt-1 text-sm text-gray-500 dark:text-dark-text-secondary">
-                  Get started by creating a new resource.
-                </p>
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200 dark:divide-dark-border">
-                  <thead className="bg-gray-50 dark:bg-dark-bg-secondary">
-                    <tr>
-                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
-                        Title
-                      </th>
-                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
-                        Category
-                      </th>
-                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
-                        Type
-                      </th>
-                      <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white dark:bg-dark-bg-tertiary divide-y divide-gray-200 dark:divide-dark-border">
-                    {resources.map((resource) => (
-                      <tr key={resource.id} className="hover:bg-gray-50 dark:hover:bg-dark-bg-secondary transition-colors">
-                        <td className="px-6 py-4">
-                          <div className="flex items-center space-x-4">
-                            {resource.image_url && (
-                              <img
-                                src={resource.image_url}
-                                alt={resource.title}
-                                className="h-12 w-12 rounded-lg object-cover"
-                              />
-                            )}
-                            <div>
-                              <div className="text-sm font-medium text-gray-900 dark:text-white">
-                                {resource.title}
-                              </div>
-                              <div className="text-sm text-gray-500 dark:text-dark-text-secondary line-clamp-2">
-                                {resource.description}
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-500 dark:text-dark-text-secondary">
-                            {resource.category}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-500 dark:text-dark-text-secondary">
-                            {resource.type}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <button
-                            onClick={() => handleDelete(resource.id)}
-                            className="text-red-600 hover:text-red-900 transition-colors"
-                          >
-                            <TrashIcon className="h-5 w-5" />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+            {/* Type */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
+                Type
+              </label>
+              <select
+                value={formData.type}
+                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                required
+              >
+                <option value="">Select Type</option>
+                {types.map(type => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* URL Input (conditional) */}
+            {formData.type === 'Link' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
+                  URL
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <LinkIcon className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type="url"
+                    value={formData.url}
+                    onChange={(e) => setFormData({ ...formData, url: e.target.value })}
+                    className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                    placeholder="https://example.com"
+                    required
+                  />
+                </div>
               </div>
             )}
-          </div>
+
+            {/* Conditional rendering for Image Upload / File Upload / URL input */}
+            {formData.type === 'Image Upload' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
+                  Image Upload
+                </label>
+                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-dark-border border-dashed rounded-lg hover:border-primary dark:hover:border-primary transition-colors">
+                  <div className="space-y-1 text-center">
+                    {formData.image_url ? (
+                      <img src={formData.image_url} alt="Resource" className="mx-auto h-32 w-auto object-cover rounded-md mb-2" />
+                    ) : (
+                      <DocumentTextIcon className="mx-auto h-12 w-12 text-gray-400" />
+                    )}
+                    <div className="flex text-sm text-gray-600 dark:text-dark-text-secondary">
+                      <label
+                        htmlFor="image-upload"
+                        className="relative cursor-pointer bg-white dark:bg-dark-bg-tertiary rounded-md font-medium text-primary hover:text-primary-dark focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary"
+                      >
+                        <span>Upload an image</span>
+                        <input
+                          id="image-upload"
+                          name="image-upload"
+                          type="file"
+                          className="sr-only"
+                          onChange={(e) => handleFileUpload(e, 'image')}
+                          disabled={uploading}
+                          accept="image/*"
+                        />
+                      </label>
+                      <p className="pl-1">or drag and drop</p>
+                    </div>
+                    <p className="text-xs text-gray-500 dark:text-dark-text-secondary">PNG, JPG, GIF up to 10MB</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {formData.type === 'File Upload' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
+                  File Upload
+                </label>
+                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-dark-border border-dashed rounded-lg hover:border-primary dark:hover:border-primary transition-colors">
+                  <div className="space-y-1 text-center">
+                    {formData.file_url ? (
+                      <a href={formData.file_url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline flex items-center justify-center">
+                        <DocumentTextIcon className="h-6 w-6 mr-2" />
+                        {selectedFileFile ? selectedFileFile.name : 'View uploaded file'}
+                      </a>
+                    ) : (
+                      <DocumentTextIcon className="mx-auto h-12 w-12 text-gray-400" />
+                    )}
+                    <div className="flex text-sm text-gray-600 dark:text-dark-text-secondary">
+                      <label
+                        htmlFor="file-upload"
+                        className="relative cursor-pointer bg-white dark:bg-dark-bg-tertiary rounded-md font-medium text-primary hover:text-primary-dark focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary"
+                      >
+                        <span>Upload a file</span>
+                        <input
+                          id="file-upload"
+                          name="file-upload"
+                          type="file"
+                          className="sr-only"
+                          onChange={(e) => handleFileUpload(e, 'file')}
+                          disabled={uploading}
+                        />
+                      </label>
+                      <p className="pl-1">or drag and drop</p>
+                    </div>
+                    <p className="text-xs text-gray-500 dark:text-dark-text-secondary">Any file type up to 10MB</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Other form fields for tags, rating, author */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
+                Tags (comma-separated)
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <TagIcon className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  type="text"
+                  value={formData.tags.join(', ')}
+                  onChange={(e) => setFormData({ ...formData, tags: e.target.value.split(',').map(tag => tag.trim()) })}
+                  className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                  placeholder="e.g., networking, security, education"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
+                Rating (1-5)
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <StarIcon className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  type="number"
+                  value={formData.rating}
+                  onChange={(e) => setFormData({ ...formData, rating: parseInt(e.target.value) || 0 })}
+                  min="0"
+                  max="5"
+                  className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
+                Author
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <UserIcon className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  type="text"
+                  value={formData.author}
+                  onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                  className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-end space-x-3">
+              <button
+                type="button"
+                onClick={() => setIsFormOpen(false)}
+                className="btn btn-outline"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={loading || uploading}
+                className={`btn btn-primary ${
+                  (loading || uploading) ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+              >
+                {selectedResource ? 'Update Resource' : 'Create Resource'}
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Resource List */}
+      <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-dark-border">
+        <div className="p-6">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            All Resources
+          </h2>
+          {resources.length === 0 ? (
+            <p className="text-gray-500 dark:text-dark-text-secondary">No resources found. Add a new resource to get started.</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {resources.map((resource) => (
+                <div key={resource.id} className="bg-white dark:bg-dark-bg-secondary rounded-lg shadow-md overflow-hidden flex flex-col">
+                  {resource.image_url && (
+                    <div className="relative w-full h-48">
+                      <img
+                        src={resource.image_url}
+                        alt={resource.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                  <div className="p-4 flex-grow">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-1">
+                      {resource.title}
+                    </h3>
+                    <p className="text-gray-600 dark:text-dark-text-secondary text-sm mb-2 line-clamp-2">
+                      {resource.description}
+                    </p>
+                    <div className="text-gray-500 dark:text-dark-text-secondary text-xs space-y-1">
+                      <p className="flex items-center">
+                        <LinkIcon className="h-4 w-4 mr-1" />
+                        <a href={resource.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                          {resource.type === 'Link' ? 'View Link' : 'Download File'}
+                        </a>
+                      </p>
+                      <p className="flex items-center">
+                        <TagIcon className="h-4 w-4 mr-1" />
+                        {resource.category}
+                      </p>
+                      {resource.author && (
+                        <p className="flex items-center">
+                          <UserIcon className="h-4 w-4 mr-1" />
+                          {resource.author}
+                        </p>
+                      )}
+                      {resource.rating > 0 && (
+                        <p className="flex items-center">
+                          <StarIcon className="h-4 w-4 mr-1 text-yellow-400" />
+                          {resource.rating} / 5
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {resource.tags && resource.tags.map((tag, index) => (
+                        <span key={index} className="bg-gray-200 dark:bg-dark-border text-gray-700 dark:text-dark-text-secondary text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="p-4 bg-gray-50 dark:bg-dark-bg-tertiary flex justify-end space-x-2">
+                    <button
+                      onClick={() => {
+                        setSelectedResource(resource);
+                        setFormData({ ...resource, tags: resource.tags ? resource.tags.join(', ') : '' });
+                        setIsFormOpen(true);
+                      }}
+                      className="text-primary hover:text-primary-dark"
+                    >
+                      <PencilIcon className="h-5 w-5" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(resource.id)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      <TrashIcon className="h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

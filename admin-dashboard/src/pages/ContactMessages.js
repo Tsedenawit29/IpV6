@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
-import { TrashIcon, CheckCircleIcon, XCircleIcon, EnvelopeIcon } from '@heroicons/react/24/outline';
+import { TrashIcon, CheckCircleIcon, XCircleIcon, EnvelopeIcon, UserIcon, SubjectIcon, CalendarIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 
 function ContactMessages() {
   const [messages, setMessages] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchMessages();
@@ -15,15 +16,16 @@ function ContactMessages() {
   async function fetchMessages() {
     try {
       setLoading(true);
+      setError(null);
       const { data, error } = await supabase
-        .from('contact_messages')
+        .from('ipv6.contact_messages')
         .select('*')
         .order('submitted_at', { ascending: false });
 
       if (error) throw error;
       setMessages(data || []);
     } catch (error) {
-      console.error('Error fetching messages:', error);
+      console.error('Error fetching contact messages:', error);
       toast.error('Failed to load contact messages');
     } finally {
       setLoading(false);
@@ -35,7 +37,7 @@ function ContactMessages() {
 
     try {
       const { error } = await supabase
-        .from('contact_messages')
+        .from('ipv6.contact_messages')
         .delete()
         .eq('id', id);
 
@@ -69,79 +71,98 @@ function ContactMessages() {
             Contact Messages
           </h1>
           <p className="mt-1 text-sm text-gray-500 dark:text-dark-text-secondary">
-            View and manage messages from your contact form
+            View and manage messages received through the contact form
           </p>
         </div>
       </div>
 
       <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-dark-border">
-        {messages.length === 0 ? (
-          <div className="p-8 text-center">
-            <EnvelopeIcon className="mx-auto h-12 w-12 text-gray-400" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">No contact messages</h3>
-            <p className="mt-1 text-sm text-gray-500 dark:text-dark-text-secondary">
-              No messages have been submitted yet.
-            </p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-dark-border">
-              <thead className="bg-gray-50 dark:bg-dark-bg-secondary">
-                <tr>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
-                    Name
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
-                    Email
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
-                    Subject
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
-                    Message
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
-                    Date
-                  </th>
-                  <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white dark:bg-dark-bg-tertiary divide-y divide-gray-200 dark:divide-dark-border">
-                {messages.map((message) => (
-                  <tr key={message.id} className="hover:bg-gray-50 dark:hover:bg-dark-bg-secondary transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900 dark:text-white">{message.name}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-500 dark:text-dark-text-secondary">{message.email}</div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm font-medium text-gray-900 dark:text-white">{message.subject}</div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm text-gray-500 dark:text-dark-text-secondary line-clamp-2">{message.message}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-500 dark:text-dark-text-secondary">
-                        {new Date(message.created_at).toLocaleString()}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <button
-                        onClick={() => handleDelete(message.id)}
-                        className="text-red-600 hover:text-red-900 transition-colors"
-                      >
-                        <TrashIcon className="h-5 w-5" />
-                      </button>
-                    </td>
+        <div className="p-6">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            All Messages
+          </h2>
+          {messages.length === 0 ? (
+            <p className="text-gray-500 dark:text-dark-text-secondary">No contact messages found.</p>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-dark-border">
+                <thead className="bg-gray-50 dark:bg-dark-bg-secondary">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
+                      Name
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
+                      Email
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
+                      Subject
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
+                      Message
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
+                      Received At
+                    </th>
+                    <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
+                      Actions
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                </thead>
+                <tbody className="bg-white dark:bg-dark-bg-tertiary divide-y divide-gray-200 dark:divide-dark-border">
+                  {messages.map((message) => (
+                    <tr key={message.id} className="hover:bg-gray-50 dark:hover:bg-dark-bg-secondary transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="flex items-center">
+                          <UserIcon className="h-5 w-5 mr-2 text-gray-400" />
+                          <div className="text-sm font-medium text-gray-900 dark:text-white">
+                            {message.name}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <EnvelopeIcon className="h-5 w-5 mr-2 text-gray-400" />
+                          <div className="text-sm text-gray-500 dark:text-dark-text-secondary">
+                            {message.email}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center">
+                          <SubjectIcon className="h-5 w-5 mr-2 text-gray-400" />
+                          <div className="text-sm text-gray-900 dark:text-white line-clamp-1">
+                            {message.subject}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-sm text-gray-500 dark:text-dark-text-secondary line-clamp-2">
+                          {message.message}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <CalendarIcon className="h-5 w-5 mr-2 text-gray-400" />
+                          <div className="text-sm text-gray-500 dark:text-dark-text-secondary">
+                            {new Date(message.submitted_at).toLocaleString()}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button
+                          onClick={() => handleDelete(message.id)}
+                          className="text-red-600 hover:text-red-800"
+                        >
+                          <TrashIcon className="h-5 w-5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
 
       {selectedMessage && (
@@ -183,7 +204,7 @@ function ContactMessages() {
               <div>
                 <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Submitted At</h3>
                 <p className="mt-1 text-sm text-gray-900 dark:text-white">
-                  {new Date(selectedMessage.created_at).toLocaleString()}
+                  {new Date(selectedMessage.submitted_at).toLocaleString()}
                 </p>
               </div>
 
