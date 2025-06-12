@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
-import { PlusIcon, TrashIcon, CalendarIcon, MapPinIcon, ClockIcon } from '@heroicons/react/24/outline';
+import { PlusIcon, TrashIcon, CalendarIcon, MapPinIcon, ClockIcon, PhotoIcon, PencilIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 
 function EventForm({ event, onSubmit, onCancel }) {
@@ -17,6 +17,7 @@ function EventForm({ event, onSubmit, onCancel }) {
     image_url: '',
     ...event,
   });
+  const [uploading, setUploading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,6 +26,40 @@ function EventForm({ event, onSubmit, onCancel }) {
       tags: formData.tags.split(',').map(tag => tag.trim()),
     });
   };
+
+  async function handleImageUpload(event) {
+    try {
+      setUploading(true);
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `event-images/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('event-images')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('event-images')
+        .getPublicUrl(filePath);
+
+      setFormData(prev => ({
+        ...prev,
+        image_url: publicUrl
+      }));
+
+      toast.success('Image uploaded successfully');
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      toast.error('Failed to upload image');
+    } finally {
+      setUploading(false);
+    }
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -148,14 +183,36 @@ function EventForm({ event, onSubmit, onCancel }) {
 
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          Image URL
+          Event Image
         </label>
-        <input
-          type="url"
-          value={formData.image_url}
-          onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm dark:bg-gray-700 dark:border-gray-600"
-        />
+        <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
+          <div className="space-y-1 text-center">
+            {formData.image_url ? (
+              <img src={formData.image_url} alt="Event" className="mx-auto h-32 w-auto object-cover rounded-md mb-2" />
+            ) : (
+              <PhotoIcon className="mx-auto h-12 w-12 text-gray-400" />
+            )}
+            <div className="flex text-sm text-gray-600">
+              <label
+                htmlFor="file-upload"
+                className="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-primary-dark focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary"
+              >
+                <span>Upload a file</span>
+                <input
+                  id="file-upload"
+                  name="file-upload"
+                  type="file"
+                  className="sr-only"
+                  onChange={handleImageUpload}
+                  disabled={uploading}
+                  accept="image/*"
+                />
+              </label>
+              <p className="pl-1">or drag and drop</p>
+            </div>
+            <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+          </div>
+        </div>
       </div>
 
       <div className="flex justify-end space-x-3">
@@ -182,14 +239,6 @@ function Events() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    date: '',
-    time: '',
-    location: '',
-    category: '',
-  });
 
   const categories = ['Webinar', 'Conference', 'Workshop', 'Meetup', 'Online Course'];
 
@@ -215,31 +264,43 @@ function Events() {
     }
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit(eventData) {
     try {
       const { error } = await supabase
         .from('events')
         .insert([{
-          ...formData,
+          ...eventData,
           created_at: new Date().toISOString(),
         }]);
 
       if (error) throw error;
 
       toast.success('Event created successfully');
-      setFormData({
-        title: '',
-        description: '',
-        date: '',
-        time: '',
-        location: '',
-        category: '',
-      });
+      setIsFormOpen(false);
       fetchEvents();
     } catch (error) {
       console.error('Error creating event:', error);
       toast.error(error.message || 'Failed to create event');
+    }
+  }
+
+  async function handleUpdate(eventData) {
+    try {
+      const { id, ...updates } = eventData;
+      const { error } = await supabase
+        .from('events')
+        .update(updates)
+        .eq('id', id);
+
+      if (error) throw error;
+
+      toast.success('Event updated successfully');
+      setIsFormOpen(false);
+      setSelectedEvent(null);
+      fetchEvents();
+    } catch (error) {
+      console.error('Error updating event:', error);
+      toast.error(error.message || 'Failed to update event');
     }
   }
 
@@ -280,194 +341,95 @@ function Events() {
             Manage your upcoming events and webinars
           </p>
         </div>
+        <button
+          onClick={() => {
+            setSelectedEvent(null);
+            setIsFormOpen(true);
+          }}
+          className="btn btn-primary flex items-center"
+        >
+          <PlusIcon className="h-5 w-5 mr-2" />
+          Add Event
+        </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-1">
-          <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg p-6 border border-gray-100 dark:border-dark-border">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
-              Create New Event
-            </h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Title */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                  Title
-                </label>
-                <input
-                  type="text"
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                  required
-                />
-              </div>
-
-              {/* Description */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                  Description
-                </label>
-                <textarea
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  rows="3"
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                  required
-                />
-              </div>
-
-              {/* Date */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                  Date
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <CalendarIcon className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type="date"
-                    value={formData.date}
-                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                    className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Time */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                  Time
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <ClockIcon className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type="time"
-                    value={formData.time}
-                    onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                    className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Location */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                  Location
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <MapPinIcon className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type="text"
-                    value={formData.location}
-                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Category */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
-                  Category
-                </label>
-                <select
-                  value={formData.category}
-                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                  required
-                >
-                  <option value="">Select Category</option>
-                  {categories.map(cat => (
-                    <option key={cat} value={cat}>{cat}</option>
-                  ))}
-                </select>
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Create Event
-              </button>
-            </form>
-          </div>
+      {isFormOpen && (
+        <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg p-6 border border-gray-100 dark:border-dark-border mb-8">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
+            {selectedEvent ? 'Edit Event' : 'Create New Event'}
+          </h2>
+          <EventForm
+            event={selectedEvent}
+            onSubmit={selectedEvent ? handleUpdate : handleSubmit}
+            onCancel={() => setIsFormOpen(false)}
+          />
         </div>
+      )}
 
-        <div className="lg:col-span-2">
-          <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-dark-border">
-            {events.length === 0 ? (
-              <div className="p-8 text-center">
-                <CalendarIcon className="mx-auto h-12 w-12 text-gray-400" />
-                <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">No events</h3>
-                <p className="mt-1 text-sm text-gray-500 dark:text-dark-text-secondary">
-                  Get started by creating a new event.
-                </p>
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200 dark:divide-dark-border">
-                  <thead className="bg-gray-50 dark:bg-dark-bg-secondary">
-                    <tr>
-                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
-                        Title
-                      </th>
-                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
-                        Date & Time
-                      </th>
-                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
-                        Location
-                      </th>
-                      <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white dark:bg-dark-bg-tertiary divide-y divide-gray-200 dark:divide-dark-border">
-                    {events.map((event) => (
-                      <tr key={event.id} className="hover:bg-gray-50 dark:hover:bg-dark-bg-secondary transition-colors">
-                        <td className="px-6 py-4">
-                          <div className="text-sm font-medium text-gray-900 dark:text-white">
-                            {event.title}
-                          </div>
-                          <div className="text-sm text-gray-500 dark:text-dark-text-secondary line-clamp-2">
-                            {event.description}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-500 dark:text-dark-text-secondary">
-                            {new Date(event.date).toLocaleDateString()} at {event.time}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-500 dark:text-dark-text-secondary">
-                            {event.location}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <button
-                            onClick={() => handleDelete(event.id)}
-                            className="text-red-600 hover:text-red-900 transition-colors"
-                          >
-                            <TrashIcon className="h-5 w-5" />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
+      {/* Event List */}
+      <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-dark-border">
+        <div className="p-6">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            All Events
+          </h2>
+          {events.length === 0 ? (
+            <p className="text-gray-500 dark:text-dark-text-secondary">No events found. Add a new event to get started.</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {events.map((event) => (
+                <div key={event.id} className="bg-white dark:bg-dark-bg-secondary rounded-lg shadow-md overflow-hidden flex flex-col">
+                  {event.image_url && (
+                    <div className="relative w-full h-48">
+                      <img
+                        src={event.image_url}
+                        alt={event.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                  <div className="p-4 flex-grow">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                      {event.title}
+                    </h3>
+                    <p className="text-gray-600 dark:text-dark-text-secondary text-sm mb-2 line-clamp-2">
+                      {event.short_description}
+                    </p>
+                    <div className="text-gray-500 dark:text-dark-text-secondary text-xs space-y-1">
+                      <p className="flex items-center">
+                        <CalendarIcon className="h-4 w-4 mr-1" />
+                        {event.event_date} at {event.event_time}
+                      </p>
+                      <p className="flex items-center">
+                        <MapPinIcon className="h-4 w-4 mr-1" />
+                        {event.location}
+                      </p>
+                      <p className="flex items-center">
+                        <ClockIcon className="h-4 w-4 mr-1" />
+                        {event.event_type}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="p-4 bg-gray-50 dark:bg-dark-bg-tertiary flex justify-end space-x-2">
+                    <button
+                      onClick={() => {
+                        setSelectedEvent(event);
+                        setIsFormOpen(true);
+                      }}
+                      className="text-primary hover:text-primary-dark"
+                    >
+                      <PencilIcon className="h-5 w-5" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(event.id)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      <TrashIcon className="h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

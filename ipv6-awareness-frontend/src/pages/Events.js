@@ -103,26 +103,26 @@ function Events() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-[#121212] dark:to-[#1E1E1E] pt-20">
+    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary pt-20">
       {/* Page Title */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-center py-12 bg-white dark:bg-[#1E1E1E] shadow-lg"
+        className="text-center py-12 bg-white dark:bg-dark-bg-tertiary shadow-lg"
       >
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#121212] dark:text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-dark-text-primary mb-4">
             IPv6 Events
           </h1>
-          <p className="text-lg text-[#121212]/80 dark:text-white/80 max-w-2xl mx-auto">
+          <p className="text-lg text-primary/80 dark:text-dark-text-secondary max-w-2xl mx-auto">
             Stay updated with the latest IPv6 conferences, workshops, and webinars
           </p>
         </div>
       </motion.div>
 
       {/* Filters Section */}
-      <section className="py-8 px-4 bg-white dark:bg-[#1E1E1E]">
+      <section className="py-8 px-4 bg-white dark:bg-dark-bg-tertiary">
         <div className="container mx-auto">
           <div className="flex flex-wrap justify-center gap-4">
             {filters.map((filter) => (
@@ -131,8 +131,8 @@ function Events() {
                 onClick={() => setActiveFilter(filter.id)}
                 className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
                   activeFilter === filter.id
-                    ? 'btn-primary'
-                    : 'btn-secondary'
+                    ? 'bg-accent text-white dark:bg-dark-text-accent dark:text-dark-bg-primary'
+                    : 'bg-white dark:bg-dark-bg-secondary text-primary dark:text-dark-text-secondary hover:bg-accent/10 dark:hover:bg-dark-text-accent/10'
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -155,7 +155,7 @@ function Events() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="bg-white dark:bg-[#1E1E1E] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-white dark:bg-dark-bg-tertiary rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <div className="relative h-48">
                   <img
@@ -166,27 +166,27 @@ function Events() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                   <div className="absolute bottom-4 left-4 text-white">
                     <div className="flex items-center gap-2">
-                      <FaCalendarAlt className="text-[#FFD700]" />
+                      <FaCalendarAlt className="text-dark-text-accent" />
                       <span>{formatDate(event.date)}</span>
                     </div>
                     <div className="flex items-center gap-2 mt-2">
-                      <FaClock className="text-[#FFD700]" />
+                      <FaClock className="text-dark-text-accent" />
                       <span>{event.time}</span>
                     </div>
                     <div className="flex items-center gap-2 mt-2">
-                      <FaMapMarkerAlt className="text-[#FFD700]" />
+                      <FaMapMarkerAlt className="text-dark-text-accent" />
                       <span>{event.location}</span>
                     </div>
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold text-[#121212] dark:text-white mb-2">{event.title}</h3>
-                  <p className="text-[#121212]/80 dark:text-white/80 mb-4">{event.description}</p>
+                  <h3 className="text-xl font-semibold text-primary dark:text-dark-text-primary mb-2">{event.title}</h3>
+                  <p className="text-primary/80 dark:text-dark-text-secondary mb-4">{event.description}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {event.tags.map((tag, index) => (
                       <span
                         key={index}
-                        className="px-3 py-1 bg-[#FFD700]/10 text-[#FFD700] rounded-full text-sm"
+                        className="px-3 py-1 bg-dark-text-accent/10 text-dark-text-accent rounded-full text-sm"
                       >
                         {tag}
                       </span>
@@ -195,14 +195,18 @@ function Events() {
                   <div className="flex gap-4">
                     <button
                       onClick={() => handleExternalLink(event.link)}
-                      className="group flex-1 flex items-center justify-center gap-2 btn-primary"
+                      className="group flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 text-white font-semibold rounded-lg hover:from-accent-light hover:to-accent dark:hover:from-dark-text-accent/80 dark:hover:to-dark-text-accent transform hover:scale-105 transition-all duration-300"
                     >
                       <span>Register Now</span>
-                      <FaExternalLinkAlt className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                      <FaExternalLinkAlt className="w-4 h-4" />
                     </button>
                     <button
-                      onClick={() => handleExternalLink(event.link)}
-                      className="group p-3 btn-secondary"
+                      className="p-3 text-primary/60 dark:text-dark-text-secondary/60 hover:text-accent dark:hover:text-dark-text-accent transition-colors"
+                    >
+                      <FaBookmark className="w-5 h-5" />
+                    </button>
+                    <button
+                      className="p-3 text-primary/60 dark:text-dark-text-secondary/60 hover:text-accent dark:hover:text-dark-text-accent transition-colors"
                     >
                       <FaShare className="w-5 h-5" />
                     </button>

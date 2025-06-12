@@ -23,6 +23,20 @@ module.exports = {
           light: '#FFE44D',
           dark: '#CCAC00',
         },
+        // Dark mode specific colors
+        dark: {
+          bg: {
+            primary: '#0A0A0A',    // Very dark background
+            secondary: '#121212',  // Slightly lighter dark
+            tertiary: '#1A1A1A',   // For cards and elevated surfaces
+          },
+          text: {
+            primary: '#E0E0E0',    // Light gray for primary text
+            secondary: '#A0A0A0',  // Muted gray for secondary text
+            accent: '#00FF9D',     // Cyan accent for highlights
+          },
+          border: '#2A2A2A',       // Subtle border color
+        }
       },
       animation: {
         fadeIn: 'fadeIn 1.5s ease-out forwards',

@@ -59,12 +59,12 @@ function FAQ() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">
+      <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 bg-clip-text text-transparent">
         Frequently Asked Questions
       </h1>
 
       <div className="mb-12">
-        <p className="text-lg text-primary/80 dark:text-secondary/80 leading-relaxed">
+        <p className="text-lg text-primary/80 dark:text-dark-text-secondary leading-relaxed">
           Find answers to common questions about IPv6, its implementation, and best practices. 
           If you don't find what you're looking for, feel free to contact our support team.
         </p>
@@ -72,8 +72,8 @@ function FAQ() {
 
       <div className="space-y-8">
         {faqCategories.map((category, categoryIndex) => (
-          <div key={categoryIndex} className="bg-white dark:bg-primary-dark/50 rounded-xl p-6 shadow-lg">
-            <h2 className="text-2xl font-semibold text-accent mb-6">{category.title}</h2>
+          <div key={categoryIndex} className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg">
+            <h2 className="text-2xl font-semibold text-accent dark:text-dark-text-accent mb-6">{category.title}</h2>
             <div className="space-y-4">
               {category.questions.map((item, questionIndex) => {
                 const index = `${categoryIndex}-${questionIndex}`;
@@ -82,15 +82,15 @@ function FAQ() {
                 return (
                   <div 
                     key={questionIndex}
-                    className="border border-primary/10 dark:border-secondary/10 rounded-lg overflow-hidden"
+                    className="border border-primary/10 dark:border-dark-border rounded-lg overflow-hidden"
                   >
                     <button
-                      className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary/5 dark:hover:bg-white/5 transition-colors"
+                      className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary/5 dark:hover:bg-dark-text-accent/5 transition-colors"
                       onClick={() => setOpenIndex(isOpen ? null : index)}
                     >
-                      <span className="font-medium text-primary dark:text-white">{item.question}</span>
+                      <span className="font-medium text-primary dark:text-dark-text-primary">{item.question}</span>
                       <svg
-                        className={`w-5 h-5 text-accent transform transition-transform duration-300 ${
+                        className={`w-5 h-5 text-accent dark:text-dark-text-accent transform transition-transform duration-300 ${
                           isOpen ? 'rotate-180' : ''
                         }`}
                         fill="none"
@@ -105,7 +105,7 @@ function FAQ() {
                         isOpen ? 'max-h-96 py-4' : 'max-h-0'
                       } overflow-hidden`}
                     >
-                      <p className="text-primary/80 dark:text-secondary/80">{item.answer}</p>
+                      <p className="text-primary/80 dark:text-dark-text-secondary">{item.answer}</p>
                     </div>
                   </div>
                 );
@@ -115,21 +115,21 @@ function FAQ() {
         ))}
       </div>
 
-      <div className="mt-16 bg-white dark:bg-primary-dark/50 rounded-xl p-8 shadow-lg">
-        <h2 className="text-2xl font-semibold mb-4 text-accent">Still Have Questions?</h2>
-        <p className="text-primary/80 dark:text-secondary/80 mb-6">
+      <div className="mt-16 bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
+        <h2 className="text-2xl font-semibold mb-4 text-accent dark:text-dark-text-accent">Still Have Questions?</h2>
+        <p className="text-primary/80 dark:text-dark-text-secondary mb-6">
           Our support team is here to help. Contact us for personalized assistance with your IPv6 implementation.
         </p>
         <div className="flex flex-wrap gap-4">
           <a
             href="/contact"
-            className="px-6 py-3 bg-gradient-to-r from-accent to-accent-light text-white font-semibold rounded-lg hover:from-accent-light hover:to-accent transform hover:scale-105 transition-all duration-300"
+            className="px-6 py-3 bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 text-white font-semibold rounded-lg hover:from-accent-light hover:to-accent dark:hover:from-dark-text-accent/80 dark:hover:to-dark-text-accent transform hover:scale-105 transition-all duration-300"
           >
             Contact Support
           </a>
           <a
             href="/help"
-            className="px-6 py-3 border-2 border-accent text-accent font-semibold rounded-lg hover:bg-accent/10 transform hover:scale-105 transition-all duration-300"
+            className="px-6 py-3 border-2 border-accent dark:border-dark-text-accent text-accent dark:text-dark-text-accent font-semibold rounded-lg hover:bg-accent/10 dark:hover:bg-dark-text-accent/10 transform hover:scale-105 transition-all duration-300"
           >
             Visit Help Center
           </a>

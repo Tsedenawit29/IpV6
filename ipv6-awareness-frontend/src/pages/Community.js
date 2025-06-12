@@ -1,4 +1,4 @@
- // === src/pages/Community.js ===
+// === src/pages/Community.js ===
 import React from 'react';
 
 function Community() {
@@ -94,12 +94,12 @@ function Community() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">
+      <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 bg-clip-text text-transparent">
         Community
       </h1>
 
       <div className="mb-12">
-        <p className="text-lg text-primary/80 dark:text-secondary/80 leading-relaxed">
+        <p className="text-lg text-primary/80 dark:text-dark-text-secondary leading-relaxed">
           Join our vibrant community of IPv6 enthusiasts, experts, and implementers. Share knowledge, 
           get support, and contribute to the future of internet connectivity.
         </p>
@@ -109,26 +109,26 @@ function Community() {
         {communitySections.map((section, index) => (
           <div 
             key={index}
-            className="bg-white dark:bg-primary-dark/50 rounded-xl p-8 shadow-lg"
+            className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg"
           >
             <div className="flex items-center space-x-3 mb-6">
-              <div className="text-accent">
+              <div className="text-accent dark:text-dark-text-accent">
                 {section.icon}
               </div>
-              <h2 className="text-2xl font-semibold text-accent">{section.title}</h2>
+              <h2 className="text-2xl font-semibold text-accent dark:text-dark-text-accent">{section.title}</h2>
             </div>
-            <p className="text-primary/80 dark:text-secondary/80 mb-8">
+            <p className="text-primary/80 dark:text-dark-text-secondary mb-8">
               {section.description}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {section.items.map((item, idx) => (
                 <div
                   key={idx}
-                  className="p-6 rounded-lg border border-primary/10 dark:border-secondary/10 hover:border-accent/50 dark:hover:border-accent/50 transform hover:scale-105 transition-all duration-300"
+                  className="p-6 rounded-lg border border-primary/10 dark:border-dark-border hover:border-accent/50 dark:hover:border-dark-text-accent/50 transform hover:scale-105 transition-all duration-300"
                 >
-                  <h3 className="text-lg font-medium text-accent mb-2">{item.title}</h3>
-                  <p className="text-primary/80 dark:text-secondary/80 mb-4">{item.description}</p>
-                  <div className="flex flex-wrap gap-4 text-sm text-primary/60 dark:text-secondary/60">
+                  <h3 className="text-lg font-medium text-accent dark:text-dark-text-accent mb-2">{item.title}</h3>
+                  <p className="text-primary/80 dark:text-dark-text-secondary mb-4">{item.description}</p>
+                  <div className="flex flex-wrap gap-4 text-sm text-primary/60 dark:text-dark-text-secondary/60">
                     {Object.entries(item)
                       .filter(([key]) => !['title', 'description'].includes(key))
                       .map(([key, value]) => (
@@ -145,57 +145,57 @@ function Community() {
         ))}
       </div>
 
-      <div className="mt-16 bg-white dark:bg-primary-dark/50 rounded-xl p-8 shadow-lg">
-        <h2 className="text-2xl font-semibold mb-6 text-accent">Join Our Community</h2>
+      <div className="mt-16 bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
+        <h2 className="text-2xl font-semibold mb-6 text-accent dark:text-dark-text-accent">Join Our Community</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <h3 className="text-lg font-semibold text-accent mb-4">Get Started</h3>
+            <h3 className="text-lg font-semibold text-accent dark:text-dark-text-accent mb-4">Get Started</h3>
             <ul className="space-y-4">
               <li className="flex items-start space-x-3">
-                <span className="text-accent mt-1">•</span>
+                <span className="text-accent dark:text-dark-text-accent mt-1">•</span>
                 <div>
-                  <p className="font-medium text-primary dark:text-white">Create an Account</p>
-                  <p className="text-primary/80 dark:text-secondary/80">Join our community platform</p>
+                  <p className="font-medium text-primary dark:text-dark-text-primary">Create an Account</p>
+                  <p className="text-primary/80 dark:text-dark-text-secondary">Join our community platform</p>
                 </div>
               </li>
               <li className="flex items-start space-x-3">
-                <span className="text-accent mt-1">•</span>
+                <span className="text-accent dark:text-dark-text-accent mt-1">•</span>
                 <div>
-                  <p className="font-medium text-primary dark:text-white">Introduce Yourself</p>
-                  <p className="text-primary/80 dark:text-secondary/80">Share your IPv6 journey</p>
+                  <p className="font-medium text-primary dark:text-dark-text-primary">Introduce Yourself</p>
+                  <p className="text-primary/80 dark:text-dark-text-secondary">Share your IPv6 journey</p>
                 </div>
               </li>
               <li className="flex items-start space-x-3">
-                <span className="text-accent mt-1">•</span>
+                <span className="text-accent dark:text-dark-text-accent mt-1">•</span>
                 <div>
-                  <p className="font-medium text-primary dark:text-white">Join Discussions</p>
-                  <p className="text-primary/80 dark:text-secondary/80">Participate in ongoing conversations</p>
+                  <p className="font-medium text-primary dark:text-dark-text-primary">Join Discussions</p>
+                  <p className="text-primary/80 dark:text-dark-text-secondary">Participate in ongoing conversations</p>
                 </div>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-accent mb-4">Community Guidelines</h3>
+            <h3 className="text-lg font-semibold text-accent dark:text-dark-text-accent mb-4">Community Guidelines</h3>
             <ul className="space-y-4">
               <li className="flex items-start space-x-3">
-                <span className="text-accent mt-1">•</span>
+                <span className="text-accent dark:text-dark-text-accent mt-1">•</span>
                 <div>
-                  <p className="font-medium text-primary dark:text-white">Be Respectful</p>
-                  <p className="text-primary/80 dark:text-secondary/80">Treat all members with respect</p>
+                  <p className="font-medium text-primary dark:text-dark-text-primary">Be Respectful</p>
+                  <p className="text-primary/80 dark:text-dark-text-secondary">Treat all members with respect</p>
                 </div>
               </li>
               <li className="flex items-start space-x-3">
-                <span className="text-accent mt-1">•</span>
+                <span className="text-accent dark:text-dark-text-accent mt-1">•</span>
                 <div>
-                  <p className="font-medium text-primary dark:text-white">Share Knowledge</p>
-                  <p className="text-primary/80 dark:text-secondary/80">Contribute to community learning</p>
+                  <p className="font-medium text-primary dark:text-dark-text-primary">Share Knowledge</p>
+                  <p className="text-primary/80 dark:text-dark-text-secondary">Contribute to community learning</p>
                 </div>
               </li>
               <li className="flex items-start space-x-3">
-                <span className="text-accent mt-1">•</span>
+                <span className="text-accent dark:text-dark-text-accent mt-1">•</span>
                 <div>
-                  <p className="font-medium text-primary dark:text-white">Stay Professional</p>
-                  <p className="text-primary/80 dark:text-secondary/80">Maintain a professional environment</p>
+                  <p className="font-medium text-primary dark:text-dark-text-primary">Stay Professional</p>
+                  <p className="text-primary/80 dark:text-dark-text-secondary">Maintain a professional environment</p>
                 </div>
               </li>
             </ul>
@@ -204,10 +204,10 @@ function Community() {
       </div>
 
       <div className="mt-8 text-center">
-        <p className="text-primary/80 dark:text-secondary/80 mb-4">
+        <p className="text-primary/80 dark:text-dark-text-secondary mb-4">
           Ready to join our community? Create your account today and start contributing!
         </p>
-        <button className="px-6 py-3 bg-gradient-to-r from-accent to-accent-light text-white font-semibold rounded-lg hover:from-accent-light hover:to-accent transform hover:scale-105 transition-all duration-300">
+        <button className="px-6 py-3 bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 text-white font-semibold rounded-lg hover:from-accent-light hover:to-accent dark:hover:from-dark-text-accent/80 dark:hover:to-dark-text-accent transform hover:scale-105 transition-all duration-300">
           Sign Up Now
         </button>
       </div>
