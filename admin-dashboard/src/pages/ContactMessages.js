@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
-import { TrashIcon, CheckCircleIcon, XCircleIcon, EnvelopeIcon, UserIcon, SubjectIcon, CalendarIcon } from '@heroicons/react/24/outline';
+import { TrashIcon, CheckCircleIcon, XCircleIcon, EnvelopeIcon, UserIcon, CalendarIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 
 function ContactMessages() {
@@ -129,7 +129,7 @@ function ContactMessages() {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center">
-                          <SubjectIcon className="h-5 w-5 mr-2 text-gray-400" />
+                          <QuestionMarkCircleIcon className="h-5 w-5 mr-2 text-gray-400" />
                           <div className="text-sm text-gray-900 dark:text-white line-clamp-1">
                             {message.subject}
                           </div>
