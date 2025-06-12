@@ -19,23 +19,18 @@ import TestIPv6 from './pages/TestIPv6';
 
 // Company Pages
 import OurMission from './pages/OurMission';
-import Team from './pages/Team';
-import Careers from './pages/Careers';
 
 // Resource Pages
 import Documentation from './pages/Documentation';
-import Tutorials from './pages/Tutorials';
+
 
 // Support Pages
 import FAQ from './pages/FAQ';
-import HelpCenter from './pages/HelpCenter';
-import Community from './pages/Community';
+
 
 // Legal Pages
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
-import CookiePolicy from './pages/CookiePolicy';
-import GDPR from './pages/GDPR';
 
 // Error Pages
 import NotFound from './pages/NotFound';
@@ -121,25 +116,19 @@ function App() {
 
                   {/* Company Section - Matches Footer */}
                   <Route path="/OurMission" element={<OurMission />} />
-                  <Route path="/Team" element={<Team />} />
-                  <Route path="/Careers" element={<Careers />} />
 
                   {/* Resources Section - Matches Footer */}
                   <Route path="/Documentation" element={<Documentation />} />
-                  <Route path="/Tutorials" element={<Tutorials />} />
 
                   {/* Support Section - Matches Footer */}
                   <Route path="/FAQ" element={<FAQ />} />
-                  <Route path="/HelpCenter" element={<HelpCenter />} />
-                  <Route path="/Community" element={<Community />} />
 
                   {/* Legal Section - Matches Footer */}
                   <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
                   <Route path="/TermsOfService" element={<TermsOfService />} />
-                  <Route path="/CookiePolicy" element={<CookiePolicy />} />
-                  <Route path="/GDPR" element={<GDPR />} />
 
-                  {/* 404 Page */}
+Tsi, [6/12/2025 12:06 PM]
+{/* 404 Page */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </PageTransition>

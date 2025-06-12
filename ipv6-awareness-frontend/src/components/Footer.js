@@ -77,7 +77,7 @@ function Footer() {
   ];
 
   return (
-    <footer className="bg-white dark:bg-primary-dark text-primary dark:text-white">
+    <footer className="bg-white dark:bg-dark-bg-primary text-primary dark:text-dark-text-primary">
       {/* Main Footer Content */}
       <div className="container mx-auto px-8 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -90,13 +90,13 @@ function Footer() {
                 className="h-16 w-auto transform group-hover:scale-105 transition-transform duration-300" 
               />
               <div>
-                <h3 className="text-2xl font-bold bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent group-hover:from-accent-light group-hover:to-accent transition-all duration-300">
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 bg-clip-text text-transparent group-hover:from-accent-light group-hover:to-accent transition-all duration-300">
                   IPv6 Awareness
                 </h3>
-                <p className="text-base text-primary/60 dark:text-secondary/60">Empowering the future of internet connectivity</p>
+                <p className="text-base text-primary/60 dark:text-dark-text-secondary">Empowering the future of internet connectivity</p>
               </div>
             </div>
-            <p className="text-lg text-primary/80 dark:text-secondary/80 mb-8">
+            <p className="text-lg text-primary/80 dark:text-dark-text-secondary mb-8">
               Promoting IPv6 adoption and education worldwide through comprehensive resources, training, and community engagement.
             </p>
             <div className="flex space-x-6">
@@ -104,7 +104,7 @@ function Footer() {
                 <a
                   key={social.name}
                   href={social.url}
-                  className="text-primary/60 dark:text-secondary/60 hover:text-accent transform hover:scale-110 transition-all duration-300"
+                  className="text-primary/60 dark:text-dark-text-secondary hover:text-accent dark:hover:text-dark-text-accent transform hover:scale-110 transition-all duration-300"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.name}
@@ -120,7 +120,7 @@ function Footer() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               {Object.entries(footerLinks).map(([category, links]) => (
                 <div key={category} className="flex flex-col">
-                  <h4 className="text-lg font-semibold mb-4 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent capitalize">
+                  <h4 className="text-lg font-semibold mb-4 bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 bg-clip-text text-transparent capitalize">
                     {category}
                   </h4>
                   <ul className="space-y-3">
@@ -128,7 +128,7 @@ function Footer() {
                       <li key={path}>
                         <Link
                           to={path}
-                          className="text-primary/80 dark:text-secondary/80 hover:text-accent transform hover:translate-x-1 transition-all duration-300 inline-block text-base"
+                          className="text-primary/80 dark:text-dark-text-secondary hover:text-accent dark:hover:text-dark-text-accent transform hover:translate-x-1 transition-all duration-300 inline-block text-base"
                         >
                           {label}
                         </Link>
@@ -143,28 +143,28 @@ function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-primary/10 dark:border-secondary/10">
+      <div className="border-t border-primary/10 dark:border-dark-border">
         <div className="container mx-auto px-8 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
-            <p className="text-base text-primary/60 dark:text-secondary/60">
+            <p className="text-base text-primary/60 dark:text-dark-text-secondary">
               &copy; {currentYear} IPv6 Awareness. All rights reserved.
             </p>
             <div className="flex space-x-8">
               <Link 
                 to="/privacy" 
-                className="text-primary/60 dark:text-secondary/60 hover:text-accent text-base transition-all duration-300 hover:translate-x-1 inline-block"
+                className="text-primary/60 dark:text-dark-text-secondary hover:text-accent dark:hover:text-dark-text-accent text-base transition-all duration-300 hover:translate-x-1 inline-block"
               >
                 Privacy Policy
               </Link>
               <Link 
                 to="/terms" 
-                className="text-primary/60 dark:text-secondary/60 hover:text-accent text-base transition-all duration-300 hover:translate-x-1 inline-block"
+                className="text-primary/60 dark:text-dark-text-secondary hover:text-accent dark:hover:text-dark-text-accent text-base transition-all duration-300 hover:translate-x-1 inline-block"
               >
                 Terms of Service
               </Link>
               <Link 
                 to="/cookies" 
-                className="text-primary/60 dark:text-secondary/60 hover:text-accent text-base transition-all duration-300 hover:translate-x-1 inline-block"
+                className="text-primary/60 dark:text-dark-text-secondary hover:text-accent dark:hover:text-dark-text-accent text-base transition-all duration-300 hover:translate-x-1 inline-block"
               >
                 Cookie Policy
               </Link>

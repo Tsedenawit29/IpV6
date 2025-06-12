@@ -78,12 +78,12 @@ function Tutorials() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">
+      <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 bg-clip-text text-transparent">
         Tutorials
       </h1>
 
       <div className="mb-12">
-        <p className="text-lg text-primary/80 dark:text-secondary/80 leading-relaxed">
+        <p className="text-lg text-primary/80 dark:text-dark-text-secondary leading-relaxed">
           Comprehensive tutorials to help you master IPv6 implementation, from basic concepts 
           to advanced deployment strategies. Choose your level and start learning today.
         </p>
@@ -93,8 +93,8 @@ function Tutorials() {
         {tutorialCategories.map((category, index) => (
           <div key={index}>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-semibold text-accent">{category.title}</h2>
-              <span className="px-4 py-1 bg-accent/10 text-accent rounded-full text-sm font-medium">
+              <h2 className="text-2xl font-semibold text-accent dark:text-dark-text-accent">{category.title}</h2>
+              <span className="px-4 py-1 bg-accent/10 dark:bg-dark-text-accent/10 text-accent dark:text-dark-text-accent rounded-full text-sm font-medium">
                 {category.level}
               </span>
             </div>
@@ -103,15 +103,15 @@ function Tutorials() {
                 <a
                   key={idx}
                   href={tutorial.link}
-                  className="block bg-white dark:bg-primary-dark/50 rounded-xl p-6 shadow-lg transform hover:scale-105 transition-all duration-300"
+                  className="block bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg transform hover:scale-105 transition-all duration-300"
                 >
                   <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-lg font-medium text-accent">{tutorial.title}</h3>
-                    <span className="text-sm text-primary/60 dark:text-secondary/60">
+                    <h3 className="text-lg font-medium text-accent dark:text-dark-text-accent">{tutorial.title}</h3>
+                    <span className="text-sm text-primary/60 dark:text-dark-text-secondary/60">
                       {tutorial.duration}
                     </span>
                   </div>
-                  <p className="text-primary/80 dark:text-secondary/80">{tutorial.description}</p>
+                  <p className="text-primary/80 dark:text-dark-text-secondary">{tutorial.description}</p>
                 </a>
               ))}
             </div>
@@ -119,38 +119,38 @@ function Tutorials() {
         ))}
       </div>
 
-      <div className="mt-16 bg-white dark:bg-primary-dark/50 rounded-xl p-8 shadow-lg">
-        <h2 className="text-2xl font-semibold mb-4 text-accent">Learning Path</h2>
+      <div className="mt-16 bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
+        <h2 className="text-2xl font-semibold mb-4 text-accent dark:text-dark-text-accent">Learning Path</h2>
         <div className="space-y-6">
           <div className="flex items-center space-x-4">
-            <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
-              <span className="text-accent font-semibold">1</span>
+            <div className="w-8 h-8 rounded-full bg-accent/20 dark:bg-dark-text-accent/20 flex items-center justify-center">
+              <span className="text-accent dark:text-dark-text-accent font-semibold">1</span>
             </div>
             <div>
-              <h3 className="text-lg font-medium text-accent">Start with Basics</h3>
-              <p className="text-primary/80 dark:text-secondary/80">
+              <h3 className="text-lg font-medium text-accent dark:text-dark-text-accent">Start with Basics</h3>
+              <p className="text-primary/80 dark:text-dark-text-secondary">
                 Begin with our beginner tutorials to build a strong foundation
               </p>
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
-              <span className="text-accent font-semibold">2</span>
+            <div className="w-8 h-8 rounded-full bg-accent/20 dark:bg-dark-text-accent/20 flex items-center justify-center">
+              <span className="text-accent dark:text-dark-text-accent font-semibold">2</span>
             </div>
             <div>
-              <h3 className="text-lg font-medium text-accent">Practice Implementation</h3>
-              <p className="text-primary/80 dark:text-secondary/80">
+              <h3 className="text-lg font-medium text-accent dark:text-dark-text-accent">Practice Implementation</h3>
+              <p className="text-primary/80 dark:text-dark-text-secondary">
                 Move to intermediate tutorials to apply your knowledge
               </p>
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
-              <span className="text-accent font-semibold">3</span>
+            <div className="w-8 h-8 rounded-full bg-accent/20 dark:bg-dark-text-accent/20 flex items-center justify-center">
+              <span className="text-accent dark:text-dark-text-accent font-semibold">3</span>
             </div>
             <div>
-              <h3 className="text-lg font-medium text-accent">Master Advanced Topics</h3>
-              <p className="text-primary/80 dark:text-secondary/80">
+              <h3 className="text-lg font-medium text-accent dark:text-dark-text-accent">Master Advanced Topics</h3>
+              <p className="text-primary/80 dark:text-dark-text-secondary">
                 Take on advanced tutorials to become an IPv6 expert
               </p>
             </div>
@@ -159,12 +159,12 @@ function Tutorials() {
       </div>
 
       <div className="mt-8 text-center">
-        <p className="text-primary/80 dark:text-secondary/80 mb-4">
+        <p className="text-primary/80 dark:text-dark-text-secondary mb-4">
           Need personalized guidance? Our experts are here to help you learn.
         </p>
         <a
           href="/contact"
-          className="inline-block px-6 py-3 bg-gradient-to-r from-accent to-accent-light text-white font-semibold rounded-lg hover:from-accent-light hover:to-accent transform hover:scale-105 transition-all duration-300"
+          className="inline-block px-6 py-3 bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 text-white font-semibold rounded-lg hover:from-accent-light hover:to-accent dark:hover:from-dark-text-accent/80 dark:hover:to-dark-text-accent transform hover:scale-105 transition-all duration-300"
         >
           Get Help
         </a>

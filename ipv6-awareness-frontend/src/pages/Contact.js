@@ -64,10 +64,10 @@ function Contact() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-primary-dark dark:to-primary/10">
+    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary">
       {/* Hero Section */}
       <section className="relative py-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-dark-text-accent/10 dark:to-dark-text-accent/20"></div>
         <div className="container mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -75,10 +75,10 @@ function Contact() {
             transition={{ duration: 0.5 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-white mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-dark-text-primary mb-6">
               Contact Us
             </h1>
-            <p className="text-lg text-primary/80 dark:text-secondary/80">
+            <p className="text-lg text-primary/80 dark:text-dark-text-secondary">
               Get in touch with our team for any questions about IPv6
             </p>
           </motion.div>
@@ -94,14 +94,14 @@ function Contact() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-white dark:bg-primary/5 rounded-xl p-8 shadow-lg"
+              className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg"
             >
-              <h2 className="text-2xl font-bold text-primary dark:text-white mb-6">
+              <h2 className="text-2xl font-bold text-primary dark:text-dark-text-primary mb-6">
                 Send us a Message
               </h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-primary dark:text-white mb-2">
+                  <label className="block text-primary dark:text-dark-text-primary mb-2">
                     Name
                   </label>
                   <input
@@ -109,12 +109,12 @@ function Contact() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-primary/5 border-2 border-secondary/20 focus:border-accent outline-none text-primary dark:text-secondary"
+                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-dark-bg-secondary border-2 border-primary/20 dark:border-dark-border focus:border-accent dark:focus:border-dark-text-accent outline-none text-primary dark:text-dark-text-primary"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-primary dark:text-white mb-2">
+                  <label className="block text-primary dark:text-dark-text-primary mb-2">
                     Email
                   </label>
                   <input
@@ -122,12 +122,12 @@ function Contact() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-primary/5 border-2 border-secondary/20 focus:border-accent outline-none text-primary dark:text-secondary"
+                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-dark-bg-secondary border-2 border-primary/20 dark:border-dark-border focus:border-accent dark:focus:border-dark-text-accent outline-none text-primary dark:text-dark-text-primary"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-primary dark:text-white mb-2">
+                  <label className="block text-primary dark:text-dark-text-primary mb-2">
                     Subject
                   </label>
                   <input
@@ -135,12 +135,12 @@ function Contact() {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-primary/5 border-2 border-secondary/20 focus:border-accent outline-none text-primary dark:text-secondary"
+                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-dark-bg-secondary border-2 border-primary/20 dark:border-dark-border focus:border-accent dark:focus:border-dark-text-accent outline-none text-primary dark:text-dark-text-primary"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-primary dark:text-white mb-2">
+                  <label className="block text-primary dark:text-dark-text-primary mb-2">
                     Message
                   </label>
                   <textarea
@@ -148,13 +148,13 @@ function Contact() {
                     value={formData.message}
                     onChange={handleChange}
                     rows="4"
-                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-primary/5 border-2 border-secondary/20 focus:border-accent outline-none text-primary dark:text-secondary"
+                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-dark-bg-secondary border-2 border-primary/20 dark:border-dark-border focus:border-accent dark:focus:border-dark-text-accent outline-none text-primary dark:text-dark-text-primary"
                     required
                   ></textarea>
                 </div>
                 <button
                   type="submit"
-                  className="btn btn-primary w-full"
+                  className="w-full px-6 py-3 bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 text-white font-semibold rounded-lg hover:from-accent-light hover:to-accent dark:hover:from-dark-text-accent/80 dark:hover:to-dark-text-accent transform hover:scale-105 transition-all duration-300"
                 >
                   Send Message
                 </button>
@@ -169,8 +169,8 @@ function Contact() {
               className="space-y-8"
             >
               {/* Contact Information */}
-              <div className="bg-white dark:bg-primary/5 rounded-xl p-8 shadow-lg">
-                <h2 className="text-2xl font-bold text-primary dark:text-white mb-6">
+              <div className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
+                <h2 className="text-2xl font-bold text-primary dark:text-dark-text-primary mb-6">
                   Contact Information
                 </h2>
                 <div className="space-y-6">
@@ -180,17 +180,17 @@ function Contact() {
                       href={info.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-4 p-4 rounded-xl hover:bg-accent/10 transition-all duration-300"
+                      className="flex items-center gap-4 p-4 rounded-xl hover:bg-accent/10 dark:hover:bg-dark-text-accent/10 transition-all duration-300"
                       whileHover={{ x: 10 }}
                     >
-                      <div className="p-3 bg-accent/10 rounded-xl text-accent">
+                      <div className="p-3 bg-accent/10 dark:bg-dark-text-accent/10 rounded-xl text-accent dark:text-dark-text-accent">
                         {info.icon}
                       </div>
                       <div>
-                        <h3 className="font-semibold text-primary dark:text-white">
+                        <h3 className="font-semibold text-primary dark:text-dark-text-primary">
                           {info.title}
                         </h3>
-                        <p className="text-primary/80 dark:text-secondary/80">
+                        <p className="text-primary/80 dark:text-dark-text-secondary">
                           {info.value}
                         </p>
                       </div>
@@ -200,8 +200,8 @@ function Contact() {
               </div>
 
               {/* Social Links */}
-              <div className="bg-white dark:bg-primary/5 rounded-xl p-8 shadow-lg">
-                <h2 className="text-2xl font-bold text-primary dark:text-white mb-6">
+              <div className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
+                <h2 className="text-2xl font-bold text-primary dark:text-dark-text-primary mb-6">
                   Connect With Us
                 </h2>
                 <div className="grid grid-cols-3 gap-4">
@@ -211,13 +211,13 @@ function Contact() {
                       href={social.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="btn btn-ghost flex flex-col items-center gap-2 p-4"
+                      className="flex flex-col items-center gap-2 p-4 rounded-xl hover:bg-accent/10 dark:hover:bg-dark-text-accent/10 transition-all duration-300"
                       whileHover={{ y: -5 }}
                     >
-                      <div className="p-3 bg-accent/10 rounded-xl text-accent">
+                      <div className="p-3 bg-accent/10 dark:bg-dark-text-accent/10 rounded-xl text-accent dark:text-dark-text-accent">
                         {social.icon}
                       </div>
-                      <span className="text-primary dark:text-white font-semibold">
+                      <span className="text-primary dark:text-dark-text-primary font-medium">
                         {social.title}
                       </span>
                     </motion.a>

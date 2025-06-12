@@ -30,12 +30,12 @@ function Team() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">
+      <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 bg-clip-text text-transparent">
         Our Team
       </h1>
 
       <div className="mb-12">
-        <p className="text-lg text-primary/80 dark:text-secondary/80 leading-relaxed">
+        <p className="text-lg text-primary/80 dark:text-dark-text-secondary leading-relaxed">
           Our team consists of passionate experts dedicated to advancing IPv6 adoption worldwide. 
           With diverse backgrounds in networking, education, and research, we work together to 
           create a more connected future.
@@ -46,7 +46,7 @@ function Team() {
         {teamMembers.map((member, index) => (
           <div 
             key={index}
-            className="bg-white dark:bg-primary-dark/50 rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition-all duration-300"
+            className="bg-white dark:bg-dark-bg-tertiary rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition-all duration-300"
           >
             <div className="aspect-w-16 aspect-h-9">
               <img
@@ -56,23 +56,23 @@ function Team() {
               />
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-semibold text-accent mb-2">{member.name}</h3>
-              <p className="text-primary/60 dark:text-secondary/60 mb-4">{member.role}</p>
-              <p className="text-primary/80 dark:text-secondary/80">{member.bio}</p>
+              <h3 className="text-xl font-semibold text-accent dark:text-dark-text-accent mb-2">{member.name}</h3>
+              <p className="text-primary/60 dark:text-dark-text-secondary/60 mb-4">{member.role}</p>
+              <p className="text-primary/80 dark:text-dark-text-secondary">{member.bio}</p>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="mt-16 bg-white dark:bg-primary-dark/50 rounded-xl p-8 shadow-lg">
-        <h2 className="text-2xl font-semibold mb-4 text-accent">Join Our Team</h2>
-        <p className="text-primary/80 dark:text-secondary/80 mb-6">
+      <div className="mt-16 bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
+        <h2 className="text-2xl font-semibold mb-4 text-accent dark:text-dark-text-accent">Join Our Team</h2>
+        <p className="text-primary/80 dark:text-dark-text-secondary mb-6">
           We're always looking for passionate individuals to join our mission. If you're interested 
           in contributing to the future of internet connectivity, check out our current openings.
         </p>
         <a
           href="/careers"
-          className="inline-block px-6 py-3 bg-gradient-to-r from-accent to-accent-light text-white font-semibold rounded-lg hover:from-accent-light hover:to-accent transform hover:scale-105 transition-all duration-300"
+          className="inline-block px-6 py-3 bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 text-white font-semibold rounded-lg hover:from-accent-light hover:to-accent dark:hover:from-dark-text-accent/80 dark:hover:to-dark-text-accent transform hover:scale-105 transition-all duration-300"
         >
           View Open Positions
         </a>

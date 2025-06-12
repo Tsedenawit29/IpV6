@@ -1,18 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
   content: [
-    "./public/index.html",
-    "./src/**/*.{js,jsx,ts,tsx}"
+    "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: '#004D00', // Dark Green
-          light: '#006600',
-          dark: '#003300',
-        },
+        primary: '#00A300',
+        'primary-dark': '#007A00',
+        'box-bg': '#F3F4F6',
+        'box-bg-dark': '#2D2D2D',
         secondary: {
           DEFAULT: '#009900', // Lime Green
           light: '#33FF33',
@@ -54,7 +52,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('tailwindcss-animate'),
-  ],
+  plugins: [],
 }
