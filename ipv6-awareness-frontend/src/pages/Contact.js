@@ -19,7 +19,10 @@ function Contact() {
     setLoading(true);
 
     try {
-      const { error } = await supabase.from('ipv6_contact_messages').insert([formData]);
+      const { error } = await supabase.from('ipv6_contact_messages').insert([{
+        ...formData,
+        submitted_at: new Date().toISOString()
+      }]);
 
       if (error) {
         throw error;

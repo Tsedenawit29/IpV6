@@ -14,7 +14,7 @@ const ContactMessages = () => {
 
   return (
     <DataTable
-      tableName="contact_messages"
+      tableName="ipv6_contact_messages"
       columns={columns}
       title="Contact Messages"
       disableAddNew={true}
