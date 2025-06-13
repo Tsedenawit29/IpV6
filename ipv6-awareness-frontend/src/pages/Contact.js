@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGlobe, FaLinkedin, FaTwitter, FaGithub, FaArrowRight } from 'react-icons/fa';
+import toast from 'react-hot-toast';
+import { supabase } from '../lib/supabaseClient';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -10,11 +12,32 @@ function Contact() {
     subject: '',
     message: ''
   });
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
+    setLoading(true);
+
+    try {
+      const { error } = await supabase.from('ipv6_contact_messages').insert([formData]);
+
+      if (error) {
+        throw error;
+      }
+
+      toast.success('Message sent successfully!');
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast.error('Failed to send message: ' + error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -155,8 +178,9 @@ function Contact() {
                 <button
                   type="submit"
                   className="w-full px-6 py-3 bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 text-white font-semibold rounded-lg hover:from-accent-light hover:to-accent dark:hover:from-dark-text-accent/80 dark:hover:to-dark-text-accent transform hover:scale-105 transition-all duration-300"
+                  disabled={loading}
                 >
-                  Send Message
+                  {loading ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             </motion.div>
