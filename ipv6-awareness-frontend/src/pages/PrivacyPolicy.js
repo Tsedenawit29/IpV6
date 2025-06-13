@@ -1,124 +1,128 @@
- // === src/pages/PrivacyPolicy.js ===
+// === src/pages/PrivacyPolicy.js ===
 import React from 'react';
+import { ShieldCheckIcon, DocumentTextIcon, UserGroupIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 
 function PrivacyPolicy() {
-  const sections = [
-    {
-      title: "Information We Collect",
-      content: [
-        "Personal Information: We collect information that you provide directly to us, such as your name, email address, and any other information you choose to provide.",
-        "Usage Information: We collect information about how you use our website, including your IP address, browser type, and pages visited.",
-        "Cookies: We use cookies and similar tracking technologies to track activity on our website and hold certain information."
-      ]
-    },
-    {
-      title: "How We Use Your Information",
-      content: [
-        "To provide and maintain our website",
-        "To notify you about changes to our website",
-        "To provide customer support",
-        "To gather analysis or valuable information so that we can improve our website",
-        "To monitor the usage of our website",
-        "To detect, prevent and address technical issues"
-      ]
-    },
-    {
-      title: "Data Security",
-      content: [
-        "We implement appropriate technical and organizational measures to protect your personal data against unauthorized or unlawful processing, accidental loss, destruction, or damage.",
-        "We regularly review our security measures and update them as necessary to ensure the ongoing security of your personal data."
-      ]
-    },
-    {
-      title: "Your Rights",
-      content: [
-        "Right to access your personal data",
-        "Right to rectification of inaccurate data",
-        "Right to erasure of your data",
-        "Right to restrict processing",
-        "Right to data portability",
-        "Right to object to processing",
-        "Right to withdraw consent"
-      ]
-    },
-    {
-      title: "Third-Party Services",
-      content: [
-        "We may use third-party services to help us provide and improve our services. These third parties may have access to your personal data only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose."
-      ]
-    },
-    {
-      title: "Changes to This Policy",
-      content: [
-        "We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the 'Last Updated' date.",
-        "You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page."
-      ]
-    }
-  ];
-
   return (
-    <div className="max-w-4xl mx-auto">
-      <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">
-        Privacy Policy
-      </h1>
+    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary pt-20">
+      <div className="container mx-auto px-4 py-12">
+        {/* Hero Section */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-dark-text-primary mb-6">
+            Privacy Policy
+          </h1>
+          <p className="text-lg text-primary/70 dark:text-dark-text-secondary max-w-3xl mx-auto">
+            Your privacy is our priority. Learn how we collect, use, and protect your personal information.
+          </p>
+        </div>
 
-      <div className="mb-12">
-        <p className="text-lg text-primary/80 dark:text-secondary/80 leading-relaxed">
-          Last Updated: {new Date().toLocaleDateString()}
-        </p>
-        <p className="text-lg text-primary/80 dark:text-secondary/80 leading-relaxed mt-4">
-          This Privacy Policy describes how we collect, use, and handle your personal information when you use our website.
-        </p>
-      </div>
-
-      <div className="space-y-12">
-        {sections.map((section, index) => (
-          <div 
-            key={index}
-            className="bg-white dark:bg-primary-dark/50 rounded-xl p-8 shadow-lg"
-          >
-            <h2 className="text-2xl font-semibold mb-6 text-accent">
-              {section.title}
-            </h2>
-            <div className="space-y-4">
-              {section.content.map((paragraph, idx) => (
-                <p 
-                  key={idx}
-                  className="text-primary/80 dark:text-secondary/80 leading-relaxed"
-                >
-                  {paragraph}
-                </p>
-              ))}
-            </div>
+        {/* Main Content */}
+        <div className="max-w-4xl mx-auto">
+          {/* Last Updated */}
+          <div className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 mb-8 shadow-lg">
+            <p className="text-primary/60 dark:text-dark-text-secondary/60">
+              Last Updated: March 15, 2024
+            </p>
           </div>
-        ))}
-      </div>
 
-      <div className="mt-16 bg-white dark:bg-primary-dark/50 rounded-xl p-8 shadow-lg">
-        <h2 className="text-2xl font-semibold mb-6 text-accent">Contact Us</h2>
-        <p className="text-primary/80 dark:text-secondary/80 mb-4">
-          If you have any questions about this Privacy Policy, please contact us:
-        </p>
-        <ul className="space-y-4">
-          <li className="flex items-start space-x-3">
-            <span className="text-accent mt-1">•</span>
-            <div>
-              <p className="font-medium text-primary dark:text-white">Email</p>
-              <p className="text-primary/80 dark:text-secondary/80">privacy@ipv6awareness.org</p>
-            </div>
-          </li>
-          <li className="flex items-start space-x-3">
-            <span className="text-accent mt-1">•</span>
-            <div>
-              <p className="font-medium text-primary dark:text-white">Address</p>
-              <p className="text-primary/80 dark:text-secondary/80">
-                123 IPv6 Street<br />
-                Internet City, IC 12345<br />
-                United States
-              </p>
-            </div>
-          </li>
-        </ul>
+          {/* Policy Sections */}
+          <div className="space-y-8">
+            <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
+              <div className="flex items-center mb-6">
+                <ShieldCheckIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
+                <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary">
+                  Information We Collect
+                </h2>
+              </div>
+              <div className="space-y-4 text-primary/80 dark:text-dark-text-secondary">
+                <p>
+                  We collect information that you provide directly to us, including:
+                </p>
+                <ul className="list-disc list-inside space-y-2 ml-4">
+                  <li>Name and contact information</li>
+                  <li>Account credentials</li>
+                  <li>Communication preferences</li>
+                  <li>Technical information about your device and internet connection</li>
+                </ul>
+              </div>
+            </section>
+
+            <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
+              <div className="flex items-center mb-6">
+                <DocumentTextIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
+                <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary">
+                  How We Use Your Information
+                </h2>
+              </div>
+              <div className="space-y-4 text-primary/80 dark:text-dark-text-secondary">
+                <p>
+                  We use the information we collect to:
+                </p>
+                <ul className="list-disc list-inside space-y-2 ml-4">
+                  <li>Provide and maintain our services</li>
+                  <li>Improve and personalize your experience</li>
+                  <li>Communicate with you about updates and changes</li>
+                  <li>Ensure the security of our platform</li>
+                </ul>
+              </div>
+            </section>
+
+            <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
+              <div className="flex items-center mb-6">
+                <UserGroupIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
+                <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary">
+                  Information Sharing
+                </h2>
+              </div>
+              <div className="space-y-4 text-primary/80 dark:text-dark-text-secondary">
+                <p>
+                  We do not sell or rent your personal information to third parties. We may share your information with:
+                </p>
+                <ul className="list-disc list-inside space-y-2 ml-4">
+                  <li>Service providers who assist in our operations</li>
+                  <li>Legal authorities when required by law</li>
+                  <li>Partners with your explicit consent</li>
+                </ul>
+              </div>
+            </section>
+
+            <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
+              <div className="flex items-center mb-6">
+                <LockClosedIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
+                <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary">
+                  Data Security
+                </h2>
+              </div>
+              <div className="space-y-4 text-primary/80 dark:text-dark-text-secondary">
+                <p>
+                  We implement appropriate technical and organizational measures to protect your personal information, including:
+                </p>
+                <ul className="list-disc list-inside space-y-2 ml-4">
+                  <li>Encryption of sensitive data</li>
+                  <li>Regular security assessments</li>
+                  <li>Access controls and authentication</li>
+                  <li>Secure data storage and transmission</li>
+                </ul>
+              </div>
+            </section>
+          </div>
+
+          {/* Contact Information */}
+          <div className="mt-12 text-center">
+            <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary mb-4">
+              Questions About Our Privacy Policy?
+            </h2>
+            <p className="text-primary/70 dark:text-dark-text-secondary mb-6">
+              If you have any questions or concerns about our privacy practices, please contact us.
+            </p>
+            <a
+              href="/contact"
+              className="inline-flex items-center px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300"
+            >
+              Contact Us
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );

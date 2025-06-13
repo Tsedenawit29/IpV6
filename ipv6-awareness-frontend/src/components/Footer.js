@@ -10,31 +10,24 @@ function Footer() {
     company: [
       { label: 'About IPv6', path: '/AboutIPv6' },
       { label: 'Our Mission', path: '/OurMission' },
-      { label: 'Team', path: '/Team' },
-      { label: 'Careers', path: '/Careers' }
     ],
     resources: [
       { label: 'Documentation', path: '/Documentation' },
-      { label: 'Tutorials', path: '/Tutorials' },
       { label: 'Blog', path: '/Blog' },
       { label: 'Events', path: '/Events' },
       { label: 'Resources', path: '/Resources' },
-      { label: 'Get Involved', path: '/GetInvolved' }
+      { label: 'Get Involved', path: '/GetInvolved' },
     ],
     support: [
       { label: 'Contact Us', path: '/Contact' },
       { label: 'FAQ', path: '/FAQ' },
-      { label: 'Help Center', path: '/HelpCenter' },
-      { label: 'Community', path: '/Community' },
       { label: 'IPv6 Dashboard', path: '/IPv6Dashboard' },
-      { label: 'Test IPv6', path: '/TestIPv6' }
+      { label: 'Test IPv6', path: '/TestIPv6' },
     ],
     legal: [
       { label: 'Privacy Policy', path: '/PrivacyPolicy' },
       { label: 'Terms of Service', path: '/TermsOfService' },
-      { label: 'Cookie Policy', path: '/CookiePolicy' },
-      { label: 'GDPR', path: '/GDPR' }
-    ]
+    ],
   };
 
   const socialLinks = [
@@ -73,7 +66,7 @@ function Footer() {
         </svg>
       ),
       url: '#'
-    }
+    },
   ];
 
   return (
@@ -90,7 +83,7 @@ function Footer() {
                 className="h-16 w-auto transform group-hover:scale-105 transition-transform duration-300" 
               />
               <div>
-                <h3 className="text-2xl font-bold bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 bg-clip-text text-transparent group-hover:from-accent-light group-hover:to-accent transition-all duration-300">
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-green-500 to-green-400 bg-clip-text text-transparent group-hover:from-green-400 group-hover:to-green-500 transition-all duration-300">
                   IPv6 Awareness
                 </h3>
                 <p className="text-base text-primary/60 dark:text-dark-text-secondary">Empowering the future of internet connectivity</p>
@@ -104,7 +97,7 @@ function Footer() {
                 <a
                   key={social.name}
                   href={social.url}
-                  className="text-primary/60 dark:text-dark-text-secondary hover:text-accent dark:hover:text-dark-text-accent transform hover:scale-110 transition-all duration-300"
+                  className="text-primary/60 dark:text-dark-text-secondary hover:text-green-500 dark:hover:text-green-400 transform hover:scale-110 transition-all duration-300"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.name}
@@ -120,7 +113,7 @@ function Footer() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               {Object.entries(footerLinks).map(([category, links]) => (
                 <div key={category} className="flex flex-col">
-                  <h4 className="text-lg font-semibold mb-4 bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 bg-clip-text text-transparent capitalize">
+                  <h4 className="text-lg font-semibold mb-4 bg-gradient-to-r from-green-500 to-green-400 bg-clip-text text-transparent capitalize">
                     {category}
                   </h4>
                   <ul className="space-y-3">
@@ -128,7 +121,7 @@ function Footer() {
                       <li key={path}>
                         <Link
                           to={path}
-                          className="text-primary/80 dark:text-dark-text-secondary hover:text-accent dark:hover:text-dark-text-accent transform hover:translate-x-1 transition-all duration-300 inline-block text-base"
+                          className="text-primary/80 dark:text-dark-text-secondary hover:text-green-500 dark:hover:text-green-400 transform hover:translate-x-1 transition-all duration-300 inline-block text-base"
                         >
                           {label}
                         </Link>
@@ -142,35 +135,11 @@ function Footer() {
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-primary/10 dark:border-dark-border">
-        <div className="container mx-auto px-8 py-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
-            <p className="text-base text-primary/60 dark:text-dark-text-secondary">
-              &copy; {currentYear} IPv6 Awareness. All rights reserved.
-            </p>
-            <div className="flex space-x-8">
-              <Link 
-                to="/privacy" 
-                className="text-primary/60 dark:text-dark-text-secondary hover:text-accent dark:hover:text-dark-text-accent text-base transition-all duration-300 hover:translate-x-1 inline-block"
-              >
-                Privacy Policy
-              </Link>
-              <Link 
-                to="/terms" 
-                className="text-primary/60 dark:text-dark-text-secondary hover:text-accent dark:hover:text-dark-text-accent text-base transition-all duration-300 hover:translate-x-1 inline-block"
-              >
-                Terms of Service
-              </Link>
-              <Link 
-                to="/cookies" 
-                className="text-primary/60 dark:text-dark-text-secondary hover:text-accent dark:hover:text-dark-text-accent text-base transition-all duration-300 hover:translate-x-1 inline-block"
-              >
-                Cookie Policy
-              </Link>
-            </div>
-          </div>
-        </div>
+      {/* Bottom Footer */}
+      <div className="mt-12 border-t border-primary/10 dark:border-dark-border pt-6 text-center">
+        <p className="text-sm text-primary/60 dark:text-dark-text-secondary">
+          &copy; {currentYear} IPv6 Awareness. All rights reserved.
+        </p>
       </div>
     </footer>
   );

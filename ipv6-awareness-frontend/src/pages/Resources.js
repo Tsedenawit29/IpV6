@@ -1,333 +1,223 @@
 // === src/pages/Resources.js ===
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaBook, FaVideo, FaFileAlt, FaTools, FaSearch, FaBookmark, FaShare, FaArrowRight, FaDownload, FaExternalLinkAlt, FaStar, FaClock, FaFilter, FaSort } from 'react-icons/fa';
+import React, { useEffect, useState } from 'react';
+import { supabase } from '../lib/supabaseClient';
+import { DocumentIcon, ArrowDownTrayIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
+import { TagIcon } from '@heroicons/react/24/outline';
 
-const Resources = () => {
-  const [activeCategory, setActiveCategory] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filteredResources, setFilteredResources] = useState([]);
-  const [sortBy, setSortBy] = useState('recent');
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
+function Resources() {
+  const [resources, setResources] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
+  // Define resource categories
   const categories = [
-    { id: 'all', label: 'All Resources', icon: <FaBook /> },
-    { id: 'documentation', label: 'Documentation', icon: <FaFileAlt /> },
-    { id: 'tutorials', label: 'Tutorials', icon: <FaVideo /> },
-    { id: 'tools', label: 'Tools', icon: <FaTools /> }
-  ];
-
-  const resources = [
-    {
-      id: 1,
-      title: 'IPv6 Implementation Guide',
-      description: 'Comprehensive guide for implementing IPv6 in your network infrastructure. Covers planning, deployment, and troubleshooting.',
-      category: 'documentation',
-      type: 'PDF',
-      url: 'https://example.com/ipv6-guide',
-      tags: ['implementation', 'guide', 'network'],
-      date: '2024-03-15',
-      rating: 4.8,
-      downloads: 1250,
-      author: 'Network Engineering Team'
-    },
-    {
-      id: 2,
-      title: 'IPv6 Security Best Practices',
-      description: 'Learn about security considerations and best practices for IPv6 networks. Includes firewall configuration and threat mitigation.',
-      category: 'documentation',
-      type: 'Article',
-      url: 'https://example.com/ipv6-security',
-      tags: ['security', 'best-practices', 'firewall'],
-      date: '2024-03-10',
-      rating: 4.9,
-      downloads: 980,
-      author: 'Security Experts'
-    },
-    {
-      id: 3,
-      title: 'IPv6 Configuration Tutorial',
-      description: 'Step-by-step tutorial for configuring IPv6 on various operating systems. Includes practical examples and common pitfalls.',
-      category: 'tutorials',
-      type: 'Video',
-      url: 'https://example.com/ipv6-config',
-      tags: ['tutorial', 'configuration', 'os'],
-      date: '2024-03-05',
-      rating: 4.7,
-      downloads: 2100,
-      author: 'Tech Academy'
-    },
-    {
-      id: 4,
-      title: 'IPv6 Testing Tools Suite',
-      description: 'Collection of tools for testing and validating IPv6 implementations. Includes network analyzers and diagnostic utilities.',
-      category: 'tools',
-      type: 'Tool',
-      url: 'https://example.com/ipv6-tools',
-      tags: ['testing', 'tools', 'diagnostics'],
-      date: '2024-03-01',
-      rating: 4.6,
-      downloads: 1500,
-      author: 'Network Tools Lab'
-    },
-    {
-      id: 5,
-      title: 'IPv6 Migration Strategies',
-      description: 'Detailed guide on migrating from IPv4 to IPv6. Includes planning, execution, and validation steps.',
-      category: 'documentation',
-      type: 'PDF',
-      url: 'https://example.com/ipv6-migration',
-      tags: ['migration', 'planning', 'validation'],
-      date: '2024-02-28',
-      rating: 4.9,
-      downloads: 1800,
-      author: 'Migration Experts'
-    },
-    {
-      id: 6,
-      title: 'IPv6 Network Design Patterns',
-      description: 'Best practices and patterns for designing IPv6 networks. Includes scalability and performance considerations.',
-      category: 'documentation',
-      type: 'Article',
-      url: 'https://example.com/ipv6-design',
-      tags: ['design', 'patterns', 'scalability'],
-      date: '2024-02-25',
-      rating: 4.7,
-      downloads: 950,
-      author: 'Network Architects'
-    }
+    'all',
+    'documentation',
+    'tutorials',
+    'tools'
   ];
 
   useEffect(() => {
-    filterResources();
-  }, [activeCategory, searchQuery, sortBy]);
+    fetchResources();
+  }, []);
 
-  const filterResources = () => {
-    let filtered = resources;
-    
-    // Filter by category
-    if (activeCategory !== 'all') {
-      filtered = filtered.filter(resource => resource.category === activeCategory);
+  async function fetchResources() {
+    try {
+      const { data, error } = await supabase
+        .from('ipv6_resources')
+        .select('*')
+        .order('date', { ascending: false });
+
+      if (error) throw error;
+
+      setResources(data || []);
+    } catch (error) {
+      console.error('Error fetching resources:', error);
+      setError('Failed to load resources. Please try again later.');
+    } finally {
+      setLoading(false);
     }
-    
-    // Filter by search query
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(resource => 
-        resource.title.toLowerCase().includes(query) ||
-        resource.description.toLowerCase().includes(query) ||
-        resource.tags.some(tag => tag.toLowerCase().includes(query)) ||
-        resource.author.toLowerCase().includes(query)
-      );
-    }
-    
-    // Sort resources
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'recent':
-          return new Date(b.date) - new Date(a.date);
-        case 'popular':
-          return b.downloads - a.downloads;
-        case 'rating':
-          return b.rating - a.rating;
-        default:
-          return 0;
-      }
-    });
-    
-    setFilteredResources(filtered);
-  };
+  }
+
+  // Filter resources based on selected category
+  const filteredResources = selectedCategory === 'all'
+    ? resources
+    : resources.filter(resource => resource.category === selectedCategory);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary pt-20">
+        <div className="container mx-auto px-4 py-8">
+          <div className="animate-pulse space-y-8">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg">
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div>
+                <div className="h-32 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
+                <div className="flex space-x-4">
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary pt-20">
+        <div className="container mx-auto px-4 py-8">
+          <div className="bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-100 p-4 rounded-lg shadow-lg">
+            <h3 className="font-semibold mb-2">Error Loading Resources</h3>
+            <p className="mb-4">{error}</p>
+            <button
+              onClick={fetchResources}
+              className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary pt-20">
-      {/* Search and Filter Section */}
-      <section className="py-12 bg-white dark:bg-dark-bg-tertiary relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5 dark:opacity-10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,#004D00_1px,transparent_0)] bg-[size:40px_40px]"></div>
+      <div className="container mx-auto px-4 py-8">
+        {/* Hero Section */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-dark-text-primary mb-4">
+            IPv6 Resources
+          </h1>
+          <p className="text-lg text-primary/70 dark:text-dark-text-secondary max-w-2xl mx-auto">
+            Explore our comprehensive collection of IPv6 resources, guides, and tools
+          </p>
         </div>
 
-        <div className="container mx-auto px-4 relative">
-          <div className="max-w-7xl mx-auto">
-            {/* Page Title */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-center mb-12"
+        {/* Category Filter */}
+        <div className="mb-8">
+          <div className="flex flex-wrap gap-4 justify-center">
+            <button
+              onClick={() => setSelectedCategory('all')}
+              className={`px-4 py-2 rounded-lg transition-colors duration-300 ${
+                selectedCategory === 'all'
+                  ? 'bg-green-500 text-white dark:bg-green-600'
+                  : 'bg-white dark:bg-dark-bg-tertiary text-primary dark:text-dark-text-primary hover:bg-green-50 dark:hover:bg-dark-bg-secondary'
+              }`}
             >
-              <h1 className="text-4xl font-bold text-primary dark:text-dark-text-primary mb-4">
-                IPv6 Resources
-              </h1>
-              <p className="text-lg text-primary/70 dark:text-dark-text-secondary max-w-2xl mx-auto">
-                Discover comprehensive guides, tools, and learning materials to help you master IPv6 implementation
-              </p>
-            </motion.div>
-
-            {/* Search Bar */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="mb-12"
-            >
-              <div className={`relative max-w-2xl mx-auto transition-all duration-300 ${isSearchFocused ? 'scale-105' : ''}`}>
-                <input
-                  type="text"
-                  placeholder="Search resources by title, description, tags, or author..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={() => setIsSearchFocused(true)}
-                  onBlur={() => setIsSearchFocused(false)}
-                  className="w-full px-6 py-4 pl-12 rounded-xl bg-white dark:bg-dark-bg-secondary border-2 border-primary/10 dark:border-dark-border focus:border-accent dark:focus:border-dark-text-accent outline-none transition-all duration-300 shadow-lg hover:shadow-xl"
-                />
-                <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary/50 dark:text-dark-text-secondary/50" />
-              </div>
-            </motion.div>
-
-            {/* Category Filters and Sort */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex flex-wrap justify-between items-center gap-6 mb-12"
-            >
-              <div className="flex flex-wrap gap-4">
-                {categories.map((category) => (
-                  <motion.button
-                    key={category.id}
-                    onClick={() => setActiveCategory(category.id)}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 ${
-                      activeCategory === category.id
-                        ? 'bg-accent text-white dark:bg-dark-text-accent dark:text-dark-bg-primary'
-                        : 'bg-white dark:bg-dark-bg-secondary text-primary dark:text-dark-text-secondary hover:bg-accent/10 dark:hover:bg-dark-text-accent/10'
-                    }`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <span className="text-lg">{category.icon}</span>
-                    <span>{category.label}</span>
-                  </motion.button>
-                ))}
-              </div>
-
-              <div className="flex items-center space-x-4">
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="px-4 py-2 rounded-lg bg-white dark:bg-dark-bg-secondary text-primary dark:text-dark-text-secondary border border-primary/10 dark:border-dark-border focus:outline-none focus:border-accent dark:focus:border-dark-text-accent"
-                >
-                  <option value="recent">Most Recent</option>
-                  <option value="popular">Most Popular</option>
-                  <option value="rating">Highest Rated</option>
-                </select>
-              </div>
-            </motion.div>
-
-            {/* Resources Grid */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
-              <AnimatePresence>
-                {filteredResources.map((resource) => (
-                  <motion.div
-                    key={resource.id}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.3 }}
-                    className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
-                  >
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className="text-lg font-semibold text-accent dark:text-dark-text-accent">{resource.title}</h3>
-                      <span className="text-sm text-primary/60 dark:text-dark-text-secondary/60">{resource.type}</span>
-                    </div>
-                    <p className="text-primary/80 dark:text-dark-text-secondary mb-4">{resource.description}</p>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {resource.tags.map((tag, index) => (
-                        <span
-                          key={index}
-                          className="px-2 py-1 text-xs rounded-full bg-accent/10 dark:bg-dark-text-accent/10 text-accent dark:text-dark-text-accent"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="flex justify-between items-center text-sm text-primary/60 dark:text-dark-text-secondary/60">
-                      <span>{resource.author}</span>
-                      <span>{resource.date}</span>
-                    </div>
-                    <div className="mt-4 flex justify-between items-center">
-                      <div className="flex items-center space-x-2">
-                        <FaStar className="text-yellow-400" />
-                        <span className="text-primary dark:text-dark-text-secondary">{resource.rating}</span>
-                        <FaDownload className="ml-4" />
-                        <span className="text-primary dark:text-dark-text-secondary">{resource.downloads}</span>
-                      </div>
-                      <a
-                        href={resource.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-accent dark:text-dark-text-accent hover:text-accent-light dark:hover:text-dark-text-accent/80 transition-colors duration-300"
-                      >
-                        <FaExternalLinkAlt />
-                      </a>
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </motion.div>
+              All Resources
+            </button>
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 rounded-lg transition-colors duration-300 ${
+                  selectedCategory === category
+                    ? 'bg-green-500 text-white dark:bg-green-600'
+                    : 'bg-white dark:bg-dark-bg-tertiary text-primary dark:text-dark-text-primary hover:bg-green-50 dark:hover:bg-dark-bg-secondary'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
           </div>
         </div>
-      </section>
 
-      {/* Call to Action */}
-      <section className="py-20 bg-primary dark:bg-primary-dark text-white relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,#FFFFFF_1px,transparent_0)] bg-[size:40px_40px]"></div>
-        </div>
+        {/* Resources Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredResources.map((resource) => (
+            <div
+              key={resource.id}
+              className="bg-white dark:bg-dark-bg-tertiary rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+            >
+              {resource.image_url && (
+                <div className="relative h-48 w-full">
+                  <img
+                    src={resource.image_url}
+                    alt={resource.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                </div>
+              )}
+              <div className="p-6">
+                <div className="flex items-center space-x-4 text-sm text-primary/60 dark:text-dark-text-secondary/60 mb-4">
+                  <div className="flex items-center">
+                    <TagIcon className="h-4 w-4 mr-1" />
+                    <span>{resource.category}</span>
+                  </div>
+                  {resource.type && (
+                    <div className="flex items-center">
+                      <DocumentIcon className="h-4 w-4 mr-1" />
+                      <span>{resource.type}</span>
+                    </div>
+                  )}
+                </div>
 
-        <div className="container mx-auto px-4 relative">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <h2 className="text-4xl font-bold mb-6">
-              Ready to Master IPv6?
-            </h2>
-            <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-              Join our growing community of network professionals and get exclusive access to:
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-              <div className="bg-white/10 rounded-xl p-6 backdrop-blur-sm">
-                <div className="text-3xl mb-4">📚</div>
-                <h3 className="text-lg font-semibold mb-2">Premium Resources</h3>
-                <p className="text-white/70">Access in-depth guides, case studies, and expert insights</p>
-              </div>
-              <div className="bg-white/10 rounded-xl p-6 backdrop-blur-sm">
-                <div className="text-3xl mb-4">👥</div>
-                <h3 className="text-lg font-semibold mb-2">Expert Network</h3>
-                <p className="text-white/70">Connect with IPv6 specialists and share experiences</p>
-              </div>
-              <div className="bg-white/10 rounded-xl p-6 backdrop-blur-sm">
-                <div className="text-3xl mb-4">🎯</div>
-                <h3 className="text-lg font-semibold mb-2">Latest Updates</h3>
-                <p className="text-white/70">Stay informed about IPv6 developments and best practices</p>
+                <h3 className="text-xl font-semibold text-primary dark:text-dark-text-primary mb-3">
+                  {resource.title}
+                </h3>
+
+                <p className="text-primary/80 dark:text-dark-text-secondary mb-4 line-clamp-3">
+                  {resource.description}
+                </p>
+
+                {resource.tags && (
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {resource.tags.map((tag, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1 text-xs rounded-full bg-primary/10 dark:bg-dark-text-accent/10 text-primary dark:text-dark-text-accent"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                <div className="flex items-center justify-between">
+                  <a
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-green-500 dark:text-green-400 hover:text-green-600 dark:hover:text-green-300 transition-colors duration-300"
+                  >
+                    View Resource
+                    <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-1" />
+                  </a>
+
+                  {resource.file_url && (
+                    <a
+                      href={resource.file_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-primary/60 dark:text-dark-text-secondary/60 hover:text-green-500 dark:hover:text-green-400 transition-colors duration-300"
+                    >
+                      <DocumentIcon className="h-4 w-4 mr-1" />
+                      <span className="text-sm">Download</span>
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
-            
-          </motion.div>
+          ))}
         </div>
-      </section>
+
+        {filteredResources.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-primary/60 dark:text-dark-text-secondary">
+              No resources found in this category.
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
-};
+}
 
 export default Resources;

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import logo from '../assets/images/Ipv6.jpg.png';
+import logo from '../assets/images/ipv6.png';
 
 function Navbar() {
   const { darkMode, toggleDarkMode } = useTheme();

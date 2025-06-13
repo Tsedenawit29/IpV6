@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
+import { useNavigate } from 'react-router-dom';
 import {
   BookOpenIcon,
   NewspaperIcon,
@@ -27,6 +28,7 @@ function StatCard({ title, value, icon: Icon, color }) {
 }
 
 function Dashboard() {
+  const navigate = useNavigate();
   const [stats, setStats] = useState({
     resources: 0,
     blogPosts: 0,
@@ -45,22 +47,22 @@ function Dashboard() {
     try {
       // Fetch resources count
       const { count: resourcesCount } = await supabase
-        .from('resources')
+        .from('ipv6_resources')
         .select('*', { count: 'exact', head: true });
 
       // Fetch blog posts count
       const { count: blogPostsCount } = await supabase
-        .from('blog_posts')
+        .from('ipv6_blog_posts')
         .select('*', { count: 'exact', head: true });
 
       // Fetch events count
       const { count: eventsCount } = await supabase
-        .from('events')
+        .from('ipv6_events')
         .select('*', { count: 'exact', head: true });
 
       // Fetch contact messages count
       const { count: contactMessagesCount } = await supabase
-        .from('contact_messages')
+        .from('ipv6_contact_messages')
         .select('*', { count: 'exact', head: true });
 
       setStats({
@@ -77,67 +79,106 @@ function Dashboard() {
 
   async function fetchRecentActivity() {
     try {
+      console.log('Starting to fetch recent activity...');
+      
       // Fetch recent resources
-      const { data: recentResources } = await supabase
-        .from('resources')
+      const { data: recentResources, error: resourcesError } = await supabase
+        .from('ipv6_resources')
         .select('*')
-        .order('created_at', { ascending: false })
+        .order('date', { ascending: false })
         .limit(5);
+
+      if (resourcesError) {
+        console.error('Error fetching resources:', resourcesError);
+        throw new Error(`Failed to fetch resources: ${resourcesError.message}`);
+      }
+      console.log('Resources fetched successfully:', recentResources?.length || 0);
 
       // Fetch recent blog posts
-      const { data: recentBlogPosts } = await supabase
-        .from('blog_posts')
+      const { data: recentBlogPosts, error: blogError } = await supabase
+        .from('ipv6_blog_posts')
         .select('*')
-        .order('created_at', { ascending: false })
+        .order('published_on', { ascending: false })
         .limit(5);
+
+      if (blogError) {
+        console.error('Error fetching blog posts:', blogError);
+        throw new Error(`Failed to fetch blog posts: ${blogError.message}`);
+      }
+      console.log('Blog posts fetched successfully:', recentBlogPosts?.length || 0);
 
       // Fetch recent events
-      const { data: recentEvents } = await supabase
-        .from('events')
+      const { data: recentEvents, error: eventsError } = await supabase
+        .from('ipv6_events')
         .select('*')
-        .order('created_at', { ascending: false })
+        .order('event_date', { ascending: false })
         .limit(5);
 
+      if (eventsError) {
+        console.error('Error fetching events:', eventsError);
+        throw new Error(`Failed to fetch events: ${eventsError.message}`);
+      }
+      console.log('Events fetched successfully:', recentEvents?.length || 0);
+
       // Fetch recent contact messages
-      const { data: recentMessages } = await supabase
-        .from('contact_messages')
+      const { data: recentMessages, error: messagesError } = await supabase
+        .from('ipv6_contact_messages')
         .select('*')
         .order('submitted_at', { ascending: false })
         .limit(5);
 
-      // Combine and sort all activities
+      if (messagesError) {
+        console.error('Error fetching messages:', messagesError);
+        throw new Error(`Failed to fetch messages: ${messagesError.message}`);
+      }
+      console.log('Messages fetched successfully:', recentMessages?.length || 0);
+
+      // Combine and sort all activities with more detailed information
       const allActivities = [
         ...(recentResources?.map(resource => ({
-          type: 'resource',
+          type: 'New Resource Added',
           title: resource.title,
-          date: resource.created_at,
+          description: resource.description,
+          date: resource.date,
           icon: BookOpenIcon,
+          category: resource.category,
+          url: resource.url
         })) || []),
         ...(recentBlogPosts?.map(post => ({
-          type: 'blog',
+          type: 'New Blog Post',
           title: post.title,
-          date: post.created_at,
+          description: post.content?.substring(0, 100) + '...',
+          date: post.published_on,
           icon: NewspaperIcon,
+          author: post.author,
+          status: post.status
         })) || []),
         ...(recentEvents?.map(event => ({
-          type: 'event',
+          type: 'New Event Created',
           title: event.title,
-          date: event.created_at,
+          description: event.description,
+          date: event.event_date,
           icon: CalendarIcon,
+          location: event.location,
+          status: event.status
         })) || []),
         ...(recentMessages?.map(message => ({
-          type: 'message',
+          type: 'New Contact Message',
           title: message.subject,
+          description: message.message,
           date: message.submitted_at,
           icon: EnvelopeIcon,
+          from: message.name,
+          email: message.email
         })) || []),
       ].sort((a, b) => new Date(b.date) - new Date(a.date))
         .slice(0, 10);
 
+      console.log('Combined activities:', allActivities.length);
       setRecentActivity(allActivities);
     } catch (error) {
-      toast.error('Error fetching recent activity');
-      console.error('Error:', error);
+      console.error('Detailed error in fetchRecentActivity:', error);
+      toast.error(`Error fetching recent activity: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -148,10 +189,10 @@ function Dashboard() {
   }
 
   const statsData = [
-    { name: 'Total Users', value: '1,234', icon: UsersIcon },
-    { name: 'Events', value: '12', icon: CalendarIcon },
-    { name: 'Resources', value: '45', icon: DocumentTextIcon },
-    { name: 'Messages', value: '89', icon: EnvelopeIcon },
+    { name: 'Resources', value: stats.resources, icon: DocumentTextIcon },
+    { name: 'Events', value: stats.events, icon: CalendarIcon },
+    { name: 'Blog Posts', value: stats.blogPosts, icon: NewspaperIcon },
+    { name: 'Messages', value: stats.contactMessages, icon: EnvelopeIcon },
   ];
 
   return (
@@ -185,9 +226,83 @@ function Dashboard() {
             Recent Activity
           </h2>
           <div className="space-y-4">
-            <p className="text-gray-500 dark:text-dark-text-secondary">
-              No recent activity to display
-            </p>
+            {recentActivity.length > 0 ? (
+              recentActivity.map((activity, index) => (
+                <div key={index} className="flex items-start space-x-4 p-3 hover:bg-gray-50 dark:hover:bg-dark-hover rounded-lg transition-colors">
+                  <div className="p-2 rounded-lg bg-primary bg-opacity-10">
+                    <activity.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-xs font-medium text-primary mb-1 block">
+                          {activity.type}
+                        </span>
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                          {activity.title}
+                        </p>
+                      </div>
+                      <span className="text-xs text-gray-500 dark:text-dark-text-secondary">
+                        {new Date(activity.date).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-500 dark:text-dark-text-secondary mt-1 line-clamp-2">
+                      {activity.description}
+                    </p>
+                    {activity.type === 'New Event Created' && (
+                      <div className="mt-1 flex items-center text-xs text-gray-500 dark:text-dark-text-secondary">
+                        <span className="mr-2">📍 {activity.location}</span>
+                        <span className={`px-2 py-0.5 rounded-full ${
+                          activity.status === 'upcoming' ? 'bg-green-100 text-green-800' :
+                          activity.status === 'ongoing' ? 'bg-blue-100 text-blue-800' :
+                          'bg-gray-100 text-gray-800'
+                        }`}>
+                          {activity.status}
+                        </span>
+                      </div>
+                    )}
+                    {activity.type === 'New Contact Message' && (
+                      <div className="mt-1 text-xs text-gray-500 dark:text-dark-text-secondary">
+                        <span>From: {activity.from}</span>
+                        <span className="mx-2">•</span>
+                        <span>{activity.email}</span>
+                      </div>
+                    )}
+                    {activity.type === 'New Blog Post' && (
+                      <div className="mt-1 flex items-center text-xs text-gray-500 dark:text-dark-text-secondary">
+                        <span className="mr-2">By: {activity.author}</span>
+                        <span className={`px-2 py-0.5 rounded-full ${
+                          activity.status === 'published' ? 'bg-green-100 text-green-800' :
+                          activity.status === 'draft' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-gray-100 text-gray-800'
+                        }`}>
+                          {activity.status}
+                        </span>
+                      </div>
+                    )}
+                    {activity.type === 'New Resource Added' && (
+                      <div className="mt-1 flex items-center text-xs text-gray-500 dark:text-dark-text-secondary">
+                        <span className="mr-2">Category: {activity.category}</span>
+                        {activity.url && (
+                          <a 
+                            href={activity.url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-primary hover:underline"
+                          >
+                            View Resource
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500 dark:text-dark-text-secondary">
+                No recent activity to display
+              </p>
+            )}
           </div>
         </div>
 
@@ -196,16 +311,28 @@ function Dashboard() {
             Quick Actions
           </h2>
           <div className="grid grid-cols-2 gap-4">
-            <button className="p-4 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+            <button 
+              onClick={() => navigate('/events')}
+              className="p-4 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+            >
               Create Event
             </button>
-            <button className="p-4 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+            <button 
+              onClick={() => navigate('/resources')}
+              className="p-4 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+            >
               Add Resource
             </button>
-            <button className="p-4 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+            <button 
+              onClick={() => navigate('/blog-posts')}
+              className="p-4 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+            >
               New Blog Post
             </button>
-            <button className="p-4 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+            <button 
+              onClick={() => navigate('/contact-messages')}
+              className="p-4 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+            >
               View Messages
             </button>
           </div>

@@ -1,138 +1,106 @@
 import React, { useState } from 'react';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 
 function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
 
-  const faqCategories = [
+  const faqs = [
     {
-      title: "General Questions",
-      questions: [
-        {
-          question: "What is IPv6?",
-          answer: "IPv6 (Internet Protocol version 6) is the most recent version of the Internet Protocol, designed to replace IPv4. It provides a vastly larger address space and improved features for modern internet requirements."
-        },
-        {
-          question: "Why do we need IPv6?",
-          answer: "IPv6 is necessary because IPv4 addresses are running out. IPv6 provides a much larger address space (128-bit vs 32-bit), better security features, improved routing efficiency, and better support for mobile devices."
-        },
-        {
-          question: "Is IPv6 backward compatible with IPv4?",
-          answer: "IPv6 is not directly backward compatible with IPv4, but there are several transition mechanisms that allow IPv6 and IPv4 to coexist. These include dual-stack, tunneling, and translation techniques."
-        }
-      ]
+      question: "What is IPv6?",
+      answer: "IPv6 (Internet Protocol version 6) is the most recent version of the Internet Protocol, designed to replace IPv4. It provides a vastly larger address space, improved security features, and better support for modern internet requirements."
     },
     {
-      title: "Technical Questions",
-      questions: [
-        {
-          question: "How do IPv6 addresses work?",
-          answer: "IPv6 addresses are 128 bits long and are written as eight groups of four hexadecimal digits, separated by colons. For example: 2001:0db8:85a3:0000:0000:8a2e:0370:7334"
-        },
-        {
-          question: "What are the main differences between IPv4 and IPv6?",
-          answer: "Key differences include: larger address space (128-bit vs 32-bit), built-in security (IPsec), simplified header format, improved routing efficiency, and better support for auto-configuration."
-        },
-        {
-          question: "How do I configure IPv6 on my network?",
-          answer: "IPv6 configuration depends on your network setup. Generally, you'll need to: enable IPv6 on your router, configure your network devices, update your firewall rules, and ensure your applications support IPv6."
-        }
-      ]
+      question: "Why do we need IPv6?",
+      answer: "IPv6 is necessary because IPv4 addresses are running out. IPv6 provides a much larger address space (128-bit vs 32-bit), better security features, improved routing efficiency, and better support for modern internet requirements like IoT devices."
     },
     {
-      title: "Implementation Questions",
-      questions: [
-        {
-          question: "How do I test if my network supports IPv6?",
-          answer: "You can test IPv6 support using various online tools, command-line utilities like ping6, or by visiting IPv6 test websites. Our website also provides a built-in IPv6 testing tool."
-        },
-        {
-          question: "What are common IPv6 deployment challenges?",
-          answer: "Common challenges include: legacy equipment compatibility, security configuration, staff training, application support, and ensuring proper network monitoring and management tools."
-        },
-        {
-          question: "How do I secure my IPv6 network?",
-          answer: "IPv6 security involves: configuring firewalls properly, implementing proper access controls, monitoring IPv6 traffic, keeping systems updated, and following security best practices specific to IPv6."
-        }
-      ]
+      question: "How do I check if I'm using IPv6?",
+      answer: "You can check your IPv6 connectivity by visiting our IPv6 test page or using online tools like test-ipv6.com. Your operating system's network settings will also show if IPv6 is enabled and configured."
+    },
+    {
+      question: "Is IPv6 more secure than IPv4?",
+      answer: "IPv6 includes built-in security features like IPsec, which provides authentication and encryption at the IP layer. However, proper implementation and configuration are still essential for maintaining security."
+    },
+    {
+      question: "How do I enable IPv6 on my network?",
+      answer: "Enabling IPv6 depends on your network setup. Generally, you'll need to: 1) Ensure your ISP supports IPv6, 2) Configure your router for IPv6, 3) Enable IPv6 on your devices. Our documentation provides detailed guides for different setups."
+    },
+    {
+      question: "Will IPv6 affect my internet speed?",
+      answer: "IPv6 can potentially improve internet performance due to its more efficient routing and larger packet size. However, the actual impact depends on your network configuration and ISP implementation."
+    },
+    {
+      question: "What are the main differences between IPv4 and IPv6?",
+      answer: "Key differences include: larger address space (128-bit vs 32-bit), built-in security features, simplified header format, improved routing efficiency, and better support for auto-configuration."
+    },
+    {
+      question: "How do I troubleshoot IPv6 connectivity issues?",
+      answer: "Common troubleshooting steps include: checking your network configuration, verifying ISP support, testing with different devices, and using diagnostic tools. Our support resources provide detailed troubleshooting guides."
     }
   ];
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 bg-clip-text text-transparent">
-        Frequently Asked Questions
-      </h1>
+    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary pt-20">
+      <div className="container mx-auto px-4 py-12">
+        {/* Hero Section */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-dark-text-primary mb-6">
+            Frequently Asked Questions
+          </h1>
+          <p className="text-lg text-primary/70 dark:text-dark-text-secondary max-w-3xl mx-auto">
+            Find answers to common questions about IPv6 implementation, benefits, and best practices.
+          </p>
+        </div>
 
-      <div className="mb-12">
-        <p className="text-lg text-primary/80 dark:text-dark-text-secondary leading-relaxed">
-          Find answers to common questions about IPv6, its implementation, and best practices. 
-          If you don't find what you're looking for, feel free to contact our support team.
-        </p>
-      </div>
-
-      <div className="space-y-8">
-        {faqCategories.map((category, categoryIndex) => (
-          <div key={categoryIndex} className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg">
-            <h2 className="text-2xl font-semibold text-accent dark:text-dark-text-accent mb-6">{category.title}</h2>
-            <div className="space-y-4">
-              {category.questions.map((item, questionIndex) => {
-                const index = `${categoryIndex}-${questionIndex}`;
-                const isOpen = openIndex === index;
-                
-                return (
-                  <div 
-                    key={questionIndex}
-                    className="border border-primary/10 dark:border-dark-border rounded-lg overflow-hidden"
-                  >
-                    <button
-                      className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary/5 dark:hover:bg-dark-text-accent/5 transition-colors"
-                      onClick={() => setOpenIndex(isOpen ? null : index)}
-                    >
-                      <span className="font-medium text-primary dark:text-dark-text-primary">{item.question}</span>
-                      <svg
-                        className={`w-5 h-5 text-accent dark:text-dark-text-accent transform transition-transform duration-300 ${
-                          isOpen ? 'rotate-180' : ''
-                        }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-                    <div
-                      className={`px-6 transition-all duration-300 ${
-                        isOpen ? 'max-h-96 py-4' : 'max-h-0'
-                      } overflow-hidden`}
-                    >
-                      <p className="text-primary/80 dark:text-dark-text-secondary">{item.answer}</p>
-                    </div>
+        {/* FAQ Section */}
+        <div className="max-w-3xl mx-auto">
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="bg-white dark:bg-dark-bg-tertiary rounded-xl shadow-lg overflow-hidden"
+              >
+                <button
+                  className="w-full px-6 py-4 text-left focus:outline-none"
+                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                >
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-primary dark:text-dark-text-primary">
+                      {faq.question}
+                    </h3>
+                    {openIndex === index ? (
+                      <ChevronUpIcon className="h-5 w-5 text-green-500 dark:text-green-400" />
+                    ) : (
+                      <ChevronDownIcon className="h-5 w-5 text-green-500 dark:text-green-400" />
+                    )}
                   </div>
-                );
-              })}
-            </div>
+                </button>
+                {openIndex === index && (
+                  <div className="px-6 pb-4">
+                    <p className="text-primary/80 dark:text-dark-text-secondary">
+                      {faq.answer}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      <div className="mt-16 bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
-        <h2 className="text-2xl font-semibold mb-4 text-accent dark:text-dark-text-accent">Still Have Questions?</h2>
-        <p className="text-primary/80 dark:text-dark-text-secondary mb-6">
-          Our support team is here to help. Contact us for personalized assistance with your IPv6 implementation.
-        </p>
-        <div className="flex flex-wrap gap-4">
-          <a
-            href="/contact"
-            className="px-6 py-3 bg-gradient-to-r from-accent to-accent-light dark:from-dark-text-accent dark:to-dark-text-accent/80 text-white font-semibold rounded-lg hover:from-accent-light hover:to-accent dark:hover:from-dark-text-accent/80 dark:hover:to-dark-text-accent transform hover:scale-105 transition-all duration-300"
-          >
-            Contact Support
-          </a>
-          <a
-            href="/help"
-            className="px-6 py-3 border-2 border-accent dark:border-dark-text-accent text-accent dark:text-dark-text-accent font-semibold rounded-lg hover:bg-accent/10 dark:hover:bg-dark-text-accent/10 transform hover:scale-105 transition-all duration-300"
-          >
-            Visit Help Center
-          </a>
+          {/* Contact Section */}
+          <div className="mt-12 text-center">
+            <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary mb-4">
+              Still Have Questions?
+            </h2>
+            <p className="text-primary/70 dark:text-dark-text-secondary mb-6">
+              Can't find what you're looking for? Our team is here to help.
+            </p>
+            <a
+              href="/contact"
+              className="inline-flex items-center px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300"
+            >
+              Contact Us
+            </a>
+          </div>
         </div>
       </div>
     </div>

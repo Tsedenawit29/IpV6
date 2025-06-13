@@ -1,174 +1,192 @@
 // === src/pages/Blog.js ===
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaSearch, FaCalendar, FaUser, FaTag, FaArrowRight, FaShare, FaBookmark, FaRegBookmark } from 'react-icons/fa';
+import React, { useEffect, useState } from 'react';
+import { supabase } from '../lib/supabaseClient';
+import { Link } from 'react-router-dom';
+import { 
+  UserIcon, 
+  CalendarIcon, 
+  TagIcon, 
+  ArrowTopRightOnSquareIcon,
+  DocumentIcon 
+} from '@heroicons/react/24/outline';
 
 function Blog() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const categories = [
-    { id: 'all', name: 'All Posts' },
-    { id: 'news', name: 'News' },
-    { id: 'tutorials', name: 'Tutorials' },
-    { id: 'case-studies', name: 'Case Studies' },
-  ];
+  useEffect(() => {
+    fetchBlogPosts();
+  }, []);
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: 'The Future of Internet: IPv6 Adoption Trends',
-      excerpt: 'Exploring the latest trends in IPv6 adoption and what it means for the future of internet connectivity.',
-      image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      category: 'news',
-      author: 'John Doe',
-      date: '2024-03-15',
-      readTime: '5 min read'
-    },
-    {
-      id: 2,
-      title: 'How to Implement IPv6 in Your Network',
-      excerpt: 'A comprehensive guide to implementing IPv6 in your existing network infrastructure.',
-      image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      category: 'tutorials',
-      author: 'Jane Smith',
-      date: '2024-03-10',
-      readTime: '8 min read'
-    },
-    {
-      id: 3,
-      title: 'IPv6 Success Story: Global Enterprise Migration',
-      excerpt: 'Case study of a global enterprise successfully migrating to IPv6.',
-      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      category: 'case-studies',
-      author: 'Mike Johnson',
-      date: '2024-03-05',
-      readTime: '6 min read'
+  async function fetchBlogPosts() {
+    try {
+      const { data, error } = await supabase
+        .from('ipv6_blog_posts')
+        .select('*')
+        .order('published_on', { ascending: false });
+
+      if (error) throw error;
+
+      setPosts(data || []);
+    } catch (error) {
+      console.error('Error fetching blog posts:', error);
+      setError('Failed to load blog posts. Please try again later.');
+    } finally {
+      setLoading(false);
     }
-  ];
+  }
 
-  const filteredPosts = blogPosts.filter(post => {
-    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary pt-20">
+        <div className="container mx-auto px-4 py-8">
+          <div className="animate-pulse space-y-8">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg">
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div>
+                <div className="h-32 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
+                <div className="flex space-x-4">
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary pt-20">
+        <div className="container mx-auto px-4 py-8">
+          <div className="bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-100 p-4 rounded-lg shadow-lg">
+            <h3 className="font-semibold mb-2">Error Loading Blog Posts</h3>
+            <p className="mb-4">{error}</p>
+            <div className="text-sm text-red-600 dark:text-red-300 mb-4">
+              Please check if:
+              <ul className="list-disc list-inside mt-2">
+                <li>The database connection is working</li>
+                <li>The table name is correct</li>
+                <li>You have the necessary permissions</li>
+              </ul>
+            </div>
+            <button
+              onClick={fetchBlogPosts}
+              className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-primary-dark dark:to-primary/10">
-      {/* Hero Section */}
-      <section className="relative py-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20"></div>
-        <div className="container mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-white mb-6">
-              IPv6 Blog
-            </h1>
-            <p className="text-lg text-primary/80 dark:text-secondary/80 mb-8">
-              Stay updated with the latest news, tutorials, and insights about IPv6
-            </p>
-            <div className="relative max-w-xl mx-auto">
-              <input
-                type="text"
-                placeholder="Search articles..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-6 py-4 pl-12 rounded-xl bg-white dark:bg-primary/5 border-2 border-secondary/20 focus:border-accent outline-none text-primary dark:text-secondary"
-              />
-              <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary/50" />
-            </div>
-          </motion.div>
+    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary pt-20">
+      <div className="container mx-auto px-4 py-8">
+        {/* Hero Section */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-dark-text-primary mb-4">
+            IPv6 Blog
+          </h1>
+          <p className="text-lg text-primary/70 dark:text-dark-text-secondary max-w-2xl mx-auto">
+            Stay updated with the latest news, insights, and developments in the world of IPv6
+          </p>
         </div>
-      </section>
 
-      {/* Categories */}
-      <section className="py-8 px-4">
-        <div className="container mx-auto">
-          <div className="flex flex-wrap justify-center gap-4">
-            {categories.map((category) => (
-              <motion.button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`btn ${
-                  selectedCategory === category.id
-                    ? 'btn-primary'
-                    : 'btn-ghost'
-                }`}
-                whileHover={{ y: -2 }}
-              >
-                {category.name}
-              </motion.button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Blog Posts */}
-      <section className="py-12 px-4">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPosts.map((post, index) => (
-              <motion.article
-                key={post.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white dark:bg-primary/5 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <div className="relative h-48 overflow-hidden">
+        {/* Blog Posts Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map((post) => (
+            <article
+              key={post.id}
+              className="bg-white dark:bg-dark-bg-tertiary rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+            >
+              {post.image_url && (
+                <div className="relative h-48 w-full">
                   <img
-                    src={post.image}
+                    src={post.image_url}
                     alt={post.title}
-                    className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-300"
+                    className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4">
-                    <span className="px-3 py-1 bg-accent text-primary rounded-full text-sm font-semibold">
-                      {post.category}
-                    </span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                </div>
+              )}
+              <div className="p-6">
+                <div className="flex items-center space-x-4 text-sm text-primary/60 dark:text-dark-text-secondary/60 mb-4">
+                  <div className="flex items-center">
+                    <UserIcon className="h-4 w-4 mr-1" />
+                    <span>{post.author}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CalendarIcon className="h-4 w-4 mr-1" />
+                    <span>{post.published_on ? new Date(post.published_on).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    }) : 'Not published'}</span>
                   </div>
                 </div>
-                <div className="p-6">
-                  <div className="flex items-center gap-4 text-sm text-primary/60 dark:text-secondary/60 mb-4">
-                    <div className="flex items-center gap-2">
-                      <FaUser className="text-accent" />
-                      <span>{post.author}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <FaCalendar className="text-accent" />
-                      <span>{post.date}</span>
-                    </div>
+
+                <h2 className="text-xl font-semibold text-primary dark:text-dark-text-primary mb-3 line-clamp-2">
+                  {post.title}
+                </h2>
+
+                <p className="text-primary/80 dark:text-dark-text-secondary mb-4 line-clamp-3">
+                  {post.short_description || post.content}
+                </p>
+
+                {post.tags && (
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {post.tags.map((tag, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1 text-xs rounded-full bg-primary/10 dark:bg-dark-text-accent/10 text-primary dark:text-dark-text-accent"
+                      >
+                        {tag}
+                      </span>
+                    ))}
                   </div>
-                  <h2 className="text-xl font-bold text-primary dark:text-white mb-3">
-                    {post.title}
-                  </h2>
-                  <p className="text-primary/80 dark:text-secondary/80 mb-4">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-primary/60 dark:text-secondary/60">
-                      {post.readTime}
-                    </span>
-                    <div className="flex items-center gap-4">
-                      <button className="btn btn-ghost">
-                        <FaShare />
-                      </button>
-                      <button className="btn btn-ghost">
-                        <FaRegBookmark />
-                      </button>
-                    </div>
-                  </div>
+                )}
+
+                <div className="flex items-center justify-between">
+                  <Link
+                    to={`/blog/${post.id}`}
+                    className="inline-flex items-center text-green-500 dark:text-green-400 hover:text-green-600 dark:hover:text-green-300 transition-colors duration-300"
+                  >
+                    Read More
+                    <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-1" />
+                  </Link>
+
+                  {post.file_url && (
+                    <a
+                      href={post.file_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-primary/60 dark:text-dark-text-secondary/60 hover:text-green-500 dark:hover:text-green-400 transition-colors duration-300"
+                    >
+                      <DocumentIcon className="h-4 w-4 mr-1" />
+                      <span className="text-sm">View Attachment</span>
+                    </a>
+                  )}
                 </div>
-              </motion.article>
-            ))}
-          </div>
+              </div>
+            </article>
+          ))}
         </div>
-      </section>
+
+        {posts.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-primary/60 dark:text-dark-text-secondary">
+              No blog posts available at the moment.
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
