@@ -66,16 +66,12 @@ function Documentation() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">
-        Documentation
+      <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
+        IPv6 Documentation
       </h1>
-
-      <div className="mb-12">
-        <p className="text-lg text-primary/80 dark:text-secondary/80 leading-relaxed">
-          Comprehensive documentation and technical resources to help you understand, implement, 
-          and optimize IPv6 in your network infrastructure.
-        </p>
-      </div>
+      <p className="text-lg text-black/80 dark:text-white/80 max-w-2xl mx-auto">
+        Comprehensive guides and technical documentation for IPv6
+      </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {documentationSections.map((section, index) => (
@@ -91,8 +87,12 @@ function Documentation() {
                   href={item.link}
                   className="block p-4 rounded-lg border border-primary/10 dark:border-secondary/10 hover:border-accent/50 dark:hover:border-accent/50 transform hover:scale-105 transition-all duration-300"
                 >
-                  <h3 className="text-lg font-medium text-accent mb-2">{item.title}</h3>
-                  <p className="text-primary/80 dark:text-secondary/80">{item.description}</p>
+                  <h3 className="text-xl font-semibold text-black dark:text-white mb-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-black/80 dark:text-white/80 mb-4">
+                    {item.description}
+                  </p>
                 </a>
               ))}
             </div>

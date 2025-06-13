@@ -70,7 +70,7 @@ function Footer() {
   ];
 
   return (
-    <footer className="bg-white dark:bg-dark-bg-primary text-primary dark:text-dark-text-primary">
+    <footer className="bg-white dark:bg-dark-bg-primary">
       {/* Main Footer Content */}
       <div className="container mx-auto px-8 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -83,13 +83,13 @@ function Footer() {
                 className="h-16 w-auto transform group-hover:scale-105 transition-transform duration-300" 
               />
               <div>
-                <h3 className="text-2xl font-bold bg-gradient-to-r from-green-500 to-green-400 bg-clip-text text-transparent group-hover:from-green-400 group-hover:to-green-500 transition-all duration-300">
+                <h3 className="text-2xl font-bold text-black dark:text-white group-hover:text-yellow-500 dark:group-hover:text-yellow-400 transition-all duration-300">
                   IPv6 Awareness
                 </h3>
-                <p className="text-base text-primary/60 dark:text-dark-text-secondary">Empowering the future of internet connectivity</p>
+                <p className="text-base text-black/80 dark:text-white/80">Empowering the future of internet connectivity</p>
               </div>
             </div>
-            <p className="text-lg text-primary/80 dark:text-dark-text-secondary mb-8">
+            <p className="text-lg text-black/80 dark:text-white/80 mb-8">
               Promoting IPv6 adoption and education worldwide through comprehensive resources, training, and community engagement.
             </p>
             <div className="flex space-x-6">
@@ -97,7 +97,7 @@ function Footer() {
                 <a
                   key={social.name}
                   href={social.url}
-                  className="text-primary/60 dark:text-dark-text-secondary hover:text-green-500 dark:hover:text-green-400 transform hover:scale-110 transition-all duration-300"
+                  className="text-black/80 dark:text-white/80 hover:text-yellow-500 dark:hover:text-yellow-400 transform hover:scale-110 transition-all duration-300"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.name}
@@ -113,7 +113,7 @@ function Footer() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               {Object.entries(footerLinks).map(([category, links]) => (
                 <div key={category} className="flex flex-col">
-                  <h4 className="text-lg font-semibold mb-4 bg-gradient-to-r from-green-500 to-green-400 bg-clip-text text-transparent capitalize">
+                  <h4 className="text-lg font-semibold mb-4 text-primary capitalize">
                     {category}
                   </h4>
                   <ul className="space-y-3">
@@ -121,7 +121,7 @@ function Footer() {
                       <li key={path}>
                         <Link
                           to={path}
-                          className="text-primary/80 dark:text-dark-text-secondary hover:text-green-500 dark:hover:text-green-400 transform hover:translate-x-1 transition-all duration-300 inline-block text-base"
+                          className="text-black/80 dark:text-white/80 hover:text-primary dark:hover:text-primary transform hover:translate-x-1 transition-all duration-300 inline-block text-base"
                         >
                           {label}
                         </Link>
@@ -136,8 +136,8 @@ function Footer() {
       </div>
 
       {/* Bottom Footer */}
-      <div className="mt-12 border-t border-primary/10 dark:border-dark-border pt-6 text-center">
-        <p className="text-sm text-primary/60 dark:text-dark-text-secondary">
+      <div className="mt-12 border-t border-gray-200 dark:border-gray-700 pt-6 text-center">
+        <p className="text-sm text-black/80 dark:text-white/80">
           &copy; {currentYear} IPv6 Awareness. All rights reserved.
         </p>
       </div>

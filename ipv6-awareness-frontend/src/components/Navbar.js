@@ -64,13 +64,13 @@ function Navbar() {
                     to={path}
                     className={`relative px-2 py-1 font-medium transition-colors ${
                       isActive(path)
-                        ? 'text-accent dark:text-dark-text-accent'
-                        : 'text-primary/80 dark:text-dark-text-secondary hover:text-accent dark:hover:text-dark-text-accent'
+                        ? 'text-yellow-500 dark:text-yellow-400'
+                        : 'text-black dark:text-white hover:text-yellow-500 dark:hover:text-yellow-400'
                     }`}
                   >
                     {label}
                     {isActive(path) && (
-                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent dark:bg-dark-text-accent transform scale-x-100 transition-transform" />
+                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-yellow-500 dark:bg-yellow-400 transform scale-x-100 transition-transform" />
                     )}
                   </Link>
                 </li>
@@ -126,8 +126,8 @@ function Navbar() {
                   to={path}
                   className={`block px-4 py-2 rounded-lg transition-colors ${
                     isActive(path)
-                      ? 'bg-accent/10 dark:bg-dark-bg-tertiary text-accent dark:text-dark-text-accent'
-                      : 'text-primary/80 dark:text-dark-text-secondary hover:bg-primary/10 dark:hover:bg-dark-bg-tertiary'
+                      ? 'bg-yellow-500/10 dark:bg-yellow-400/10 text-yellow-500 dark:text-yellow-400'
+                      : 'text-black dark:text-white hover:bg-yellow-500/10 dark:hover:bg-yellow-400/10'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >

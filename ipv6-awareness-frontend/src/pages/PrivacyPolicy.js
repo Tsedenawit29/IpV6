@@ -8,7 +8,7 @@ function PrivacyPolicy() {
       <div className="container mx-auto px-4 py-12">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-dark-text-primary mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#00C47C] dark:text-white mb-6">
             Privacy Policy
           </h1>
           <p className="text-lg text-primary/70 dark:text-dark-text-secondary max-w-3xl mx-auto">
@@ -30,7 +30,7 @@ function PrivacyPolicy() {
             <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
               <div className="flex items-center mb-6">
                 <ShieldCheckIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
-                <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary">
+                <h2 className="text-2xl font-semibold text-[#00C47C] dark:text-white">
                   Information We Collect
                 </h2>
               </div>
@@ -50,7 +50,7 @@ function PrivacyPolicy() {
             <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
               <div className="flex items-center mb-6">
                 <DocumentTextIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
-                <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary">
+                <h2 className="text-2xl font-semibold text-[#00C47C] dark:text-white">
                   How We Use Your Information
                 </h2>
               </div>
@@ -70,7 +70,7 @@ function PrivacyPolicy() {
             <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
               <div className="flex items-center mb-6">
                 <UserGroupIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
-                <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary">
+                <h2 className="text-2xl font-semibold text-[#00C47C] dark:text-white">
                   Information Sharing
                 </h2>
               </div>
@@ -89,7 +89,7 @@ function PrivacyPolicy() {
             <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
               <div className="flex items-center mb-6">
                 <LockClosedIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
-                <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary">
+                <h2 className="text-2xl font-semibold text-[#00C47C] dark:text-white">
                   Data Security
                 </h2>
               </div>
@@ -109,7 +109,7 @@ function PrivacyPolicy() {
 
           {/* Contact Information */}
           <div className="mt-12 text-center">
-            <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary mb-4">
+            <h2 className="text-2xl font-semibold text-[#00C47C] dark:text-white mb-4">
               Questions About Our Privacy Policy?
             </h2>
             <p className="text-primary/70 dark:text-dark-text-secondary mb-6">

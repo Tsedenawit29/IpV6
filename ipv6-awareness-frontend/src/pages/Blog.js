@@ -91,11 +91,11 @@ function Blog() {
       <div className="container mx-auto px-4 py-8">
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-dark-text-primary mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
             IPv6 Blog
           </h1>
-          <p className="text-lg text-primary/70 dark:text-dark-text-secondary max-w-2xl mx-auto">
-            Stay updated with the latest news, insights, and developments in the world of IPv6
+          <p className="text-lg text-black/80 dark:text-white/80 max-w-2xl mx-auto">
+            Latest news, updates, and insights about IPv6
           </p>
         </div>
 
@@ -132,12 +132,12 @@ function Blog() {
                   </div>
                 </div>
 
-                <h2 className="text-xl font-semibold text-primary dark:text-dark-text-primary mb-3 line-clamp-2">
+                <h3 className="text-xl font-semibold text-black dark:text-white mb-3">
                   {post.title}
-                </h2>
+                </h3>
 
-                <p className="text-primary/80 dark:text-dark-text-secondary mb-4 line-clamp-3">
-                  {post.short_description || post.content}
+                <p className="text-black/80 dark:text-white/80 mb-4">
+                  {post.excerpt}
                 </p>
 
                 {post.tags && (

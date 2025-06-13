@@ -44,11 +44,11 @@ function FAQ() {
       <div className="container mx-auto px-4 py-12">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-dark-text-primary mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
             Frequently Asked Questions
           </h1>
-          <p className="text-lg text-primary/70 dark:text-dark-text-secondary max-w-3xl mx-auto">
-            Find answers to common questions about IPv6 implementation, benefits, and best practices.
+          <p className="text-lg text-black/80 dark:text-white/80 max-w-2xl mx-auto">
+            Find answers to common questions about IPv6
           </p>
         </div>
 
@@ -65,7 +65,7 @@ function FAQ() {
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 >
                   <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-primary dark:text-dark-text-primary">
+                    <h3 className="text-xl font-semibold text-black dark:text-white mb-3">
                       {faq.question}
                     </h3>
                     {openIndex === index ? (
@@ -77,7 +77,7 @@ function FAQ() {
                 </button>
                 {openIndex === index && (
                   <div className="px-6 pb-4">
-                    <p className="text-primary/80 dark:text-dark-text-secondary">
+                    <p className="text-black/80 dark:text-white/80">
                       {faq.answer}
                     </p>
                   </div>

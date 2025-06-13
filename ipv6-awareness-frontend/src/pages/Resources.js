@@ -91,10 +91,10 @@ function Resources() {
       <div className="container mx-auto px-4 py-8">
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-dark-text-primary mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
             IPv6 Resources
           </h1>
-          <p className="text-lg text-primary/70 dark:text-dark-text-secondary max-w-2xl mx-auto">
+          <p className="text-lg text-black/80 dark:text-white/80 max-w-2xl mx-auto">
             Explore our comprehensive collection of IPv6 resources, guides, and tools
           </p>
         </div>
@@ -107,7 +107,7 @@ function Resources() {
               className={`px-4 py-2 rounded-lg transition-colors duration-300 ${
                 selectedCategory === 'all'
                   ? 'bg-green-500 text-white dark:bg-green-600'
-                  : 'bg-white dark:bg-dark-bg-tertiary text-primary dark:text-dark-text-primary hover:bg-green-50 dark:hover:bg-dark-bg-secondary'
+                  : 'bg-white dark:bg-dark-bg-tertiary text-black dark:text-white hover:bg-green-50 dark:hover:bg-dark-bg-secondary'
               }`}
             >
               All Resources
@@ -119,7 +119,7 @@ function Resources() {
                 className={`px-4 py-2 rounded-lg transition-colors duration-300 ${
                   selectedCategory === category
                     ? 'bg-green-500 text-white dark:bg-green-600'
-                    : 'bg-white dark:bg-dark-bg-tertiary text-primary dark:text-dark-text-primary hover:bg-green-50 dark:hover:bg-dark-bg-secondary'
+                    : 'bg-white dark:bg-dark-bg-tertiary text-black dark:text-white hover:bg-green-50 dark:hover:bg-dark-bg-secondary'
                 }`}
               >
                 {category}
@@ -146,7 +146,7 @@ function Resources() {
                 </div>
               )}
               <div className="p-6">
-                <div className="flex items-center space-x-4 text-sm text-primary/60 dark:text-dark-text-secondary/60 mb-4">
+                <div className="flex items-center space-x-4 text-sm text-black/60 dark:text-white/60 mb-4">
                   <div className="flex items-center">
                     <TagIcon className="h-4 w-4 mr-1" />
                     <span>{resource.category}</span>
@@ -159,11 +159,11 @@ function Resources() {
                   )}
                 </div>
 
-                <h3 className="text-xl font-semibold text-primary dark:text-dark-text-primary mb-3">
+                <h3 className="text-xl font-semibold text-black dark:text-white mb-3">
                   {resource.title}
                 </h3>
 
-                <p className="text-primary/80 dark:text-dark-text-secondary mb-4 line-clamp-3">
+                <p className="text-black/80 dark:text-white/80 mb-4 line-clamp-3">
                   {resource.description}
                 </p>
 

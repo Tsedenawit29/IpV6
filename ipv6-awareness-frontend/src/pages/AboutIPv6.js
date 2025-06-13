@@ -96,20 +96,20 @@ function AboutIPv6() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="relative min-h-[90vh] flex items-center justify-center bg-gradient-to-br from-primary/90 via-primary/80 to-primary-dark dark:from-dark-bg-primary dark:via-dark-bg-secondary dark:to-dark-bg-primary text-white overflow-hidden"
+        className="relative min-h-[90vh] flex items-center justify-center bg-gradient-to-br from-white via-primary/10 to-primary/5 dark:from-dark-bg-primary dark:via-dark-bg-secondary dark:to-dark-bg-primary text-black dark:text-white overflow-hidden"
       >
         {/* Background Elements */}
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-10"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary-dark/90 dark:from-dark-bg-primary/90 dark:to-dark-bg-primary/90"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,255,0,0.15),transparent_50%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(0,255,157,0.08),transparent_50%)]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,215,0,0.15),transparent_50%)] dark:bg-[radial-gradient(circle_at_70%_80%,rgba(0,255,157,0.08),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-5"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-white/90 to-white/80 dark:from-dark-bg-primary/90 dark:to-dark-bg-primary/90"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,196,124,0.1),transparent_50%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(0,255,157,0.05),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(0,196,124,0.1),transparent_50%)] dark:bg-[radial-gradient(circle_at_70%_80%,rgba(0,255,157,0.05),transparent_50%)]"></div>
         
         {/* Floating Elements */}
         <div className="absolute inset-0 overflow-hidden">
           {[...Array(20)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-2 h-2 bg-accent/30 dark:bg-dark-text-accent/30 rounded-full"
+              className="absolute w-2 h-2 bg-primary/20 dark:bg-dark-text-accent/20 rounded-full"
               initial={{ 
                 x: Math.random() * window.innerWidth,
                 y: Math.random() * window.innerHeight,
@@ -142,9 +142,9 @@ function AboutIPv6() {
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="inline-block p-4 rounded-2xl bg-accent/20 dark:bg-dark-bg-tertiary backdrop-blur-sm mb-8"
+                  className="inline-block p-4 rounded-2xl bg-primary/10 dark:bg-dark-bg-tertiary backdrop-blur-sm mb-8"
                 >
-                  <FaInfoCircle className="text-6xl text-accent dark:text-dark-text-accent" />
+                  <FaInfoCircle className="text-6xl text-primary dark:text-dark-text-accent" />
                 </motion.div>
                 
                 <div className="space-y-6">
@@ -152,7 +152,7 @@ function AboutIPv6() {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="text-3xl font-semibold text-accent dark:text-dark-text-accent"
+                    className="text-3xl font-semibold text-primary dark:text-dark-text-accent"
                   >
                     <span className="inline-block transform hover:scale-105 transition-transform duration-300">
                       Understanding IPv6
@@ -163,12 +163,12 @@ function AboutIPv6() {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.3 }}
-                    className="text-6xl md:text-7xl font-bold leading-tight"
+                    className="text-4xl md:text-5xl lg:text-6xl font-bold text-black dark:text-white mb-6"
                   >
                     The Next Generation{' '}
                     <span className="relative inline-block group">
-                      <span className="text-accent dark:text-dark-text-accent">Internet Protocol</span>
-                      <span className="absolute -bottom-2 left-0 w-full h-1 bg-accent/50 dark:bg-dark-text-accent/50 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                      <span className="text-primary dark:text-dark-text-accent">Internet Protocol</span>
+                      <span className="absolute -bottom-2 left-0 w-full h-1 bg-primary/50 dark:bg-dark-text-accent/50 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
                     </span>
                   </motion.h1>
                   
@@ -176,7 +176,7 @@ function AboutIPv6() {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.4 }}
-                    className="text-xl md:text-2xl text-white/90 dark:text-dark-text-secondary leading-relaxed"
+                    className="text-xl md:text-2xl text-black/80 dark:text-white/80 leading-relaxed"
                   >
                     Discover the future of internet addressing and connectivity
                   </motion.p>
@@ -235,184 +235,108 @@ function AboutIPv6() {
       </motion.section>
 
       {/* Tabs Section */}
-      <section className="py-20 bg-white dark:bg-dark-bg-secondary">
-        <div className="container mx-auto px-4">
-          <div className="max-w-7xl mx-auto">
-            {/* Tab Navigation */}
-            <div className="flex flex-wrap justify-center gap-4 mb-16">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`btn ${
-                    activeTab === tab.id
-                      ? 'btn-primary'
-                      : 'btn-outline'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
+      <section className="py-16 px-4">
+        <div className="container mx-auto">
+          <div className="flex justify-center space-x-4 mb-8">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-6 py-3 rounded-lg transition-colors duration-300 ${
+                  activeTab === tab.id
+                    ? 'bg-primary text-white dark:bg-primary-dark'
+                    : 'bg-white dark:bg-dark-bg-tertiary text-black dark:text-white hover:bg-gray-50 dark:hover:bg-dark-bg-secondary'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
 
-            {/* Tab Content */}
-            <div className="bg-white dark:bg-dark-bg-secondary rounded-xl shadow-lg p-8">
-              {activeTab === 'overview' && (
-                <div className="space-y-8">
-                  <h2 className="text-3xl font-bold text-primary dark:text-dark-text-primary mb-6">
-                    What is IPv6?
-                  </h2>
-                  <p className="text-lg text-primary/80 dark:text-dark-text-secondary leading-relaxed">
-                    IPv6 (Internet Protocol version 6) is the most recent version of the Internet Protocol, designed to replace IPv4. It provides a vastly larger address space and improved features for the modern internet.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-                    {features.map((feature, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg"
-                      >
-                        <div className="flex items-start gap-4">
-                          <div className="text-accent dark:text-dark-text-accent">
-                            {feature.icon}
-                          </div>
-                          <div>
-                            <h3 className="text-xl font-bold text-primary dark:text-dark-text-primary mb-2">
-                              {feature.title}
-                            </h3>
-                            <p className="text-primary/80 dark:text-dark-text-secondary">
-                              {feature.description}
-                            </p>
-                          </div>
+          {/* Tab Content */}
+          <div className="mt-8">
+            {activeTab === 'overview' && (
+              <div className="space-y-8">
+                <h2 className="text-3xl font-bold text-[#00C47C] dark:text-white mb-6">
+                  What is IPv6?
+                </h2>
+                <p className="text-lg text-primary/80 dark:text-dark-text-secondary leading-relaxed">
+                  IPv6 (Internet Protocol version 6) is the most recent version of the Internet Protocol, designed to replace IPv4. It provides a vastly larger address space and improved features for the modern internet.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+                  {features.map((feature, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg"
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className="text-accent dark:text-dark-text-accent">
+                          {feature.icon}
                         </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {activeTab === 'benefits' && (
-                <div className="space-y-8">
-                  <h2 className="text-3xl font-bold text-primary dark:text-dark-text-primary mb-6">
-                    Key Benefits
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {benefits.map((benefit, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg"
-                      >
-                        <div className="flex items-start gap-4">
-                          <div className="text-accent dark:text-dark-text-accent">
-                            {benefit.icon}
-                          </div>
-                          <div>
-                            <h3 className="text-xl font-bold text-primary dark:text-dark-text-primary mb-2">
-                              {benefit.title}
-                            </h3>
-                            <p className="text-primary/80 dark:text-dark-text-secondary mb-4">
-                              {benefit.description}
-                            </p>
-                            <div className="text-accent dark:text-dark-text-accent font-semibold">
-                              {benefit.stat}
-                            </div>
-                            <p className="text-primary/60 dark:text-dark-text-secondary text-sm mt-2">
-                              {benefit.details}
-                            </p>
-                          </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-[#00C47C] dark:text-white mb-2">
+                            {feature.title}
+                          </h3>
+                          <p className="text-primary/80 dark:text-dark-text-secondary">
+                            {feature.description}
+                          </p>
                         </div>
-                      </motion.div>
-                    ))}
-                  </div>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
-              )}
+              </div>
+            )}
 
-              {activeTab === 'implementation' && (
-                <div className="space-y-8">
-                  <h2 className="text-3xl font-bold text-primary dark:text-dark-text-primary mb-6">
-                    Implementation Guide
-                  </h2>
-                  <p className="text-lg text-primary/80 dark:text-dark-text-secondary leading-relaxed">
-                    Learn how to implement IPv6 in your network and prepare for the future of internet connectivity.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg"
-                    >
-                      <div className="text-accent dark:text-dark-text-accent mb-4">
-                        <FaDownload className="text-4xl" />
-                      </div>
-                      <h3 className="text-xl font-bold text-primary dark:text-dark-text-primary mb-2">
-                        Get Started
+            {activeTab === 'benefits' && (
+              <div className="space-y-8">
+                <h2 className="text-3xl font-bold text-black dark:text-white mb-6">Benefits</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {benefits.map((benefit, index) => (
+                    <div key={index} className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg">
+                      <div className="text-accent dark:text-dark-text-accent mb-4">{benefit.icon}</div>
+                      <h3 className="text-xl font-semibold text-black dark:text-white mb-3">
+                        {benefit.title}
                       </h3>
-                      <p className="text-primary/80 dark:text-dark-text-secondary mb-4">
-                        Download our implementation guide and start your IPv6 journey.
+                      <p className="text-black/80 dark:text-white/80 mb-4">
+                        {benefit.description}
                       </p>
-                      <button
-                        onClick={() => handleExternalLink('https://example.com/ipv6-guide')}
-                        className="text-accent dark:text-dark-text-accent hover:underline"
-                      >
-                        Download Guide →
-                      </button>
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.1 }}
-                      className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg"
-                    >
-                      <div className="text-accent dark:text-dark-text-accent mb-4">
-                        <FaBook className="text-4xl" />
-                      </div>
-                      <h3 className="text-xl font-bold text-primary dark:text-dark-text-primary mb-2">
-                        Documentation
-                      </h3>
-                      <p className="text-primary/80 dark:text-dark-text-secondary mb-4">
-                        Access detailed documentation and technical specifications.
-                      </p>
-                      <button
-                        onClick={() => handleExternalLink('https://example.com/ipv6-docs')}
-                        className="text-accent dark:text-dark-text-accent hover:underline"
-                      >
-                        View Docs →
-                      </button>
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                      className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg"
-                    >
-                      <div className="text-accent dark:text-dark-text-accent mb-4">
-                        <FaUsers className="text-4xl" />
-                      </div>
-                      <h3 className="text-xl font-bold text-primary dark:text-dark-text-primary mb-2">
-                        Community
-                      </h3>
-                      <p className="text-primary/80 dark:text-dark-text-secondary mb-4">
-                        Join our community for support and collaboration.
-                      </p>
-                      <button
-                        onClick={() => handleExternalLink('https://example.com/ipv6-community')}
-                        className="text-accent dark:text-dark-text-accent hover:underline"
-                      >
-                        Join Community →
-                      </button>
-                    </motion.div>
-                  </div>
+                      <div className="text-accent dark:text-dark-text-accent font-semibold">{benefit.stat}</div>
+                    </div>
+                  ))}
                 </div>
-              )}
-            </div>
+              </div>
+            )}
+
+            {activeTab === 'implementation' && (
+              <div className="space-y-8">
+                <h2 className="text-3xl font-bold text-black dark:text-white mb-6">Implementation</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {features.map((feature, index) => (
+                    <div key={index} className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg">
+                      <div className="text-accent dark:text-dark-text-accent mb-4">{feature.icon}</div>
+                      <h3 className="text-xl font-semibold text-black dark:text-white mb-3">
+                        {feature.title}
+                      </h3>
+                      <p className="text-black/80 dark:text-white/80 mb-4">
+                        {feature.description}
+                      </p>
+                      <ul className="space-y-2">
+                        {feature.details.map((detail, idx) => (
+                          <li key={idx} className="text-black/80 dark:text-white/80 flex items-center">
+                            <span className="text-accent dark:text-dark-text-accent mr-2">•</span>
+                            {detail}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>

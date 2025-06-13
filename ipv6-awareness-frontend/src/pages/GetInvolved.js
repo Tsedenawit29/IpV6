@@ -97,11 +97,11 @@ function GetInvolved() {
         className="text-center py-12 bg-white dark:bg-[#1E1E1E] shadow-lg"
       >
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#121212] dark:text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
             Get Involved
           </h1>
-          <p className="text-lg text-[#121212]/80 dark:text-white/80 max-w-2xl mx-auto">
-            Join our community and help shape the future of IPv6
+          <p className="text-lg text-black/80 dark:text-white/80 max-w-2xl mx-auto">
+            Join us in promoting IPv6 adoption and education
           </p>
         </div>
       </motion.div>
@@ -116,17 +116,17 @@ function GetInvolved() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: sectionIndex * 0.2 }}
-              className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-8 shadow-lg border border-[#FFD700]/10"
+              className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-8 shadow-lg border border-[#00C47C]/20"
             >
               <div className="flex items-center gap-4 mb-8">
-                <div className="p-4 bg-[#FFD700]/10 rounded-xl text-[#FFD700] border border-[#FFD700]/20">
+                <div className="p-4 bg-[#00C47C]/10 rounded-xl text-[#00C47C] border border-[#00C47C]/20">
                   {section.icon}
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-[#121212] dark:text-white">
+                  <h2 className="text-2xl font-bold text-black dark:text-white">
                     {section.title}
                   </h2>
-                  <p className="text-[#121212]/80 dark:text-white/80">
+                  <p className="text-black/80 dark:text-white/80">
                     {section.description}
                   </p>
                 </div>
@@ -137,17 +137,17 @@ function GetInvolved() {
                 {section.items.map((item, itemIndex) => (
                   <div
                     key={itemIndex}
-                    className="flex flex-col p-4 rounded-xl transition-all duration-300 border border-[#FFD700]/10" // Simplified styling
+                    className="flex flex-col p-4 rounded-xl transition-all duration-300 border border-[#00C47C]/20"
                   >
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="text-[#FFD700]">
+                      <div className="text-[#00C47C]">
                         {item.icon}
                       </div>
-                      <h3 className="text-lg font-semibold text-[#121212] dark:text-white">
+                      <h3 className="text-xl font-semibold text-black dark:text-white mb-3">
                         {item.title}
                       </h3>
                     </div>
-                    <p className="text-sm text-[#121212]/80 dark:text-white/80 mb-4">
+                    <p className="text-black/80 dark:text-white/80 mb-4">
                       {item.description}
                     </p>
                     <button
@@ -171,11 +171,11 @@ function GetInvolved() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="text-center mt-12"
         >
-          <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-12 shadow-lg border border-[#FFD700]/10">
-            <h2 className="text-3xl font-bold text-[#121212] dark:text-white mb-4">
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-12 shadow-lg border border-[#00C47C]/20">
+            <h2 className="text-3xl font-bold text-black dark:text-white mb-4">
               Ready to Make a Difference?
             </h2>
-            <p className="text-lg text-[#121212]/80 dark:text-white/80 mb-8 max-w-2xl mx-auto">
+            <p className="text-black/80 dark:text-white/80 mb-8 max-w-2xl mx-auto">
               Join our community today and help shape the future of IPv6 adoption
             </p>
             <div className="flex flex-wrap justify-center gap-4">

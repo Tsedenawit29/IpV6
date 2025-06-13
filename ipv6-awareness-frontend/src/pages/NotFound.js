@@ -12,13 +12,13 @@ function NotFound() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-6xl font-bold text-[#004D00] dark:text-white mb-4">
+          <h1 className="text-6xl font-bold text-black dark:text-white mb-4">
             404
           </h1>
-          <h2 className="text-3xl font-bold text-[#004D00] dark:text-white mb-6">
+          <h2 className="text-3xl font-bold text-black dark:text-white mb-6">
             Page Not Found
           </h2>
-          <p className="text-lg text-[#004D00]/80 dark:text-[#009900]/80 mb-8 max-w-md mx-auto">
+          <p className="text-lg text-black/80 dark:text-white/80 mb-8 max-w-md mx-auto">
             The page you're looking for doesn't exist or has been moved.
           </p>
           <div className="flex flex-wrap justify-center gap-4">

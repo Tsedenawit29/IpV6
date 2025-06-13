@@ -75,11 +75,11 @@ function Contact() {
             transition={{ duration: 0.5 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-dark-text-primary mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
               Contact Us
             </h1>
-            <p className="text-lg text-primary/80 dark:text-dark-text-secondary">
-              Get in touch with our team for any questions about IPv6
+            <p className="text-lg text-black/80 dark:text-white/80 max-w-2xl mx-auto">
+              Get in touch with our team for any questions or support
             </p>
           </motion.div>
         </div>
@@ -187,10 +187,10 @@ function Contact() {
                         {info.icon}
                       </div>
                       <div>
-                        <h3 className="font-semibold text-primary dark:text-dark-text-primary">
+                        <h3 className="text-xl font-semibold text-black dark:text-white mb-3">
                           {info.title}
                         </h3>
-                        <p className="text-primary/80 dark:text-dark-text-secondary">
+                        <p className="text-black/80 dark:text-white/80">
                           {info.value}
                         </p>
                       </div>
