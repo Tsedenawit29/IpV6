@@ -2,27 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './styles/hero.css';
+
 @layer base {
   body {
-    @apply bg-white dark:bg-primary text-primary dark:text-white;
+    @apply bg-white dark:bg-dark-bg-primary text-black dark:text-white;
   }
 }
 
 @layer components {
   /* Button Base Styles */
   .btn {
-    @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300 
-           transform hover:-translate-y-1 active:translate-y-0
-           focus:outline-none focus:ring-2 focus:ring-offset-2
-           bg-white dark:bg-primary-dark text-primary dark:text-white;
+    @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300;
   }
 
   /* Primary Button */
   .btn-primary {
-    @apply bg-white dark:bg-primary-dark text-primary dark:text-white
-           hover:bg-primary/10 dark:hover:bg-primary/20
-           focus:ring-primary/50
-           shadow-lg hover:shadow-xl;
+    @apply bg-primary text-white hover:bg-primary-dark;
   }
 
   /* Secondary Button */
@@ -43,10 +39,7 @@
 
   /* Outline Button */
   .btn-outline {
-    @apply bg-transparent border-2 border-primary text-primary 
-           dark:border-white dark:text-white
-           hover:bg-primary/10 dark:hover:bg-white/10
-           focus:ring-primary/50;
+    @apply border-2 border-primary text-primary hover:bg-primary hover:text-white;
   }
 
   /* Ghost Button */
@@ -60,4 +53,33 @@
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-[#e6b800];
   }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1.5s ease-out forwards;
+}
+
+.animate-slideUp {
+  animation: slideUp 1s ease-out forwards;
 }

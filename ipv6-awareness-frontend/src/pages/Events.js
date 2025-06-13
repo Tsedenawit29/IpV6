@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { CalendarIcon, MapPinIcon, ClockIcon, ArrowTopRightOnSquareIcon, TagIcon, DocumentIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { FaArrowRight, FaCalendar, FaMapMarkerAlt, FaUsers } from 'react-icons/fa';
 
 function Events() {
   const [events, setEvents] = useState([]);
@@ -76,204 +78,119 @@ function Events() {
   const pastEvents = events.filter(event => new Date(event.event_date) < new Date());
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary pt-20">
-      <div className="container mx-auto px-4 py-8">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
-            IPv6 Events
-          </h1>
-          <p className="text-lg text-black/80 dark:text-white/80 max-w-2xl mx-auto">
-            Upcoming events, webinars, and conferences about IPv6
-          </p>
+    <div className="min-h-screen bg-white dark:bg-dark-bg-primary">
+      {/* Hero Section */}
+      <section className="relative py-20 px-4 bg-gradient-to-br from-white via-primary/10 to-primary/5 dark:from-dark-bg-primary dark:via-primary/20 dark:to-primary/10">
+        <div className="absolute inset-0 hero-pattern"></div>
+        <div className="container mx-auto relative">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-6">
+              IPv6 <span className="text-primary">Events</span>
+            </h1>
+            <p className="text-lg text-black/80 dark:text-white/80 mb-8">
+              Join our upcoming events and webinars to learn more about IPv6 implementation and adoption.
+            </p>
+          </motion.div>
         </div>
+      </section>
 
-        {/* Upcoming Events */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary mb-8">
-            Upcoming Events
-          </h2>
+      {/* Events Grid */}
+      <section className="py-20 px-4 bg-white dark:bg-dark-bg-secondary">
+        <div className="container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {upcomingEvents.map((event) => (
-              <div
-                key={event.id}
-                className="bg-white dark:bg-dark-bg-tertiary rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+            {upcomingEvents.map((event, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="flex flex-col bg-white dark:bg-dark-bg-tertiary rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
               >
-                {event.image_url && (
-                  <div className="relative h-48 w-full">
-                    <img
-                      src={event.image_url}
-                      alt={event.title}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                  </div>
-                )}
                 <div className="p-6">
-                  <div className="flex items-center space-x-4 text-sm text-primary/60 dark:text-dark-text-secondary/60 mb-4">
-                    <div className="flex items-center">
-                      <CalendarIcon className="h-4 w-4 mr-1" />
-                      <span>{new Date(event.event_date).toLocaleDateString('en-US', {
+                  <div className="flex items-center gap-4 text-sm text-black/60 dark:text-white/60 mb-4">
+                    <div className="flex items-center gap-2">
+                      <FaCalendar className="w-4 h-4" />
+                      {new Date(event.event_date).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'
-                      })}</span>
+                      })}
                     </div>
-                    <div className="flex items-center">
-                      <ClockIcon className="h-4 w-4 mr-1" />
-                      <span>{event.time}</span>
+                    <div className="flex items-center gap-2">
+                      <FaMapMarkerAlt className="w-4 h-4" />
+                      {event.location}
                     </div>
                   </div>
-
-                  <h3 className="text-xl font-semibold text-black dark:text-white mb-3">
+                  <h3 className="text-xl font-bold text-black dark:text-white mb-3">
                     {event.title}
                   </h3>
-
-                  <p className="text-black/80 dark:text-white/80 mb-4 line-clamp-3">
+                  <p className="text-black/80 dark:text-white/80 mb-4">
                     {event.description}
                   </p>
-
-                  <div className="flex items-center space-x-4 text-sm text-primary/60 dark:text-dark-text-secondary/60 mb-4">
-                    <div className="flex items-center">
-                      <MapPinIcon className="h-4 w-4 mr-1" />
-                      <span>{event.location}</span>
-                    </div>
-                    {event.type && (
-                      <div className="flex items-center">
-                        <TagIcon className="h-4 w-4 mr-1" />
-                        <span>{event.type}</span>
-                      </div>
-                    )}
+                  <div className="flex items-center gap-2 text-sm text-black/60 dark:text-white/60 mb-6">
+                    <FaUsers className="w-4 h-4" />
+                    {event.attendees} attendees
                   </div>
-
-                  <div className="flex items-center justify-between">
-                    <Link
-                      to={`/events/${event.id}`}
-                      className="inline-flex items-center text-green-500 dark:text-green-400 hover:text-green-600 dark:hover:text-green-300 transition-colors duration-300"
-                    >
-                      Learn More
-                      <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-1" />
-                    </Link>
-
-                    {event.registration_url && (
-                      <a
-                        href={event.registration_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-primary/60 dark:text-dark-text-secondary/60 hover:text-green-500 dark:hover:text-green-400 transition-colors duration-300"
-                      >
-                        <DocumentIcon className="h-4 w-4 mr-1" />
-                        <span className="text-sm">Register</span>
-                      </a>
-                    )}
-                  </div>
+                  <Link 
+                    to={`/events/${event.id}`}
+                    className="group inline-flex items-center text-primary hover:text-primary-dark transition-colors duration-300"
+                  >
+                    Register Now
+                    <FaArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
+        </div>
+      </section>
 
-          {upcomingEvents.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-primary/60 dark:text-dark-text-secondary">
-                No upcoming events scheduled at the moment.
-              </p>
-            </div>
-          )}
-        </section>
-
-        {/* Past Events */}
-        <section>
-          <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary mb-8">
-            Past Events
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {pastEvents.map((event) => (
-              <div
-                key={event.id}
-                className="bg-white dark:bg-dark-bg-tertiary rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+      {/* CTA Section */}
+      <section className="py-20 px-4 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent dark:from-primary/20 dark:via-primary/10 dark:to-transparent">
+        <div className="container mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-6">
+              Host an Event
+            </h2>
+            <p className="text-black/80 dark:text-white/80 mb-12 text-lg">
+              Want to organize an IPv6 event in your community? We're here to help!
+            </p>
+            <div className="flex flex-wrap justify-center gap-6">
+              <Link 
+                to="/contact" 
+                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 ease-out transform bg-primary hover:bg-primary-dark rounded-lg hover:scale-105 hover:shadow-lg"
               >
-                {event.image_url && (
-                  <div className="relative h-48 w-full">
-                    <img
-                      src={event.image_url}
-                      alt={event.title}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                  </div>
-                )}
-                <div className="p-6">
-                  <div className="flex items-center space-x-4 text-sm text-primary/60 dark:text-dark-text-secondary/60 mb-4">
-                    <div className="flex items-center">
-                      <CalendarIcon className="h-4 w-4 mr-1" />
-                      <span>{new Date(event.event_date).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <ClockIcon className="h-4 w-4 mr-1" />
-                      <span>{event.time}</span>
-                    </div>
-                  </div>
-
-                  <h3 className="text-xl font-semibold text-black dark:text-white mb-3">
-                    {event.title}
-                  </h3>
-
-                  <p className="text-black/80 dark:text-white/80 mb-4 line-clamp-3">
-                    {event.description}
-                  </p>
-
-                  <div className="flex items-center space-x-4 text-sm text-primary/60 dark:text-dark-text-secondary/60 mb-4">
-                    <div className="flex items-center">
-                      <MapPinIcon className="h-4 w-4 mr-1" />
-                      <span>{event.location}</span>
-                    </div>
-                    {event.type && (
-                      <div className="flex items-center">
-                        <TagIcon className="h-4 w-4 mr-1" />
-                        <span>{event.type}</span>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <Link
-                      to={`/events/${event.id}`}
-                      className="inline-flex items-center text-green-500 dark:text-green-400 hover:text-green-600 dark:hover:text-green-300 transition-colors duration-300"
-                    >
-                      View Details
-                      <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-1" />
-                    </Link>
-
-                    {event.materials_url && (
-                      <a
-                        href={event.materials_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-primary/60 dark:text-dark-text-secondary/60 hover:text-green-500 dark:hover:text-green-400 transition-colors duration-300"
-                      >
-                        <DocumentIcon className="h-4 w-4 mr-1" />
-                        <span className="text-sm">View Materials</span>
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {pastEvents.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-primary/60 dark:text-dark-text-secondary">
-                No past events available.
-              </p>
+                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                <span className="absolute inset-0 w-full h-full bg-primary border-2 border-primary-dark group-hover:bg-primary-dark"></span>
+                <span className="relative flex items-center gap-2">
+                  Contact Us
+                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Link>
+              <Link 
+                to="/get-involved" 
+                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary transition-all duration-300 ease-out transform border-2 border-primary hover:bg-primary hover:text-white rounded-lg hover:scale-105 hover:shadow-lg"
+              >
+                <span className="relative flex items-center gap-2">
+                  Get Involved
+                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Link>
             </div>
-          )}
-        </section>
-      </div>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 }
