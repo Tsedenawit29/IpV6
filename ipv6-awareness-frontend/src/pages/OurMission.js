@@ -1,131 +1,35 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FaArrowRight, FaGlobe, FaUsers, FaBook, FaHandshake } from 'react-icons/fa';
+import { FaArrowRight, FaGlobe, FaUsers, FaLightbulb, FaHandshake } from 'react-icons/fa';
 
 const OurMission = () => {
   return (
-    <div className="min-h-screen bg-white dark:bg-dark-bg-primary">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 bg-gradient-to-br from-white via-primary/10 to-primary/5 dark:from-dark-bg-primary dark:via-primary/20 dark:to-primary/10">
+      <section className="relative min-h-[80vh] flex items-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-primary/5 to-accent/10 dark:from-dark-bg-primary dark:via-primary/10 dark:to-accent/20"></div>
         <div className="absolute inset-0 hero-pattern"></div>
-        <div className="container mx-auto relative">
+        
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.8 }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-black dark:text-white">
               Our <span className="text-primary">Mission</span>
             </h1>
-            <p className="text-lg text-black/80 dark:text-white/80 mb-8">
-              To accelerate the global adoption of IPv6 and ensure a sustainable future for internet connectivity.
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+              Empowering the future of internet connectivity through IPv6 adoption and education
             </p>
-            <div className="flex flex-wrap justify-center gap-6">
-              <Link 
-                to="/get-involved" 
-                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 ease-out transform bg-primary hover:bg-primary-dark rounded-lg hover:scale-105 hover:shadow-lg"
-              >
-                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
-                <span className="absolute inset-0 w-full h-full bg-primary border-2 border-primary-dark group-hover:bg-primary-dark"></span>
-                <span className="relative flex items-center gap-2">
-                  Join Us
-                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                </span>
-              </Link>
-              <Link 
-                to="/about-ipv6" 
-                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary transition-all duration-300 ease-out transform border-2 border-primary hover:bg-primary hover:text-white rounded-lg hover:scale-105 hover:shadow-lg"
-              >
-                <span className="relative flex items-center gap-2">
-                  Learn More
-                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                </span>
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Mission Statement Section */}
-      <section className="py-20 px-4 bg-white dark:bg-dark-bg-secondary">
-        <div className="container mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto"
-          >
-            <h2 className="text-3xl font-bold text-black dark:text-white mb-8 text-center">
-              Our Vision
-            </h2>
-            <div className="prose dark:prose-invert max-w-none">
-              <p className="text-black/80 dark:text-white/80 mb-6">
-                We envision a world where IPv6 is the standard protocol for internet communication, enabling seamless connectivity for billions of devices and supporting the growth of emerging technologies.
-              </p>
-              <p className="text-black/80 dark:text-white/80 mb-6">
-                Our mission is to drive the global transition to IPv6 through education, collaboration, and practical implementation support.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Goals Section */}
-      <section className="py-20 px-4 bg-gray-50 dark:bg-dark-bg-primary">
-        <div className="container mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto"
-          >
-            <h2 className="text-3xl font-bold text-black dark:text-white mb-12 text-center">
-              Our Goals
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {goals.map((goal, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="flex flex-col items-start p-6 bg-white dark:bg-dark-bg-tertiary rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
-                >
-                  <div className="text-primary mb-4">
-                    {goal.icon}
-                  </div>
-                  <h3 className="text-xl font-bold text-black dark:text-white mb-3">
-                    {goal.title}
-                  </h3>
-                  <p className="text-black/80 dark:text-white/80">
-                    {goal.description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent dark:from-primary/20 dark:via-primary/10 dark:to-transparent">
-        <div className="container mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-6">
-              Join Our Mission
-            </h2>
-            <p className="text-black/80 dark:text-white/80 mb-12 text-lg">
-              Be part of the IPv6 revolution and help shape the future of internet connectivity.
-            </p>
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="flex flex-wrap justify-center gap-4">
               <Link 
                 to="/get-involved" 
                 className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 ease-out transform bg-primary hover:bg-primary-dark rounded-lg hover:scale-105 hover:shadow-lg"
@@ -138,9 +42,110 @@ const OurMission = () => {
                 </span>
               </Link>
               <Link 
-                to="/contact" 
-                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary transition-all duration-300 ease-out transform border-2 border-primary hover:bg-primary hover:text-white rounded-lg hover:scale-105 hover:shadow-lg"
+                to="/resources" 
+                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary transition-all duration-300 ease-out transform bg-transparent hover:bg-primary-dark hover:text-white rounded-lg hover:scale-105 hover:shadow-lg border-2 border-primary"
               >
+                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                <span className="absolute inset-0 w-full h-full bg-transparent border-2 border-primary group-hover:bg-primary-dark"></span>
+                <span className="relative flex items-center gap-2">
+                  Explore Resources
+                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Mission Statement */}
+      <section className="py-20 bg-white dark:bg-dark-bg-primary">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold mb-6 text-black dark:text-white">
+              Our <span className="text-primary">Vision</span>
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              Promoting IPv6 adoption and education worldwide through comprehensive resources, training, and community engagement.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: <FaGlobe className="text-3xl text-primary" />,
+                title: "Global Impact",
+                description: "Working towards worldwide IPv6 adoption and implementation"
+              },
+              {
+                icon: <FaUsers className="text-3xl text-accent" />,
+                title: "Community Building",
+                description: "Fostering a strong and supportive IPv6 community"
+              },
+              {
+                icon: <FaLightbulb className="text-3xl text-primary" />,
+                title: "Education",
+                description: "Providing comprehensive training and resources"
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="group p-8 rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-bg-secondary dark:to-dark-bg-tertiary hover:shadow-lg transition-all duration-300"
+              >
+                <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  {item.icon}
+                </div>
+                <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">{item.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-20 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 dark:from-primary/10 dark:via-accent/10 dark:to-primary/10">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h2 className="text-4xl font-bold mb-6 text-black dark:text-white">
+              Join Our <span className="text-primary">Mission</span>
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+              Together, we can build a more connected and secure internet future
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link 
+                to="/get-involved" 
+                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 ease-out transform bg-primary hover:bg-primary-dark rounded-lg hover:scale-105 hover:shadow-lg"
+              >
+                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                <span className="absolute inset-0 w-full h-full bg-primary border-2 border-primary-dark group-hover:bg-primary-dark"></span>
+                <span className="relative flex items-center gap-2">
+                  Get Started
+                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Link>
+              <Link 
+                to="/contact" 
+                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary transition-all duration-300 ease-out transform bg-transparent hover:bg-primary-dark hover:text-white rounded-lg hover:scale-105 hover:shadow-lg border-2 border-primary"
+              >
+                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                <span className="absolute inset-0 w-full h-full bg-transparent border-2 border-primary group-hover:bg-primary-dark"></span>
                 <span className="relative flex items-center gap-2">
                   Contact Us
                   <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
@@ -153,28 +158,5 @@ const OurMission = () => {
     </div>
   );
 };
-
-const goals = [
-  {
-    icon: <FaGlobe className="w-8 h-8" />,
-    title: "Global Adoption",
-    description: "Drive worldwide IPv6 adoption through education and awareness campaigns."
-  },
-  {
-    icon: <FaUsers className="w-8 h-8" />,
-    title: "Community Building",
-    description: "Foster a strong community of IPv6 advocates and implementers."
-  },
-  {
-    icon: <FaBook className="w-8 h-8" />,
-    title: "Education",
-    description: "Provide comprehensive resources and training for IPv6 implementation."
-  },
-  {
-    icon: <FaHandshake className="w-8 h-8" />,
-    title: "Collaboration",
-    description: "Partner with organizations to accelerate IPv6 deployment."
-  }
-];
 
 export default OurMission; 

@@ -78,71 +78,138 @@ function Events() {
   const pastEvents = events.filter(event => new Date(event.event_date) < new Date());
 
   return (
-    <div className="min-h-screen bg-white dark:bg-dark-bg-primary">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 bg-gradient-to-br from-white via-primary/10 to-primary/5 dark:from-dark-bg-primary dark:via-primary/20 dark:to-primary/10">
+      <section className="relative min-h-[80vh] flex items-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-primary/5 to-accent/10 dark:from-dark-bg-primary dark:via-primary/10 dark:to-accent/20"></div>
         <div className="absolute inset-0 hero-pattern"></div>
-        <div className="container mx-auto relative">
+        
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.8 }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-black dark:text-white">
               IPv6 <span className="text-primary">Events</span>
             </h1>
-            <p className="text-lg text-black/80 dark:text-white/80 mb-8">
-              Join our upcoming events and webinars to learn more about IPv6 implementation and adoption.
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+              Join our upcoming events and workshops
             </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link 
+                to="/resources" 
+                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 ease-out transform bg-primary hover:bg-primary-dark rounded-lg hover:scale-105 hover:shadow-lg"
+              >
+                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                <span className="absolute inset-0 w-full h-full bg-primary border-2 border-primary-dark group-hover:bg-primary-dark"></span>
+                <span className="relative flex items-center gap-2">
+                  View Resources
+                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Link>
+              <Link 
+                to="/documentation" 
+                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary transition-all duration-300 ease-out transform bg-transparent hover:bg-primary-dark hover:text-white rounded-lg hover:scale-105 hover:shadow-lg border-2 border-primary"
+              >
+                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                <span className="absolute inset-0 w-full h-full bg-transparent border-2 border-primary group-hover:bg-primary-dark"></span>
+                <span className="relative flex items-center gap-2">
+                  Read Documentation
+                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Events Grid */}
-      <section className="py-20 px-4 bg-white dark:bg-dark-bg-secondary">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {upcomingEvents.map((event, index) => (
+      {/* Upcoming Events */}
+      <section className="py-20 bg-white dark:bg-dark-bg-primary">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold mb-6 text-black dark:text-white">
+              Upcoming <span className="text-primary">Events</span>
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              Join our community events and workshops
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                title: "IPv6 Implementation Workshop",
+                date: "March 20, 2024",
+                location: "Virtual Event",
+                attendees: "50+",
+                description: "Learn practical IPv6 implementation strategies",
+                link: "/events/ipv6-workshop"
+              },
+              {
+                title: "IPv6 Security Summit",
+                date: "April 5, 2024",
+                location: "New York, NY",
+                attendees: "100+",
+                description: "Explore IPv6 security best practices",
+                link: "/events/security-summit"
+              },
+              {
+                title: "IPv6 Community Meetup",
+                date: "April 15, 2024",
+                location: "San Francisco, CA",
+                attendees: "75+",
+                description: "Network with IPv6 professionals",
+                link: "/events/community-meetup"
+              }
+            ].map((event, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="flex flex-col bg-white dark:bg-dark-bg-tertiary rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+                viewport={{ once: true }}
+                className="group p-8 rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-bg-secondary dark:to-dark-bg-tertiary hover:shadow-lg transition-all duration-300"
               >
-                <div className="p-6">
-                  <div className="flex items-center gap-4 text-sm text-black/60 dark:text-white/60 mb-4">
-                    <div className="flex items-center gap-2">
-                      <FaCalendar className="w-4 h-4" />
-                      {new Date(event.event_date).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <FaMapMarkerAlt className="w-4 h-4" />
-                      {event.location}
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold text-black dark:text-white mb-3">
-                    {event.title}
-                  </h3>
-                  <p className="text-black/80 dark:text-white/80 mb-4">
-                    {event.description}
-                  </p>
-                  <div className="flex items-center gap-2 text-sm text-black/60 dark:text-white/60 mb-6">
-                    <FaUsers className="w-4 h-4" />
+                <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-300 mb-4">
+                  <span className="flex items-center gap-2">
+                    <FaCalendar className="text-primary" />
+                    {event.date}
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <FaMapMarkerAlt className="text-primary" />
+                    {event.location}
+                  </span>
+                </div>
+                <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">{event.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">{event.description}</p>
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center gap-2 text-sm text-primary">
+                    <FaUsers />
                     {event.attendees} attendees
-                  </div>
+                  </span>
                   <Link 
-                    to={`/events/${event.id}`}
-                    className="group inline-flex items-center text-primary hover:text-primary-dark transition-colors duration-300"
+                    to={event.link}
+                    className="group relative inline-flex items-center justify-center px-6 py-3 font-bold text-primary transition-all duration-300 ease-out transform bg-transparent hover:bg-primary-dark hover:text-white rounded-lg hover:scale-105 hover:shadow-lg border-2 border-primary"
                   >
-                    Register Now
-                    <FaArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
+                    <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                    <span className="absolute inset-0 w-full h-full bg-transparent border-2 border-primary group-hover:bg-primary-dark"></span>
+                    <span className="relative flex items-center gap-2">
+                      Register Now
+                      <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                    </span>
                   </Link>
                 </div>
               </motion.div>
@@ -151,22 +218,23 @@ function Events() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent dark:from-primary/20 dark:via-primary/10 dark:to-transparent">
-        <div className="container mx-auto">
+      {/* Call to Action */}
+      <section className="py-20 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 dark:from-primary/10 dark:via-accent/10 dark:to-primary/10">
+        <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-6">
-              Host an Event
+            <h2 className="text-4xl font-bold mb-6 text-black dark:text-white">
+              Host Your <span className="text-primary">Event</span>
             </h2>
-            <p className="text-black/80 dark:text-white/80 mb-12 text-lg">
-              Want to organize an IPv6 event in your community? We're here to help!
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+              Want to organize an IPv6 event? We can help!
             </p>
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="flex flex-wrap justify-center gap-4">
               <Link 
                 to="/contact" 
                 className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 ease-out transform bg-primary hover:bg-primary-dark rounded-lg hover:scale-105 hover:shadow-lg"
@@ -179,11 +247,13 @@ function Events() {
                 </span>
               </Link>
               <Link 
-                to="/get-involved" 
-                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary transition-all duration-300 ease-out transform border-2 border-primary hover:bg-primary hover:text-white rounded-lg hover:scale-105 hover:shadow-lg"
+                to="/resources" 
+                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary transition-all duration-300 ease-out transform bg-transparent hover:bg-primary-dark hover:text-white rounded-lg hover:scale-105 hover:shadow-lg border-2 border-primary"
               >
+                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                <span className="absolute inset-0 w-full h-full bg-transparent border-2 border-primary group-hover:bg-primary-dark"></span>
                 <span className="relative flex items-center gap-2">
-                  Get Involved
+                  View Resources
                   <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                 </span>
               </Link>
