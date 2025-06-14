@@ -1,202 +1,183 @@
 // === src/pages/GetInvolved.js ===
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaUsers, FaHandshake, FaLightbulb, FaCode, FaBook, FaGlobe, FaArrowRight, FaExternalLinkAlt, FaGithub, FaDiscord, FaTwitter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { FaArrowRight, FaHandshake, FaUsers, FaLightbulb, FaCode } from 'react-icons/fa';
 
-function GetInvolved() {
-  const handleExternalLink = (url) => {
-    window.open(url, '_blank');
-  };
-
-  const sections = [
-    {
-      title: "Join Our Community",
-      description: "Connect with IPv6 enthusiasts and experts worldwide",
-      icon: <FaUsers className="w-8 h-8" />,
-      items: [
-        {
-          title: 'IPv6 Forum',
-          description: 'Join the global IPv6 community',
-          link: 'https://www.ipv6forum.com/',
-          icon: <FaGlobe />
-        },
-        {
-          title: 'Discord Server',
-          description: 'Chat with community members',
-          link: 'https://discord.gg/ipv6',
-          icon: <FaDiscord />
-        },
-        {
-          title: 'Twitter',
-          description: 'Follow IPv6 updates',
-          link: 'https://twitter.com/ipv6forum',
-          icon: <FaTwitter />
-        }
-      ]
-    },
-    {
-      title: "Contribute to IPv6",
-      description: "Help improve IPv6 adoption through code and documentation",
-      icon: <FaCode className="w-8 h-8" />,
-      items: [
-        {
-          title: 'GitHub Repository',
-          description: 'Contribute to our open-source projects',
-          link: 'https://github.com/ipv6',
-          icon: <FaGithub />
-        },
-        {
-          title: 'Documentation',
-          description: 'Help improve our guides and tutorials',
-          link: 'https://www.ietf.org/',
-          icon: <FaBook />
-        },
-        {
-          title: 'Bug Reports',
-          description: 'Report issues and suggest improvements',
-          link: 'https://github.com/ipv6/issues',
-          icon: <FaExternalLinkAlt />
-        }
-      ]
-    },
-    {
-      title: "Learn & Share",
-      description: "Expand your knowledge and share it with others",
-      icon: <FaBook className="w-8 h-8" />,
-      items: [
-        {
-          title: 'Tutorials',
-          description: 'Access our learning resources',
-          link: 'https://www.ietf.org/',
-          icon: <FaBook />
-        },
-        {
-          title: 'Webinars',
-          description: 'Join our educational sessions',
-          link: 'https://www.worldipv6launch.org/',
-          icon: <FaExternalLinkAlt />
-        },
-        {
-          title: 'Blog',
-          description: 'Read and share articles',
-          link: 'https://www.ipv6forum.com/',
-          icon: <FaExternalLinkAlt />
-        }
-      ]
-    }
-  ];
-
+const GetInvolved = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-[#121212] dark:to-[#1E1E1E] pt-20">
-      {/* Page Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="text-center py-12 bg-white dark:bg-[#1E1E1E] shadow-lg"
-      >
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
-            Get Involved
-          </h1>
-          <p className="text-lg text-black/80 dark:text-white/80 max-w-2xl mx-auto">
-            Join us in promoting IPv6 adoption and education
-          </p>
-        </div>
-      </motion.div>
-
-      {/* Main Content */}
-      <div className="container mx-auto px-4 py-12">
-        {/* Sections Grid */}
-        <div className="grid grid-cols-1 gap-8">
-          {sections.map((section, sectionIndex) => (
-            <motion.section
-              key={sectionIndex}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: sectionIndex * 0.2 }}
-              className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-8 shadow-lg border border-[#00C47C]/20"
-            >
-              <div className="flex items-center gap-4 mb-8">
-                <div className="p-4 bg-[#00C47C]/10 rounded-xl text-[#00C47C] border border-[#00C47C]/20">
-                  {section.icon}
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-black dark:text-white">
-                    {section.title}
-                  </h2>
-                  <p className="text-black/80 dark:text-white/80">
-                    {section.description}
-                  </p>
-                </div>
-              </div>
-
-              {/* Minimized Feature Display */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {section.items.map((item, itemIndex) => (
-                  <div
-                    key={itemIndex}
-                    className="flex flex-col p-4 rounded-xl transition-all duration-300 border border-[#00C47C]/20"
-                  >
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="text-[#00C47C]">
-                        {item.icon}
-                      </div>
-                      <h3 className="text-xl font-semibold text-black dark:text-white mb-3">
-                        {item.title}
-                      </h3>
-                    </div>
-                    <p className="text-black/80 dark:text-white/80 mb-4">
-                      {item.description}
-                    </p>
-                    <button
-                      onClick={() => handleExternalLink(item.link)}
-                      className="btn btn-primary w-full flex items-center justify-center gap-2 text-sm py-2" // Smaller button
-                    >
-                      Visit {item.title.split(' ')[0]} {/* More concise button text */}
-                      <FaArrowRight className="w-3 h-3" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </motion.section>
-          ))}
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative min-h-[80vh] flex items-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-primary/5 to-accent/10 dark:from-dark-bg-primary dark:via-primary/10 dark:to-accent/20"></div>
+        <div className="absolute inset-0 hero-pattern"></div>
+        
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
         </div>
 
-        {/* Call to Action */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-center mt-12"
-        >
-          <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-12 shadow-lg border border-[#00C47C]/20">
-            <h2 className="text-3xl font-bold text-black dark:text-white mb-4">
-              Ready to Make a Difference?
-            </h2>
-            <p className="text-black/80 dark:text-white/80 mb-8 max-w-2xl mx-auto">
-              Join our community today and help shape the future of IPv6 adoption
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-black dark:text-white">
+              Get <span className="text-primary">Involved</span>
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+              Join our community and help shape the future of IPv6
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                to="/signup"
-                className="btn btn-primary"
+              <Link 
+                to="/resources" 
+                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 ease-out transform bg-primary hover:bg-primary-dark rounded-lg hover:scale-105 hover:shadow-lg"
               >
-                Get Started
+                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                <span className="absolute inset-0 w-full h-full bg-primary border-2 border-primary-dark group-hover:bg-primary-dark"></span>
+                <span className="relative flex items-center gap-2">
+                  View Resources
+                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </span>
               </Link>
-              <Link
-                to="/contact"
-                className="btn btn-secondary"
+              <Link 
+                to="/contact" 
+                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary transition-all duration-300 ease-out transform bg-transparent hover:bg-primary-dark hover:text-white rounded-lg hover:scale-105 hover:shadow-lg border-2 border-primary"
               >
-                Contact Us
+                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                <span className="absolute inset-0 w-full h-full bg-transparent border-2 border-primary group-hover:bg-primary-dark"></span>
+                <span className="relative flex items-center gap-2">
+                  Contact Us
+                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </span>
               </Link>
             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Ways to Get Involved */}
+      <section className="py-20 bg-white dark:bg-dark-bg-primary">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold mb-6 text-black dark:text-white">
+              Ways to <span className="text-primary">Contribute</span>
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              There are many ways to get involved in our community
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                icon: <FaHandshake className="text-3xl text-primary" />,
+                title: "Become a Partner",
+                description: "Join our network of IPv6 partners and collaborators",
+                link: "/partners"
+              },
+              {
+                icon: <FaUsers className="text-3xl text-accent" />,
+                title: "Join the Community",
+                description: "Connect with other IPv6 enthusiasts and professionals",
+                link: "/community"
+              },
+              {
+                icon: <FaLightbulb className="text-3xl text-primary" />,
+                title: "Share Knowledge",
+                description: "Contribute to our knowledge base and documentation",
+                link: "/contribute"
+              },
+              {
+                icon: <FaCode className="text-3xl text-accent" />,
+                title: "Develop Solutions",
+                description: "Help build tools and solutions for IPv6 adoption",
+                link: "/develop"
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="group p-8 rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-dark-bg-secondary dark:to-dark-bg-tertiary hover:shadow-lg transition-all duration-300"
+              >
+                <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  {item.icon}
+                </div>
+                <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">{item.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">{item.description}</p>
+                <Link 
+                  to={item.link}
+                  className="group relative inline-flex items-center justify-center px-6 py-3 font-bold text-primary transition-all duration-300 ease-out transform bg-transparent hover:bg-primary-dark hover:text-white rounded-lg hover:scale-105 hover:shadow-lg border-2 border-primary"
+                >
+                  <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                  <span className="absolute inset-0 w-full h-full bg-transparent border-2 border-primary group-hover:bg-primary-dark"></span>
+                  <span className="relative flex items-center gap-2">
+                    Learn More
+                    <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </Link>
+              </motion.div>
+            ))}
           </div>
-        </motion.section>
-      </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-20 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 dark:from-primary/10 dark:via-accent/10 dark:to-primary/10">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h2 className="text-4xl font-bold mb-6 text-black dark:text-white">
+              Ready to <span className="text-primary">Join?</span>
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+              Start your journey with us today
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link 
+                to="/contact" 
+                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 ease-out transform bg-primary hover:bg-primary-dark rounded-lg hover:scale-105 hover:shadow-lg"
+              >
+                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                <span className="absolute inset-0 w-full h-full bg-primary border-2 border-primary-dark group-hover:bg-primary-dark"></span>
+                <span className="relative flex items-center gap-2">
+                  Get Started
+                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Link>
+              <Link 
+                to="/resources" 
+                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary transition-all duration-300 ease-out transform bg-transparent hover:bg-primary-dark hover:text-white rounded-lg hover:scale-105 hover:shadow-lg border-2 border-primary"
+              >
+                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                <span className="absolute inset-0 w-full h-full bg-transparent border-2 border-primary group-hover:bg-primary-dark"></span>
+                <span className="relative flex items-center gap-2">
+                  Explore Resources
+                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
-}
+};
 
 export default GetInvolved;
