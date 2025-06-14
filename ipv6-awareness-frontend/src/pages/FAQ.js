@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaChevronDown, FaBook, FaUsers, FaTools, FaArrowRight } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { FaChevronDown, FaBook, FaUsers, FaTools } from 'react-icons/fa';
 
 function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
@@ -29,41 +28,20 @@ function FAQ() {
     }
   ];
 
-  const resources = [
-    {
-      title: "Documentation",
-      description: "Detailed guides and technical documentation for IPv6 implementation",
-      icon: <FaBook className="w-8 h-8" />,
-      link: "/documentation"
-    },
-    {
-      title: "Community",
-      description: "Join our community of IPv6 experts and enthusiasts",
-      icon: <FaUsers className="w-8 h-8" />,
-      link: "/community"
-    },
-    {
-      title: "Tools",
-      description: "Implementation tools and utilities for IPv6 deployment",
-      icon: <FaTools className="w-8 h-8" />,
-      link: "/tools"
-    }
-  ];
-
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
-    <div className="min-h-screen dark:bg-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5">
       {/* Hero */}
-      <div className="relative py-20 overflow-hidden bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 dark:from-primary/10 dark:via-accent/10 dark:to-primary/10">
+      <div className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20" />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />
           <div className="absolute top-0 left-0 w-full h-full">
-            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl animate-blob dark:bg-primary/30" />
-            <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-accent/20 rounded-full filter blur-3xl animate-blob animation-delay-2000 dark:bg-accent/30" />
-            <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl animate-blob animation-delay-4000 dark:bg-primary/30" />
+            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl animate-blob" />
+            <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-accent/20 rounded-full filter blur-3xl animate-blob animation-delay-2000" />
+            <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl animate-blob animation-delay-4000" />
           </div>
         </div>
 
@@ -74,18 +52,18 @@ function FAQ() {
             transition={{ duration: 0.8 }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h1 className="text-5xl font-bold mb-6 text-black dark:text-white">
+            <h1 className="text-5xl font-bold mb-6 text-black">
               Frequently Asked <span className="text-primary">Questions</span>
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
-              Find answers to common questions about IPv6
+            <p className="text-xl text-gray-600">
+              Find answers to common questions about IPv6 implementation and adoption
             </p>
           </motion.div>
         </div>
       </div>
 
-      {/* FAQ Items */}
-      <div className="py-16 bg-white dark:bg-gray-800">
+      {/* FAQ List */}
+      <div className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             {faqItems.map((item, index) => (
@@ -99,33 +77,31 @@ function FAQ() {
               >
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between p-6 rounded-xl bg-gradient-to-br from-primary/5 to-accent/5 dark:from-primary/10 dark:to-accent/10 border-2 border-transparent hover:border-primary/20 dark:hover:border-primary/40 transition-all duration-300"
+                  className="w-full p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-between"
                 >
-                  <h3 className="text-xl font-bold text-left text-black dark:text-white">
+                  <h3 className="text-xl font-bold text-black text-left">
                     {item.question}
                   </h3>
                   <motion.div
                     animate={{ rotate: openIndex === index ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <FaChevronDown className="w-5 h-5 text-yellow-500" />
+                    <FaChevronDown className="w-5 h-5 text-primary" />
                   </motion.div>
                 </button>
-                <AnimatePresence>
-                  {openIndex === index && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="p-6 bg-white dark:bg-gray-700 rounded-b-xl border-2 border-t-0 border-gray-100 dark:border-gray-600">
-                        <p className="text-gray-600 dark:text-gray-300">{item.answer}</p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{
+                    height: openIndex === index ? "auto" : 0,
+                    opacity: openIndex === index ? 1 : 0
+                  }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  <div className="p-6 bg-white/50 backdrop-blur-sm rounded-b-xl mt-2">
+                    <p className="text-gray-600">{item.answer}</p>
+                  </div>
+                </motion.div>
               </motion.div>
             ))}
           </div>
@@ -133,7 +109,7 @@ function FAQ() {
       </div>
 
       {/* Additional Resources */}
-      <div className="py-16 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 dark:from-primary/10 dark:via-accent/10 dark:to-primary/10">
+      <div className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -142,40 +118,37 @@ function FAQ() {
             viewport={{ once: true }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h2 className="text-4xl font-bold mb-6 text-black dark:text-white">
-              Additional <span className="text-primary">Resources</span>
+            <h2 className="text-4xl font-bold mb-6 text-black">
+              Need More <span className="text-primary">Information</span>?
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-              Explore more resources to learn about IPv6
+            <p className="text-xl text-gray-600 mb-8">
+              Explore our comprehensive resources to learn more about IPv6
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {resources.map((resource, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="group p-6 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 hover:border-primary/20 dark:hover:border-primary/40 transition-all duration-300"
-                >
-                  <div className="text-yellow-500 mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                    {resource.icon}
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 text-black dark:text-white group-hover:text-primary transition-colors duration-300">
-                    {resource.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    {resource.description}
-                  </p>
-                  <Link
-                    to={resource.link}
-                    className="inline-flex items-center text-primary dark:text-white hover:text-primary-dark dark:hover:text-gray-300 transition-colors duration-300"
-                  >
-                    Learn More
-                    <FaArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </motion.div>
-              ))}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="p-6 bg-gradient-to-br from-primary/5 to-accent/5 rounded-xl"
+              >
+                <FaBook className="w-8 h-8 text-primary mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">Documentation</h3>
+                <p className="text-gray-600">Detailed guides and technical documentation</p>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="p-6 bg-gradient-to-br from-primary/5 to-accent/5 rounded-xl"
+              >
+                <FaUsers className="w-8 h-8 text-primary mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">Community</h3>
+                <p className="text-gray-600">Join our community of IPv6 experts</p>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="p-6 bg-gradient-to-br from-primary/5 to-accent/5 rounded-xl"
+              >
+                <FaTools className="w-8 h-8 text-primary mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">Tools</h3>
+                <p className="text-gray-600">Implementation tools and utilities</p>
+              </motion.div>
             </div>
           </motion.div>
         </div>
