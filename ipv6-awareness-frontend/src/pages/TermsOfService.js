@@ -1,125 +1,122 @@
 import React from 'react';
-import { ScaleIcon, ExclamationTriangleIcon, DocumentCheckIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+import { motion } from 'framer-motion';
+import { FaGavel, FaUserCheck, FaShieldAlt, FaExclamationTriangle, FaEnvelope } from 'react-icons/fa';
 
 function TermsOfService() {
+  const termsSections = [
+    {
+      icon: <FaGavel className="w-8 h-8" />,
+      title: "Acceptance of Terms",
+      content: "By accessing and using our services, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services. We reserve the right to modify these terms at any time, and such modifications will be effective immediately upon posting."
+    },
+    {
+      icon: <FaUserCheck className="w-8 h-8" />,
+      title: "User Responsibilities",
+      content: "You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account. You agree to provide accurate and complete information when using our services and to update such information to keep it accurate and current."
+    },
+    {
+      icon: <FaShieldAlt className="w-8 h-8" />,
+      title: "Service Usage",
+      content: "Our services are provided 'as is' and 'as available.' We make no warranties, expressed or implied, regarding the operation of our services or the information, content, or materials included on our website. We reserve the right to modify, suspend, or discontinue any aspect of our services at any time."
+    },
+    {
+      icon: <FaExclamationTriangle className="w-8 h-8" />,
+      title: "Prohibited Activities",
+      content: "You agree not to engage in any activity that interferes with or disrupts our services or the servers and networks connected to our services. This includes, but is not limited to, attempting to gain unauthorized access to our systems or other users' accounts."
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary pt-20">
-      <div className="container mx-auto px-4 py-12">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#00C47C] dark:text-white mb-6">
-            Terms of Service
-          </h1>
-          <p className="text-lg text-primary/70 dark:text-dark-text-secondary max-w-3xl mx-auto">
-            Please read these terms carefully before using our services.
-          </p>
+    <div className="min-h-screen dark:bg-gray-900">
+      {/* Hero */}
+      <div className="relative py-20 overflow-hidden bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 dark:from-primary/10 dark:via-accent/10 dark:to-primary/10">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20" />
+          <div className="absolute top-0 left-0 w-full h-full">
+            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl animate-blob dark:bg-primary/30" />
+            <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-accent/20 rounded-full filter blur-3xl animate-blob animation-delay-2000 dark:bg-accent/30" />
+            <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl animate-blob animation-delay-4000 dark:bg-primary/30" />
+          </div>
         </div>
 
-        {/* Main Content */}
-        <div className="max-w-4xl mx-auto">
-          {/* Last Updated */}
-          <div className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 mb-8 shadow-lg">
-            <p className="text-primary/60 dark:text-dark-text-secondary/60">
-              Last Updated: March 15, 2024
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h1 className="text-5xl font-bold mb-6 text-black dark:text-white">
+              Terms of <span className="text-primary">Service</span>
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              Please read these terms carefully before using our services
             </p>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Terms Sections */}
+      <div className="py-16 bg-white dark:bg-gray-800">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            {termsSections.map((section, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="mb-12"
+              >
+                <div className="flex items-start gap-6">
+                  <div className="text-yellow-500 transform hover:scale-110 transition-transform duration-300">
+                    {section.icon}
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold mb-4 text-black dark:text-white">
+                      {section.title}
+                    </h2>
+                    <div className="prose dark:prose-invert max-w-none">
+                      {section.content}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
+        </div>
+      </div>
 
-          {/* Terms Sections */}
-          <div className="space-y-8">
-            <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
-              <div className="flex items-center mb-6">
-                <ScaleIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
-                <h2 className="text-2xl font-semibold text-[#00C47C] dark:text-white">
-                  Agreement to Terms
-                </h2>
-              </div>
-              <div className="space-y-4 text-primary/80 dark:text-dark-text-secondary">
-                <p>
-                  By accessing or using our services, you agree to be bound by these Terms of Service. If you disagree with any part of the terms, you may not access our services.
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>You must be at least 18 years old to use our services</li>
-                  <li>You must provide accurate and complete information</li>
-                  <li>You are responsible for maintaining the security of your account</li>
-                </ul>
-              </div>
-            </section>
-
-            <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
-              <div className="flex items-center mb-6">
-                <ExclamationTriangleIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
-                <h2 className="text-2xl font-semibold text-[#00C47C] dark:text-white">
-                  Prohibited Activities
-                </h2>
-              </div>
-              <div className="space-y-4 text-primary/80 dark:text-dark-text-secondary">
-                <p>
-                  You agree not to engage in any of the following activities:
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Violating any applicable laws or regulations</li>
-                  <li>Interfering with the proper functioning of our services</li>
-                  <li>Attempting to gain unauthorized access</li>
-                  <li>Using our services for any illegal purposes</li>
-                </ul>
-              </div>
-            </section>
-
-            <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
-              <div className="flex items-center mb-6">
-                <DocumentCheckIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
-                <h2 className="text-2xl font-semibold text-[#00C47C] dark:text-white">
-                  Intellectual Property
-                </h2>
-              </div>
-              <div className="space-y-4 text-primary/80 dark:text-dark-text-secondary">
-                <p>
-                  Our services and their original content, features, and functionality are owned by us and are protected by international copyright, trademark, and other intellectual property laws.
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>You may not copy, modify, or distribute our content</li>
-                  <li>You may not use our trademarks without permission</li>
-                  <li>You retain rights to your own content</li>
-                </ul>
-              </div>
-            </section>
-
-            <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
-              <div className="flex items-center mb-6">
-                <UserCircleIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
-                <h2 className="text-2xl font-semibold text-[#00C47C] dark:text-white">
-                  User Responsibilities
-                </h2>
-              </div>
-              <div className="space-y-4 text-primary/80 dark:text-dark-text-secondary">
-                <p>
-                  As a user of our services, you are responsible for:
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Maintaining the confidentiality of your account</li>
-                  <li>All activities that occur under your account</li>
-                  <li>Ensuring your use complies with these terms</li>
-                  <li>Reporting any security breaches or violations</li>
-                </ul>
-              </div>
-            </section>
-          </div>
-
-          {/* Contact Information */}
-          <div className="mt-12 text-center">
-            <h2 className="text-2xl font-semibold text-[#00C47C] dark:text-white mb-4">
-              Questions About Our Terms?
+      {/* Additional Information */}
+      <div className="py-16 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 dark:from-primary/10 dark:via-accent/10 dark:to-primary/10">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h2 className="text-4xl font-bold mb-6 text-black dark:text-white">
+              Additional <span className="text-primary">Information</span>
             </h2>
-            <p className="text-primary/70 dark:text-dark-text-secondary mb-6">
-              If you have any questions about these Terms of Service, please contact us.
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+              Last updated: March 15, 2024
             </p>
-            <a
-              href="/contact"
-              className="inline-flex items-center px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300"
-            >
-              Contact Us
-            </a>
-          </div>
+            <div className="p-6 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700">
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                For any questions about these terms, please contact us at:
+              </p>
+              <a
+                href="mailto:legal@ipv6awareness.org"
+                className="inline-flex items-center text-primary dark:text-white hover:text-primary-dark dark:hover:text-gray-300 transition-colors duration-300"
+              >
+                <FaEnvelope className="mr-2 w-5 h-5 text-yellow-500" />
+                legal@ipv6awareness.org
+              </a>
+            </div>
+          </motion.div>
         </div>
       </div>
     </div>

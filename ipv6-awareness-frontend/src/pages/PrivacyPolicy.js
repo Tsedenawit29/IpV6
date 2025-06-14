@@ -1,127 +1,123 @@
 // === src/pages/PrivacyPolicy.js ===
 import React from 'react';
-import { ShieldCheckIcon, DocumentTextIcon, UserGroupIcon, LockClosedIcon } from '@heroicons/react/24/outline';
+import { motion } from 'framer-motion';
+import { FaShieldAlt, FaUserShield, FaLock, FaHistory, FaEnvelope } from 'react-icons/fa';
 
 function PrivacyPolicy() {
+  const policySections = [
+    {
+      icon: <FaShieldAlt className="w-8 h-8" />,
+      title: "Information Collection",
+      content: "We collect information that you provide directly to us, including your name, email address, and any other information you choose to provide. We also collect information about your use of our services and your interactions with our website."
+    },
+    {
+      icon: <FaUserShield className="w-8 h-8" />,
+      title: "Data Protection",
+      content: "We implement appropriate technical and organizational measures to protect your personal data against unauthorized or unlawful processing, accidental loss, destruction, or damage. We regularly review and update our security measures to ensure the ongoing confidentiality, integrity, and availability of your data."
+    },
+    {
+      icon: <FaLock className="w-8 h-8" />,
+      title: "User Rights",
+      content: "You have the right to access, correct, or delete your personal data. You can also object to the processing of your data, request data portability, and withdraw your consent at any time. To exercise these rights, please contact us using the information provided below."
+    },
+    {
+      icon: <FaHistory className="w-8 h-8" />,
+      title: "Data Retention",
+      content: "We retain your personal data only for as long as necessary to fulfill the purposes for which it was collected, including legal, accounting, or reporting requirements. When we no longer need your data, we will securely delete or anonymize it."
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary pt-20">
-      <div className="container mx-auto px-4 py-12">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#00C47C] dark:text-white mb-6">
-            Privacy Policy
-          </h1>
-          <p className="text-lg text-primary/70 dark:text-dark-text-secondary max-w-3xl mx-auto">
-            Your privacy is our priority. Learn how we collect, use, and protect your personal information.
-          </p>
+    <div className="min-h-screen dark:bg-gray-900">
+      {/* Hero */}
+      <div className="relative py-20 overflow-hidden bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 dark:from-primary/10 dark:via-accent/10 dark:to-primary/10">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20" />
+          <div className="absolute top-0 left-0 w-full h-full">
+            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl animate-blob dark:bg-primary/30" />
+            <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-accent/20 rounded-full filter blur-3xl animate-blob animation-delay-2000 dark:bg-accent/30" />
+            <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl animate-blob animation-delay-4000 dark:bg-primary/30" />
+          </div>
         </div>
 
-        {/* Main Content */}
-        <div className="max-w-4xl mx-auto">
-          {/* Last Updated */}
-          <div className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 mb-8 shadow-lg">
-            <p className="text-primary/60 dark:text-dark-text-secondary/60">
-              Last Updated: March 15, 2024
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h1 className="text-5xl font-bold mb-6 text-black dark:text-white">
+              Privacy <span className="text-primary">Policy</span>
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              Learn how we protect your privacy and handle your data
             </p>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Policy Sections */}
+      <div className="py-16 bg-white dark:bg-gray-800">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            {policySections.map((section, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="mb-12"
+              >
+                <div className="flex items-start gap-6">
+                  <div className="text-yellow-500 transform hover:scale-110 transition-transform duration-300">
+                    {section.icon}
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold mb-4 text-black dark:text-white">
+                      {section.title}
+                    </h2>
+                    <div className="prose dark:prose-invert max-w-none">
+                      {section.content}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
+        </div>
+      </div>
 
-          {/* Policy Sections */}
-          <div className="space-y-8">
-            <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
-              <div className="flex items-center mb-6">
-                <ShieldCheckIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
-                <h2 className="text-2xl font-semibold text-[#00C47C] dark:text-white">
-                  Information We Collect
-                </h2>
-              </div>
-              <div className="space-y-4 text-primary/80 dark:text-dark-text-secondary">
-                <p>
-                  We collect information that you provide directly to us, including:
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Name and contact information</li>
-                  <li>Account credentials</li>
-                  <li>Communication preferences</li>
-                  <li>Technical information about your device and internet connection</li>
-                </ul>
-              </div>
-            </section>
-
-            <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
-              <div className="flex items-center mb-6">
-                <DocumentTextIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
-                <h2 className="text-2xl font-semibold text-[#00C47C] dark:text-white">
-                  How We Use Your Information
-                </h2>
-              </div>
-              <div className="space-y-4 text-primary/80 dark:text-dark-text-secondary">
-                <p>
-                  We use the information we collect to:
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Provide and maintain our services</li>
-                  <li>Improve and personalize your experience</li>
-                  <li>Communicate with you about updates and changes</li>
-                  <li>Ensure the security of our platform</li>
-                </ul>
-              </div>
-            </section>
-
-            <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
-              <div className="flex items-center mb-6">
-                <UserGroupIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
-                <h2 className="text-2xl font-semibold text-[#00C47C] dark:text-white">
-                  Information Sharing
-                </h2>
-              </div>
-              <div className="space-y-4 text-primary/80 dark:text-dark-text-secondary">
-                <p>
-                  We do not sell or rent your personal information to third parties. We may share your information with:
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Service providers who assist in our operations</li>
-                  <li>Legal authorities when required by law</li>
-                  <li>Partners with your explicit consent</li>
-                </ul>
-              </div>
-            </section>
-
-            <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
-              <div className="flex items-center mb-6">
-                <LockClosedIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
-                <h2 className="text-2xl font-semibold text-[#00C47C] dark:text-white">
-                  Data Security
-                </h2>
-              </div>
-              <div className="space-y-4 text-primary/80 dark:text-dark-text-secondary">
-                <p>
-                  We implement appropriate technical and organizational measures to protect your personal information, including:
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Encryption of sensitive data</li>
-                  <li>Regular security assessments</li>
-                  <li>Access controls and authentication</li>
-                  <li>Secure data storage and transmission</li>
-                </ul>
-              </div>
-            </section>
-          </div>
-
-          {/* Contact Information */}
-          <div className="mt-12 text-center">
-            <h2 className="text-2xl font-semibold text-[#00C47C] dark:text-white mb-4">
-              Questions About Our Privacy Policy?
+      {/* Additional Information */}
+      <div className="py-16 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 dark:from-primary/10 dark:via-accent/10 dark:to-primary/10">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h2 className="text-4xl font-bold mb-6 text-black dark:text-white">
+              Additional <span className="text-primary">Information</span>
             </h2>
-            <p className="text-primary/70 dark:text-dark-text-secondary mb-6">
-              If you have any questions or concerns about our privacy practices, please contact us.
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+              Last updated: March 15, 2024
             </p>
-            <a
-              href="/contact"
-              className="inline-flex items-center px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300"
-            >
-              Contact Us
-            </a>
-          </div>
+            <div className="p-6 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700">
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                For any privacy-related inquiries, please contact us at:
+              </p>
+              <a
+                href="mailto:privacy@ipv6awareness.org"
+                className="inline-flex items-center text-primary dark:text-white hover:text-primary-dark dark:hover:text-gray-300 transition-colors duration-300"
+              >
+                <FaEnvelope className="mr-2 w-5 h-5 text-yellow-500" />
+                privacy@ipv6awareness.org
+              </a>
+            </div>
+          </motion.div>
         </div>
       </div>
     </div>

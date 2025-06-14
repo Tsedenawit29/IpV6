@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply bg-white dark:bg-dark-bg-primary text-black dark:text-white;
+    @apply bg-white dark:bg-dark-bg-primary text-black;
   }
 }
 

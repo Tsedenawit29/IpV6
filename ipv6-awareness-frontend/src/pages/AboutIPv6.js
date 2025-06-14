@@ -1,137 +1,191 @@
-// === src/pages/AboutIPv6.js ===
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
-import { FaGlobe, FaShieldAlt, FaBolt, FaRobot, FaArrowRight, FaPlay, FaInfoCircle, FaChartLine, FaNetworkWired, FaMobileAlt, FaCloud, FaServer, FaLock, FaCheckCircle, FaExclamationTriangle, FaDownload, FaBook, FaUsers, FaTools } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { FaGlobe, FaShieldAlt, FaBolt, FaRobot, FaArrowRight, FaNetworkWired, FaServer, FaTools, FaMobileAlt, FaCloud, FaInfoCircle, FaLock, FaChartLine, FaUsers, FaCode, FaDatabase, FaShieldVirus, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+
+// Bubble component for the animated background
+const Bubble = ({ delay, size, x, y }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0 }}
+    animate={{
+      opacity: [0.1, 0.2, 0.1],
+      scale: [1, 1.2, 1],
+      x: [x, x + 20, x],
+      y: [y, y - 20, y],
+    }}
+    transition={{
+      duration: 4,
+      delay,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }}
+    className="absolute rounded-full bg-white/10 backdrop-blur-sm"
+    style={{
+      width: size,
+      height: size,
+      left: `${x}%`,
+      top: `${y}%`,
+    }}
+  />
+);
 
 function AboutIPv6() {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('overview');
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSection, setCurrentSection] = useState(0);
 
-  const tabs = [
-    { id: 'overview', label: 'Overview' },
-    { id: 'benefits', label: 'Benefits' },
-    { id: 'implementation', label: 'Implementation' },
-  ];
-
-  const features = [
+  const sections = [
     {
-      icon: <FaNetworkWired className="text-4xl text-accent dark:text-dark-text-accent" />,
-      title: "Auto-Configuration",
-      description: "Simplified network setup with automatic address configuration",
-      video: "https://www.youtube.com/embed/6aT9XUK8Y3Y",
-      details: [
-        "Stateless Address Autoconfiguration (SLAAC)",
-        "No need for DHCP in many cases",
-        "Simplified network management",
-        "Reduced configuration errors"
+      id: 'overview',
+      title: 'Overview',
+      icon: <FaInfoCircle className="text-4xl text-yellow-500" />,
+      features: [
+        {
+          title: 'What is IPv6?',
+          description: 'IPv6 is the most recent version of the Internet Protocol, designed to replace IPv4 and address its limitations.',
+          icon: <FaGlobe className="text-4xl text-yellow-500" />,
+          details: [
+            '128-bit address space',
+            'Improved header format',
+            'Built-in security features',
+            'Better routing efficiency'
+          ]
+        },
+        {
+          title: 'Address Space',
+          description: 'Provides 340 undecillion unique addresses, ensuring the internet can grow for generations to come.',
+          icon: <FaNetworkWired className="text-4xl text-yellow-500" />,
+          details: [
+            '340 trillion trillion trillion addresses',
+            'Eliminates need for NAT',
+            'Simplifies network management',
+            'Enables true end-to-end connectivity'
+          ]
+        },
+        {
+          title: 'Protocol Structure',
+          description: 'Features a streamlined header format and improved routing efficiency.',
+          icon: <FaServer className="text-4xl text-yellow-500" />,
+          details: [
+            'Simplified header format',
+            'Improved routing efficiency',
+            'Better support for extensions',
+            'Enhanced QoS capabilities'
+          ]
+        }
       ]
     },
     {
-      icon: <FaMobileAlt className="text-4xl text-accent dark:text-dark-text-accent" />,
-      title: "Mobile Support",
-      description: "Seamless connectivity for mobile devices and IoT",
-      video: "https://www.youtube.com/embed/7_-qWlvQQtY",
-      details: [
-        "Better mobility support",
-        "Seamless handover between networks",
-        "Improved IoT device connectivity",
-        "Enhanced mobile security"
+      id: 'benefits',
+      title: 'Benefits',
+      icon: <FaShieldAlt className="text-4xl text-yellow-500" />,
+      features: [
+        {
+          title: 'Enhanced Security',
+          description: 'Built-in IPsec support for end-to-end encryption and authentication.',
+          icon: <FaLock className="text-4xl text-yellow-500" />,
+          details: [
+            'Mandatory IPsec support',
+            'End-to-end encryption',
+            'Improved authentication',
+            'Better privacy features'
+          ]
+        },
+        {
+          title: 'Better Performance',
+          description: 'Improved routing efficiency and reduced network overhead.',
+          icon: <FaChartLine className="text-4xl text-yellow-500" />,
+          details: [
+            'Faster routing',
+            'Reduced latency',
+            'Better packet handling',
+            'Improved QoS support'
+          ]
+        },
+        {
+          title: 'IoT Ready',
+          description: 'Perfect for the growing Internet of Things ecosystem.',
+          icon: <FaRobot className="text-4xl text-yellow-500" />,
+          details: [
+            'Massive address space',
+            'Auto-configuration',
+            'Better mobility support',
+            'Enhanced multicast'
+          ]
+        }
       ]
     },
     {
-      icon: <FaCloud className="text-4xl text-accent dark:text-dark-text-accent" />,
-      title: "Cloud Ready",
-      description: "Optimized for modern cloud infrastructure",
-      video: "https://www.youtube.com/embed/o5Cv9fvajrc",
-      details: [
-        "Native cloud support",
-        "Better scalability",
-        "Improved performance",
-        "Enhanced security features"
+      id: 'implementation',
+      title: 'Implementation',
+      icon: <FaTools className="text-4xl text-yellow-500" />,
+      features: [
+        {
+          title: 'Easy Migration',
+          description: 'Dual-stack approach allows gradual transition from IPv4.',
+          icon: <FaCode className="text-4xl text-yellow-500" />,
+          details: [
+            'Dual-stack support',
+            'Tunneling options',
+            'Translation services',
+            'Gradual deployment'
+          ]
+        },
+        {
+          title: 'Mobile Support',
+          description: 'Better mobility support with seamless handover between networks.',
+          icon: <FaMobileAlt className="text-4xl text-yellow-500" />,
+          details: [
+            'Seamless mobility',
+            'Better handover',
+            'Reduced latency',
+            'Improved connectivity'
+          ]
+        },
+        {
+          title: 'Cloud Ready',
+          description: 'Optimized for modern cloud infrastructure and services.',
+          icon: <FaCloud className="text-4xl text-yellow-500" />,
+          details: [
+            'Cloud-native support',
+            'Container compatibility',
+            'Microservices ready',
+            'Scalable architecture'
+          ]
+        }
       ]
     }
   ];
 
-  const benefits = [
-    {
-      icon: <FaGlobe className="text-4xl text-accent dark:text-dark-text-accent" />,
-      title: "Unlimited Addresses",
-      description: "340 undecillion unique addresses for future growth",
-      stat: "340 undecillion",
-      details: "Enough addresses for every device, sensor, and application imaginable"
-    },
-    {
-      icon: <FaShieldAlt className="text-4xl text-accent dark:text-dark-text-accent" />,
-      title: "Enhanced Security",
-      description: "Built-in IPsec for better security",
-      stat: "100% Secure",
-      details: "End-to-end encryption and authentication built into the protocol"
-    },
-    {
-      icon: <FaBolt className="text-4xl text-accent dark:text-dark-text-accent" />,
-      title: "Better Performance",
-      description: "Faster routing and lower latency",
-      stat: "40% Faster",
-      details: "Optimized header format and improved routing efficiency"
-    },
-    {
-      icon: <FaRobot className="text-4xl text-accent dark:text-dark-text-accent" />,
-      title: "IoT Ready",
-      description: "Perfect for smart devices and IoT",
-      stat: "∞ Devices",
-      details: "Designed to support the growing Internet of Things ecosystem"
-    }
-  ];
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % sections[currentSection].features.length);
+  };
 
-  // Handle external links
-  const handleExternalLink = (url) => {
-    window.open(url, '_blank');
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + sections[currentSection].features.length) % sections[currentSection].features.length);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary">
+    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 font-sans">
       {/* Hero Section */}
-      <motion.section 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="relative min-h-[90vh] flex items-center justify-center bg-gradient-to-br from-primary/90 via-primary/80 to-primary-dark dark:from-dark-bg-primary dark:via-dark-bg-secondary dark:to-dark-bg-primary text-white overflow-hidden"
-      >
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-10"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary-dark/90 dark:from-dark-bg-primary/90 dark:to-dark-bg-primary/90"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,255,0,0.15),transparent_50%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(0,255,157,0.08),transparent_50%)]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,215,0,0.15),transparent_50%)] dark:bg-[radial-gradient(circle_at_70%_80%,rgba(0,255,157,0.08),transparent_50%)]"></div>
-        
-        {/* Floating Elements */}
+      <section className="relative min-h-[90vh] flex items-center justify-center bg-gradient-to-br from-primary/90 via-primary/80 to-primary-dark text-white overflow-hidden">
+        {/* Animated Bubbles Background */}
         <div className="absolute inset-0 overflow-hidden">
-          {[...Array(20)].map((_, i) => (
-            <motion.div
+          {[...Array(15)].map((_, i) => (
+            <Bubble
               key={i}
-              className="absolute w-2 h-2 bg-accent/30 dark:bg-dark-text-accent/30 rounded-full"
-              initial={{ 
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-                scale: Math.random() * 2 + 1
-              }}
-              animate={{
-                y: [null, Math.random() * window.innerHeight],
-                x: [null, Math.random() * window.innerWidth],
-              }}
-              transition={{
-                duration: Math.random() * 10 + 10,
-                repeat: Infinity,
-                ease: "linear"
-              }}
+              delay={i * 0.2}
+              size={Math.random() * 100 + 50}
+              x={Math.random() * 100}
+              y={Math.random() * 100}
             />
           ))}
         </div>
+
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary-dark/90"></div>
         
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4 relative z-10 mt-20">
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              {/* Left Column - Text Content */}
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -142,9 +196,9 @@ function AboutIPv6() {
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="inline-block p-4 rounded-2xl bg-accent/20 dark:bg-dark-bg-tertiary backdrop-blur-sm mb-8"
+                  className="inline-block p-4 rounded-2xl bg-accent/20 backdrop-blur-sm mb-8"
                 >
-                  <FaInfoCircle className="text-6xl text-accent dark:text-dark-text-accent" />
+                  <FaInfoCircle className="text-6xl text-yellow-500" />
                 </motion.div>
                 
                 <div className="space-y-6">
@@ -152,11 +206,9 @@ function AboutIPv6() {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="text-3xl font-semibold text-accent dark:text-dark-text-accent"
+                    className="text-3xl font-semibold text-[#228B22]"
                   >
-                    <span className="inline-block transform hover:scale-105 transition-transform duration-300">
-                      Understanding IPv6
-                    </span>
+                    Understanding IPv6
                   </motion.div>
                   
                   <motion.h1 
@@ -167,8 +219,8 @@ function AboutIPv6() {
                   >
                     The Next Generation{' '}
                     <span className="relative inline-block group">
-                      <span className="text-accent dark:text-dark-text-accent">Internet Protocol</span>
-                      <span className="absolute -bottom-2 left-0 w-full h-1 bg-accent/50 dark:bg-dark-text-accent/50 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                      <span className="text-[#228B22]">Internet Protocol</span>
+                      <span className="absolute -bottom-2 left-0 w-full h-1 bg-[#228B22]/50 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
                     </span>
                   </motion.h1>
                   
@@ -176,30 +228,21 @@ function AboutIPv6() {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.4 }}
-                    className="text-xl md:text-2xl text-white/90 dark:text-dark-text-secondary leading-relaxed"
+                    className="text-xl md:text-2xl text-white/90 leading-relaxed"
                   >
                     Discover the future of internet addressing and connectivity
                   </motion.p>
                 </div>
-
-                <motion.div 
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.6 }}
-                  className="flex flex-wrap gap-6"
-                >
-                </motion.div>
               </motion.div>
 
-              {/* Right Column - Interactive Elements */}
               <motion.div
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
                 className="relative"
               >
-                <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-white/5 dark:bg-dark-bg-tertiary backdrop-blur-sm p-8">
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-transparent dark:from-dark-text-accent/20"></div>
+                <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-white/5 backdrop-blur-sm p-8">
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-transparent"></div>
                   <div className="relative z-10 h-full flex flex-col justify-center items-center text-center">
                     <div className="grid grid-cols-2 gap-8">
                       {[
@@ -215,11 +258,11 @@ function AboutIPv6() {
                           transition={{ delay: 0.2 + index * 0.1 }}
                           className="group cursor-pointer"
                         >
-                          <div className="p-6 rounded-xl bg-white/10 dark:bg-dark-bg-secondary backdrop-blur-sm hover:bg-white/20 dark:hover:bg-dark-bg-tertiary transition-all duration-300">
-                            <div className="text-4xl text-accent dark:text-dark-text-accent mb-3 transform group-hover:scale-110 transition-transform">
+                          <div className="p-6 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300">
+                            <div className="text-4xl text-yellow-500 mb-3 transform group-hover:scale-110 transition-transform">
                               {item.icon}
                             </div>
-                            <div className="text-white/90 dark:text-dark-text-primary font-semibold">
+                            <div className="text-white/90 font-semibold">
                               {item.label}
                             </div>
                           </div>
@@ -232,192 +275,124 @@ function AboutIPv6() {
             </div>
           </div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* Tabs Section */}
-      <section className="py-20 bg-white dark:bg-dark-bg-secondary">
-        <div className="container mx-auto px-4">
-          <div className="max-w-7xl mx-auto">
-            {/* Tab Navigation */}
-            <div className="flex flex-wrap justify-center gap-4 mb-16">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`btn ${
-                    activeTab === tab.id
-                      ? 'btn-primary'
-                      : 'btn-outline'
-                  }`}
+      {/* Content Sections */}
+      <div className="relative mt-20">
+        {/* Section Content */}
+        {sections.map((section, sectionIndex) => (
+          <section key={section.id} id={section.id} className="py-20">
+            <div className="container mx-auto px-4">
+              <div className="max-w-6xl mx-auto">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="space-y-12"
                 >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Tab Content */}
-            <div className="bg-white dark:bg-dark-bg-secondary rounded-xl shadow-lg p-8">
-              {activeTab === 'overview' && (
-                <div className="space-y-8">
-                  <h2 className="text-3xl font-bold text-primary dark:text-dark-text-primary mb-6">
-                    What is IPv6?
-                  </h2>
-                  <p className="text-lg text-primary/80 dark:text-dark-text-secondary leading-relaxed">
-                    IPv6 (Internet Protocol version 6) is the most recent version of the Internet Protocol, designed to replace IPv4. It provides a vastly larger address space and improved features for the modern internet.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-                    {features.map((feature, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg"
-                      >
-                        <div className="flex items-start gap-4">
-                          <div className="text-accent dark:text-dark-text-accent">
-                            {feature.icon}
-                          </div>
-                          <div>
-                            <h3 className="text-xl font-bold text-primary dark:text-dark-text-primary mb-2">
-                              {feature.title}
-                            </h3>
-                            <p className="text-primary/80 dark:text-dark-text-secondary">
-                              {feature.description}
-                            </p>
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
+                  <div className="flex items-center gap-4">
+                    {section.icon}
+                    <h2 className="text-4xl font-bold text-[#228B22]">{section.title}</h2>
                   </div>
-                </div>
-              )}
 
-              {activeTab === 'benefits' && (
-                <div className="space-y-8">
-                  <h2 className="text-3xl font-bold text-primary dark:text-dark-text-primary mb-6">
-                    Key Benefits
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {benefits.map((benefit, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg"
-                      >
-                        <div className="flex items-start gap-4">
-                          <div className="text-accent dark:text-dark-text-accent">
-                            {benefit.icon}
-                          </div>
-                          <div>
-                            <h3 className="text-xl font-bold text-primary dark:text-dark-text-primary mb-2">
-                              {benefit.title}
-                            </h3>
-                            <p className="text-primary/80 dark:text-dark-text-secondary mb-4">
-                              {benefit.description}
-                            </p>
-                            <div className="text-accent dark:text-dark-text-accent font-semibold">
-                              {benefit.stat}
+                  <div className="relative">
+                    <button
+                      onClick={prevSlide}
+                      className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 p-2 rounded-full bg-white shadow-lg hover:bg-gray-50 transition-colors"
+                    >
+                      <FaChevronLeft className="text-[#228B22] text-xl" />
+                    </button>
+
+                    <div className="overflow-hidden">
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={`${sectionIndex}-${currentSlide}`}
+                          initial={{ opacity: 0, x: 100 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -100 }}
+                          transition={{ duration: 0.5 }}
+                          className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+                        >
+                          <div className="space-y-6">
+                            <div className="text-yellow-500">
+                              {section.features[currentSlide].icon}
                             </div>
-                            <p className="text-primary/60 dark:text-dark-text-secondary text-sm mt-2">
-                              {benefit.details}
+                            <h3 className="text-2xl font-semibold text-[#228B22]">
+                              {section.features[currentSlide].title}
+                            </h3>
+                            <p className="text-gray-600 text-lg">
+                              {section.features[currentSlide].description}
                             </p>
+                            <ul className="space-y-3">
+                              {section.features[currentSlide].details.map((detail, idx) => (
+                                <li key={idx} className="flex items-center gap-3 text-gray-600">
+                                  <span className="w-2 h-2 rounded-full bg-[#228B22]"></span>
+                                  <span className="text-lg">{detail}</span>
+                                </li>
+                              ))}
+                            </ul>
                           </div>
-                        </div>
-                      </motion.div>
+                        </motion.div>
+                      </AnimatePresence>
+                    </div>
+
+                    <button
+                      onClick={nextSlide}
+                      className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 p-2 rounded-full bg-white shadow-lg hover:bg-gray-50 transition-colors"
+                    >
+                      <FaChevronRight className="text-[#228B22] text-xl" />
+                    </button>
+                  </div>
+
+                  {/* Progress Indicators */}
+                  <div className="flex justify-center gap-2 mt-8">
+                    {section.features.map((_, index) => (
+                      <div
+                        key={index}
+                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                          currentSlide === index ? 'bg-[#228B22] w-8' : 'bg-gray-300'
+                        }`}
+                      />
                     ))}
                   </div>
-                </div>
-              )}
-
-              {activeTab === 'implementation' && (
-                <div className="space-y-8">
-                  <h2 className="text-3xl font-bold text-primary dark:text-dark-text-primary mb-6">
-                    Implementation Guide
-                  </h2>
-                  <p className="text-lg text-primary/80 dark:text-dark-text-secondary leading-relaxed">
-                    Learn how to implement IPv6 in your network and prepare for the future of internet connectivity.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg"
-                    >
-                      <div className="text-accent dark:text-dark-text-accent mb-4">
-                        <FaDownload className="text-4xl" />
-                      </div>
-                      <h3 className="text-xl font-bold text-primary dark:text-dark-text-primary mb-2">
-                        Get Started
-                      </h3>
-                      <p className="text-primary/80 dark:text-dark-text-secondary mb-4">
-                        Download our implementation guide and start your IPv6 journey.
-                      </p>
-                      <button
-                        onClick={() => handleExternalLink('https://example.com/ipv6-guide')}
-                        className="text-accent dark:text-dark-text-accent hover:underline"
-                      >
-                        Download Guide →
-                      </button>
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.1 }}
-                      className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg"
-                    >
-                      <div className="text-accent dark:text-dark-text-accent mb-4">
-                        <FaBook className="text-4xl" />
-                      </div>
-                      <h3 className="text-xl font-bold text-primary dark:text-dark-text-primary mb-2">
-                        Documentation
-                      </h3>
-                      <p className="text-primary/80 dark:text-dark-text-secondary mb-4">
-                        Access detailed documentation and technical specifications.
-                      </p>
-                      <button
-                        onClick={() => handleExternalLink('https://example.com/ipv6-docs')}
-                        className="text-accent dark:text-dark-text-accent hover:underline"
-                      >
-                        View Docs →
-                      </button>
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                      className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg"
-                    >
-                      <div className="text-accent dark:text-dark-text-accent mb-4">
-                        <FaUsers className="text-4xl" />
-                      </div>
-                      <h3 className="text-xl font-bold text-primary dark:text-dark-text-primary mb-2">
-                        Community
-                      </h3>
-                      <p className="text-primary/80 dark:text-dark-text-secondary mb-4">
-                        Join our community for support and collaboration.
-                      </p>
-                      <button
-                        onClick={() => handleExternalLink('https://example.com/ipv6-community')}
-                        className="text-accent dark:text-dark-text-accent hover:underline"
-                      >
-                        Join Community →
-                      </button>
-                    </motion.div>
-                  </div>
-                </div>
-              )}
+                </motion.div>
+              </div>
             </div>
-          </div>
+          </section>
+        ))}
+      </div>
+
+      {/* Call to Action */}
+      <section className="py-20 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h2 className="text-4xl font-bold mb-6 text-[#228B22]">
+              Ready to Learn More?
+            </h2>
+            <p className="text-xl text-gray-600 mb-8">
+              Explore our resources and get started with IPv6 today
+            </p>
+            <Link
+              to="/resources"
+              className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 ease-out transform bg-[#228B22] hover:bg-[#1a6b1a] rounded-lg hover:scale-105 hover:shadow-lg"
+            >
+              <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-[#1a6b1a] group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+              <span className="absolute inset-0 w-full h-full bg-[#228B22] border-2 border-[#1a6b1a] group-hover:bg-[#1a6b1a]"></span>
+              <span className="relative flex items-center gap-2">
+                View Resources
+                <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+              </span>
+            </Link>
+          </motion.div>
         </div>
       </section>
     </div>
   );
 }
 
-export default AboutIPv6;
+export default AboutIPv6; 

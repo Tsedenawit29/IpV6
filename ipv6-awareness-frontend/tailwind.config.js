@@ -9,14 +9,14 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#00C47C', // Green
-          light: '#33D096',
-          dark: '#009D63',
+          DEFAULT: '#228B22', // Forest Green (Your specified default)
+          light: '#4FBE4F',   // A noticeably lighter shade of Forest Green
+          dark: '#1A6B1A',    // A noticeably darker shade of Forest Green
         },
         secondary: {
-          DEFAULT: '#00C47C', // Green
-          light: '#33D096',
-          dark: '#009D63',
+          DEFAULT: '#228B22', // Forest Green (Matches primary for consistency, as per your original request)
+          light: '#4FBE4F',
+          dark: '#1A6B1A',
         },
         accent: {
           DEFAULT: '#FFD700', // Gold

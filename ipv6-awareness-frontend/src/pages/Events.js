@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { CalendarIcon, MapPinIcon, ClockIcon, ArrowTopRightOnSquareIcon, TagIcon, DocumentIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { FaArrowRight, FaCalendar, FaMapMarkerAlt, FaUsers } from 'react-icons/fa';
 
 function Events() {
   const [events, setEvents] = useState([]);
