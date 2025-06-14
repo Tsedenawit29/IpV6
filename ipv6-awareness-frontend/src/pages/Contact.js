@@ -13,7 +13,6 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission
     console.log('Form submitted:', formData);
   };
 
@@ -27,37 +26,36 @@ const Contact = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-white via-primary/5 to-accent/10 dark:from-dark-bg-primary dark:via-primary/10 dark:to-accent/20"></div>
-        <div className="absolute inset-0 hero-pattern"></div>
-        
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
-          <div className="absolute -top-24 -left-24 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+      <section className="relative min-h-[50vh] flex items-center justify-center bg-white dark:bg-dark-bg-primary overflow-hidden">
+        {/* Background gradients and bulbs */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute -top-32 -left-32 w-96 h-96 bg-accent/20 rounded-full blur-[120px]"></div>
+          <div className="absolute top-1/2 left-[60%] w-96 h-96 bg-primary/20 rounded-full blur-[120px]"></div>
+          <div className="absolute -bottom-32 right-10 w-72 h-72 bg-secondary/30 rounded-full blur-[100px]"></div>
+          <div className="absolute inset-0 dark:hero-pattern mix-blend-soft-light"></div>
         </div>
 
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container px-4 mx-auto relative z-10 text-center">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto text-center"
           >
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-black dark:text-white">
+            <h1 className="text-5xl md:text-6xl font-bold mb-4 text-black dark:text-white">
               Contact <span className="text-primary">Us</span>
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-              Get in touch with our team for any questions or support
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              We'd love to hear from you. Reach out with any questions.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Contact Form Section */}
+      {/* Contact Section */}
       <section className="py-20 bg-white dark:bg-dark-bg-primary">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12">
-            {/* Contact Information */}
+            {/* Contact Info */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -66,11 +64,11 @@ const Contact = () => {
               className="space-y-8"
             >
               <div>
-                <h2 className="text-3xl font-bold mb-6 text-black dark:text-white">
+                <h2 className="text-3xl font-bold text-black dark:text-white mb-4">
                   Get in <span className="text-primary">Touch</span>
                 </h2>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Have questions about IPv6? We're here to help.
+                  Whether you're curious about features or want support—we’re ready to answer any and all questions.
                 </p>
               </div>
 
@@ -109,13 +107,13 @@ const Contact = () => {
               <div className="pt-6">
                 <h3 className="text-lg font-semibold text-black dark:text-white mb-4">Follow Us</h3>
                 <div className="flex gap-4">
-                  <a href="#" className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                  <a href="#" className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition">
                     <FaLinkedin className="text-xl" />
                   </a>
-                  <a href="#" className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                  <a href="#" className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition">
                     <FaTwitter className="text-xl" />
                   </a>
-                  <a href="#" className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                  <a href="#" className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition">
                     <FaGithub className="text-xl" />
                   </a>
                 </div>
@@ -132,7 +130,7 @@ const Contact = () => {
             >
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Name
                   </label>
                   <input
@@ -141,13 +139,13 @@ const Contact = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-tertiary text-black dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-tertiary text-black dark:text-white focus:ring-2 focus:ring-primary focus:outline-none"
                     required
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Email
                   </label>
                   <input
@@ -156,13 +154,13 @@ const Contact = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-tertiary text-black dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-tertiary text-black dark:text-white focus:ring-2 focus:ring-primary focus:outline-none"
                     required
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Subject
                   </label>
                   <input
@@ -171,13 +169,13 @@ const Contact = () => {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-tertiary text-black dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-tertiary text-black dark:text-white focus:ring-2 focus:ring-primary focus:outline-none"
                     required
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Message
                   </label>
                   <textarea
@@ -186,7 +184,7 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     rows="4"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-tertiary text-black dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-tertiary text-black dark:text-white focus:ring-2 focus:ring-primary focus:outline-none"
                     required
                   ></textarea>
                 </div>
@@ -204,39 +202,6 @@ const Contact = () => {
                 </button>
               </form>
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Map Section */}
-      <section className="py-20 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 dark:from-primary/10 dark:via-accent/10 dark:to-primary/10">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto text-center mb-12"
-          >
-            <h2 className="text-4xl font-bold mb-6 text-black dark:text-white">
-              Visit Our <span className="text-primary">Office</span>
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
-              Come meet us in person
-            </p>
-          </motion.div>
-
-          <div className="aspect-w-16 aspect-h-9 rounded-2xl overflow-hidden shadow-lg">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3168.627904167088!2d-122.08373988468247!3d37.42199997982354!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fb7495bec0189%3A0x7c17d44a466baf9b!2sPalo+Alto%2C+CA!5e0!3m2!1sen!2sus!4v1565277759798!5m2!1sen!2sus"
-              width="100%"
-              height="450"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="rounded-2xl"
-            ></iframe>
           </div>
         </div>
       </section>
