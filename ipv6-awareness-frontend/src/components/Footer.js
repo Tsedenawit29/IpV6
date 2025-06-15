@@ -1,6 +1,7 @@
 // === src/components/Footer.js ===
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FaTwitter, FaLinkedinIn, FaYoutube, FaGithub } from 'react-icons/fa';
 import logo from '../assets/images/Ipv6.jpg.png';
 
 function Footer() {
@@ -31,7 +32,10 @@ function Footer() {
   };
 
   const socialLinks = [
-    // Your social icons and links
+    { name: 'Twitter', url: 'https://twitter.com/your_ipv6_handle', icon: <FaTwitter size={24} /> },
+    { name: 'LinkedIn', url: 'https://linkedin.com/company/your_ipv6_company', icon: <FaLinkedinIn size={24} /> },
+    { name: 'YouTube', url: 'https://youtube.com/your_ipv6_channel', icon: <FaYoutube size={24} /> },
+    { name: 'GitHub', url: 'https://github.com/your_ipv6_repo', icon: <FaGithub size={24} /> },
   ];
 
   return (

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { PlusIcon, PencilIcon, TrashIcon, CalendarIcon, ClockIcon, MapPinIcon, LinkIcon, TagIcon, PhotoIcon, DocumentTextIcon, QueueListIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
+import EditModal from '../components/EditModal';
 
 export default function Events() {
   const [events, setEvents] = useState([]);
@@ -16,11 +18,13 @@ export default function Events() {
     event_time: '',
     location: '',
     link: '',
-    tags: [],
+    tags: [], // Ensure this is always initialized as an array
     image_url: ''
   });
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [editData, setEditData] = useState(null);
 
   const eventTypes = [
     { value: 'conference', label: 'Conference' },
@@ -34,6 +38,7 @@ export default function Events() {
 
   const fetchEvents = async () => {
     try {
+      setLoading(true); // Start loading state
       const { data, error } = await supabase
         .from('ipv6_events')
         .select('*')
@@ -43,6 +48,8 @@ export default function Events() {
     } catch (error) {
       console.error('Error fetching events:', error);
       toast.error('Error fetching events: ' + error.message);
+    } finally {
+      setLoading(false); // End loading state
     }
   };
 
@@ -131,9 +138,10 @@ export default function Events() {
         event_time: '',
         location: '',
         link: '',
-        tags: [],
+        tags: [], // Reset to empty array
         image_url: ''
       });
+      setIsFormOpen(false); // Close form after submission
       fetchEvents();
     } catch (error) {
       console.error('Error creating event:', error);
@@ -141,15 +149,18 @@ export default function Events() {
     }
   };
 
-  const handleDelete = async (id) => {
+  async function handleDelete(id) {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'This action cannot be undone!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#00C389',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    });
+    if (!result.isConfirmed) return;
     try {
-      // Check authentication first
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      if (sessionError || !session) {
-        toast.error('Please log in to delete events');
-        return;
-      }
-
       const { error } = await supabase
         .from('ipv6_events')
         .delete()
@@ -159,18 +170,12 @@ export default function Events() {
       fetchEvents();
     } catch (error) {
       console.error('Error deleting event:', error);
-      toast.error('Error deleting event: ' + error.message);
+      toast.error('Failed to delete event');
     }
-  };
+  }
 
-  const handleUpdate = async (event) => {
-    // Check authentication first
-    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-    if (sessionError || !session) {
-      toast.error('Please log in to update events');
-      return;
-    }
-
+  const handleUpdate = (event) => {
+    // Note: Authentication check for update is done in handleSubmit
     setSelectedEvent(event);
     setFormData({
       title: event.title,
@@ -181,9 +186,22 @@ export default function Events() {
       event_time: event.event_time,
       location: event.location,
       link: event.link,
-      tags: event.tags || [],
+      // Ensure tags is always an array or an empty string for the input field
+      tags: Array.isArray(event.tags) ? event.tags : [], 
       image_url: event.image_url
     });
+    setIsFormOpen(true); // Open form for editing
+  };
+
+  const handleEdit = (item) => {
+    setEditData(item);
+    setEditModalOpen(true);
+  };
+
+  const handleSave = (updatedData) => {
+    // Your logic to save the edited data
+    setEditModalOpen(false);
+    // Optionally refresh data or show a success message
   };
 
   return (
@@ -199,7 +217,19 @@ export default function Events() {
         </div>
         <button
           onClick={() => {
-            setSelectedEvent(null);
+            setSelectedEvent(null); // Clear selected event for new form
+            setFormData({ // Reset form data for new event
+              title: '',
+              short_description: '',
+              full_description: '',
+              event_type: 'conference',
+              event_date: '',
+              event_time: '',
+              location: '',
+              link: '',
+              tags: [],
+              image_url: ''
+            });
             setIsFormOpen(true);
           }}
           className="btn btn-primary flex items-center"
@@ -214,7 +244,8 @@ export default function Events() {
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
             {selectedEvent ? 'Edit Event' : 'Create New Event'}
           </h2>
-          <form onSubmit={selectedEvent ? (e) => handleUpdate({ ...formData, id: selectedEvent.id }) : handleSubmit} className="space-y-6">
+          {/* Form uses handleSubmit for both create and update */}
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
                 Title
@@ -367,7 +398,8 @@ export default function Events() {
                 <input
                   type="text"
                   name="tags"
-                  value={formData.tags.join(', ')}
+                  // FIX: Ensure formData.tags is an array before calling .join()
+                  value={Array.isArray(formData.tags) ? formData.tags.join(', ') : formData.tags || ''}
                   onChange={(e) => setFormData({ ...formData, tags: e.target.value.split(',').map(tag => tag.trim()).filter(tag => tag) })}
                   className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
                   placeholder="e.g., security, networking, webinar"
@@ -431,14 +463,21 @@ export default function Events() {
         </div>
       )}
 
-      <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-dark-border">
-        <div className="p-6">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-            All Events
-          </h2>
-          {events.length === 0 ? (
-            <p className="text-gray-500 dark:text-dark-text-secondary">No events found. Add a new event to get started.</p>
-          ) : (
+      {/* Loading indicator */}
+      {loading && (
+        <div className="text-center text-gray-500 dark:text-dark-text-secondary">
+          <p>Loading events...</p>
+        </div>
+      )}
+
+      {!loading && events.length === 0 ? (
+        <p className="text-gray-500 dark:text-dark-text-secondary">No events found. Add a new event to get started.</p>
+      ) : (
+        <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-dark-border">
+          <div className="p-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              All Events
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {events.map((event) => (
                 <div key={event.id} className="bg-white dark:bg-dark-bg-secondary rounded-lg shadow-md overflow-hidden flex flex-col">
@@ -483,7 +522,8 @@ export default function Events() {
                       </p>
                     </div>
                     <div className="flex flex-wrap gap-1 mt-2">
-                      {event.tags && event.tags.map((tag, index) => (
+                      {/* Ensure event.tags is an array before mapping */}
+                      {Array.isArray(event.tags) && event.tags.map((tag, index) => (
                         <span key={index} className="bg-gray-200 dark:bg-dark-border text-gray-700 dark:text-dark-text-secondary text-xs font-semibold px-2.5 py-0.5 rounded-full">
                           {tag}
                         </span>
@@ -492,11 +532,7 @@ export default function Events() {
                   </div>
                   <div className="p-4 bg-gray-50 dark:bg-dark-bg-tertiary flex justify-end space-x-2">
                     <button
-                      onClick={() => {
-                        setSelectedEvent(event);
-                        setFormData({ ...event, tags: event.tags ? event.tags.join(', ') : '' });
-                        setIsFormOpen(true);
-                      }}
+                      onClick={() => handleUpdate(event)} // Pass the whole event object
                       className="text-primary hover:text-primary-dark"
                     >
                       <PencilIcon className="h-5 w-5" />
@@ -511,9 +547,17 @@ export default function Events() {
                 </div>
               ))}
             </div>
-          )}
+          </div>
         </div>
-      </div>
+      )}
+
+      {isEditModalOpen && (
+        <EditModal
+          data={editData}
+          onClose={() => setEditModalOpen(false)}
+          onSave={handleSave}
+        />
+      )}
     </div>
   );
-} 
+}

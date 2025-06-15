@@ -18,8 +18,7 @@
 
   /* Primary Button */
   .btn-primary {
-    @apply bg-primary text-white hover:bg-primary-dark
-           focus:ring-primary/50 shadow-lg hover:shadow-xl;
+    @apply bg-[#00C389] text-white hover:bg-[#00C389]/90 focus:ring-[#00C389]/50 shadow-lg hover:shadow-xl;
   }
 
   /* Secondary Button */
@@ -30,16 +29,12 @@
 
   /* Accent Button */
   .btn-accent {
-    @apply bg-accent text-primary hover:bg-accent-dark
-           focus:ring-accent/50 shadow-lg hover:shadow-xl;
+    @apply bg-[#00C389] text-primary hover:bg-[#00C389]/90 focus:ring-[#00C389]/50 shadow-lg hover:shadow-xl;
   }
 
   /* Outline Button */
   .btn-outline {
-    @apply bg-transparent border-2 border-primary text-primary 
-           dark:border-dark-text-primary dark:text-dark-text-primary
-           hover:bg-primary/10 dark:hover:bg-dark-text-primary/10
-           focus:ring-primary/50;
+    @apply border-2 border-[#00C389] text-[#00C389] hover:bg-[#00C389]/10 focus:ring-[#00C389]/50;
   }
 
   /* Card Styles */
@@ -52,7 +47,7 @@
   .input {
     @apply w-full px-4 py-2 rounded-lg border border-gray-300 
            dark:border-dark-border dark:bg-dark-bg-tertiary
-           focus:outline-none focus:ring-2 focus:ring-primary/50
+           focus:outline-none focus:ring-2 focus:ring-[#00C38980]
            text-primary dark:text-dark-text-primary;
   }
 

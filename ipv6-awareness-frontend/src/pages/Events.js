@@ -18,6 +18,9 @@ function Events() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
+  const [formData, setFormData] = useState({
+    tags: [],
+  });
 
   const eventCategories = [
     { id: 'all', name: 'All Events', icon: BookOpenIcon },
@@ -40,6 +43,17 @@ function Events() {
       if (error) throw error;
 
       setEvents(data || []);
+      // Ensure formData is set for the first event, safely handling potential undefined
+      if (data && data.length > 0) {
+        setFormData({
+          ...data[0],
+          tags: Array.isArray(data[0].tags)
+            ? data[0].tags
+            : typeof data[0].tags === "string"
+              ? data[0].tags.split(",").map(tag => tag.trim()).filter(Boolean)
+              : []
+        });
+      }
     } catch (error) {
       console.error('Error fetching events:', error);
       setError('Failed to load events. Please try again later.');
@@ -49,8 +63,22 @@ function Events() {
   }
 
   const filteredEvents = events.filter(
-    (event) => activeCategory === 'all' || event.type?.toLowerCase() === activeCategory
+    (event) => {
+      const eventTypeClean = event.event_type?.toLowerCase().trim();
+      const activeCategoryClean = activeCategory.trim();
+      return activeCategoryClean === 'all' || eventTypeClean === activeCategoryClean;
+    }
   );
+
+  const tagsArray = Array.isArray(formData.tags)
+    ? formData.tags
+    : typeof formData.tags === "string"
+      ? formData.tags.split(",").map(tag => tag.trim()).filter(Boolean)
+      : [];
+
+  console.log('Current Active Category:', activeCategory);
+  console.log('Total Events:', events.length);
+  console.log('Filtered Events Count:', filteredEvents.length);
 
   if (loading) return <LoadingState />;
   if (error) return <ErrorState error={error} onRetry={fetchEvents} />;

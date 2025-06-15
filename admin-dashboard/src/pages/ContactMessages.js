@@ -19,7 +19,7 @@ function ContactMessages() {
       const { data, error } = await supabase
         .from('ipv6_contact_messages')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('submitted_at', { ascending: false });
 
       if (error) throw error;
       setMessages(data || []);
@@ -96,11 +96,11 @@ function ContactMessages() {
                       </p>
                       <p className="flex items-center">
                         <EnvelopeIcon className="h-4 w-4 mr-1" />
-                        Email: {message.email}
+                        Email: <a href={`mailto:${message.email}`} className="text-[#00C389] hover:underline">{message.email}</a>
                       </p>
                       <p className="flex items-center">
                         <CalendarIcon className="h-4 w-4 mr-1" />
-                        Received: {new Date(message.created_at).toLocaleDateString()} at {new Date(message.created_at).toLocaleTimeString()}
+                        Received: {new Date(message.submitted_at).toLocaleDateString()} at {new Date(message.submitted_at).toLocaleTimeString()}
                       </p>
                     </div>
                   </div>

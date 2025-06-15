@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import FileUpload from './FileUpload';
+import Swal from 'sweetalert2';
 
 const DataTable = ({
   tableName,
@@ -28,7 +29,7 @@ const DataTable = ({
       const { data, error } = await supabase
         .from(tableName)
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('submitted_at', { ascending: false });
 
       if (error) throw error;
       setData(data);
@@ -70,17 +71,25 @@ const DataTable = ({
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this item?')) {
-      try {
-        const { error } = await supabase
-          .from(tableName)
-          .delete()
-          .eq('id', id);
-        if (error) throw error;
-        fetchData();
-      } catch (error) {
-        setError(error.message);
-      }
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'This action cannot be undone!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#00C389',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    });
+    if (!result.isConfirmed) return;
+    try {
+      const { error } = await supabase
+        .from(tableName)
+        .delete()
+        .eq('id', id);
+      if (error) throw error;
+      fetchData();
+    } catch (error) {
+      setError(error.message);
     }
   };
 

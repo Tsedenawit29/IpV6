@@ -1,439 +1,530 @@
-// === src/pages/Home.js ===
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FaGlobe, FaShieldAlt, FaBolt, FaRobot, FaArrowRight, FaChartLine, FaNetworkWired, FaMobileAlt, FaCloud, FaServer, FaLock, FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
+import { supabase } from '../lib/supabaseClient';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import {
+  FaGlobe, FaShieldAlt, FaBolt, FaRobot, FaArrowRight, FaChartLine, FaNetworkWired,
+  FaMobileAlt, FaCloud, FaServer, FaLock, FaCheckCircle, FaExclamationTriangle,
+  FaChevronLeft, FaChevronRight
+} from 'react-icons/fa';
+import logo from '../assets/images/logo.jpg';
+import './carousel.css'; // For carousel styles, create this file or remove if not needed
 
 function Home() {
+  const [latestUpdates, setLatestUpdates] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchLatestUpdates();
+  }, []);
+
+  async function fetchLatestUpdates() {
+    try {
+      const { data, error } = await supabase
+        .from('ipv6_blog_posts')
+        .select('*')
+        .order('published_on', { ascending: false })
+        .limit(5);
+
+      if (error) throw error;
+      setLatestUpdates(data || []);
+    } catch (error) {
+      console.error('Error fetching updates:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // Define CustomArrow component before using it in sliderSettings
+  const CustomArrow = ({ direction, onClick }) => (
+    <button
+      onClick={onClick}
+      className={`absolute top-1/2 transform -translate-y-1/2 z-10 p-2 rounded-full shadow-md transition-all
+        ${direction === 'left' ? 'left-2' : 'right-2'}
+        bg-white text-black dark:bg-gray-800 dark:text-white hover:bg-[#00C389]/20`}
+      aria-label={direction === 'left' ? 'Previous' : 'Next'}
+    >
+      {direction === 'left' ? <FaChevronLeft className="h-6 w-6" /> : <FaChevronRight className="h-6 w-6" />}
+    </button>
+  );
+
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    nextArrow: <CustomArrow direction="right" />,
+    prevArrow: <CustomArrow direction="left" />,
+  };
+
   const benefits = [
     {
-      icon: <FaServer className="w-8 h-8" />,
+      icon: <FaServer className="w-10 h-10" />,
       title: 'Larger Address Space',
-      description: 'IPv6 provides 128-bit addresses, enabling virtually unlimited IP addresses.',
-      stat: '340 undecillion addresses'
+      description: 'IPv6 offers 128-bit addresses, totaling about 340 undecillion (3.4×10^38) unique IPs.',
+      stat: '340 undecillion addresses',
     },
     {
-      icon: <FaLock className="w-8 h-8" />,
+      icon: <FaLock className="w-10 h-10" />,
       title: 'Enhanced Security',
-      description: 'Built-in IPsec support and improved security features.',
-      stat: '100% encrypted by default'
+      description: 'IPv6 was designed with IPsec in mind, providing end-to-end encryption and integrity by default.',
+      stat: 'Built-in IPsec',
     },
     {
-      icon: <FaGlobe className="w-8 h-8" />,
-      title: 'Better Performance',
-      description: 'Improved routing efficiency and packet processing.',
-      stat: '40% faster routing'
-    }
+      icon: <FaBolt className="w-10 h-10" />,
+      title: 'Efficient Performance',
+      description: 'Faster packet processing and no need for NAT improves performance and reduces latency.',
+      stat: 'Reduced latency by 20%',
+    },
   ];
 
   const features = [
     {
-      icon: <FaCheckCircle className="w-8 h-8" />,
+      icon: <FaCheckCircle className="w-10 h-10" />,
       title: 'Auto-Configuration',
-      description: 'Simplified network configuration and management.'
+      description: 'Supports stateless address autoconfiguration for plug-and-play simplicity.',
     },
     {
-      icon: <FaExclamationTriangle className="w-8 h-8" />,
-      title: 'Future-Proof',
-      description: 'Designed to meet the growing demands of the internet.'
+      icon: <FaExclamationTriangle className="w-10 h-10" />,
+      title: 'Scalability',
+      description: 'Designed for exponential growth in devices and networks.',
     },
     {
-      icon: <FaNetworkWired className="w-8 h-8" />,
-      title: 'Improved Routing',
-      description: 'More efficient packet routing and better network performance.'
+      icon: <FaNetworkWired className="w-10 h-10" />,
+      title: 'Streamlined Routing',
+      description: 'Hierarchical addressing reduces routing table size.',
     },
     {
-      icon: <FaMobileAlt className="w-8 h-8" />,
-      title: 'Mobile Support',
-      description: 'Better support for mobile devices and IoT applications.'
+      icon: <FaMobileAlt className="w-10 h-10" />,
+      title: 'Mobile Ready',
+      description: 'Enhanced support for mobile networks and efficient handoffs.',
     },
     {
-      icon: <FaCloud className="w-8 h-8" />,
-      title: 'Cloud Ready',
-      description: 'Optimized for cloud computing and distributed systems.'
+      icon: <FaCloud className="w-10 h-10" />,
+      title: 'Cloud Optimized',
+      description: 'Seamless integration with cloud-native and hybrid architectures.',
     },
     {
-      icon: <FaLock className="w-8 h-8" />,
-      title: 'Enhanced Security',
-      description: 'Built-in security features and better privacy protection.'
-    }
+      icon: <FaShieldAlt className="w-10 h-10" />,
+      title: 'Privacy Focused',
+      description: 'Privacy extensions prevent tracking of devices across networks.',
+    },
   ];
 
-  const stats = [
-    { value: "40%", label: "Global Adoption", icon: <FaChartLine /> },
-    { value: "100+", label: "Countries", icon: <FaGlobe /> },
-    { value: "1B+", label: "Devices", icon: <FaMobileAlt /> },
-    { value: "24/7", label: "Support", icon: <FaServer /> }
+  const globalStats = [
+    { value: '40%', label: 'Global IPv6 Adoption', icon: <FaChartLine className="text-4xl" /> },
+    { value: '100+', label: 'Countries Deployed', icon: <FaGlobe className="text-4xl" /> },
+    { value: '1B+', label: 'IPv6-Capable Devices', icon: <FaMobileAlt className="text-4xl" /> },
+    { value: '24/7', label: 'Support Available', icon: <FaServer className="text-4xl" /> },
   ];
+
+  // Animation variants for framer-motion
+  const fadeUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary">
+    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-gray-100 transition-colors duration-500">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 bg-gradient-to-br from-white via-primary/10 to-primary/5 dark:from-dark-bg-primary dark:via-primary/20 dark:to-primary/10">
-        <div className="absolute inset-0 hero-pattern"></div>
-        <div className="container mx-auto relative">
-          <div className="max-w-4xl mx-auto text-center">
+      <section className="relative h-screen w-full overflow-hidden bg-black">
+        <motion.img
+          src={logo}
+          alt="IPv6 Logo Background"
+          className="absolute inset-0 w-full h-full object-contain opacity-40 mx-auto my-auto pointer-events-none select-none"
+          initial={{ scale: 0.95, rotate: 0 }}
+          animate={{ 
+            scale: [1, 1.1, 1],
+            rotate: [0, 5, 0],
+            opacity: [0.4, 0.5, 0.4]
+          }}
+          transition={{ 
+            duration: 20, 
+            repeat: Infinity, 
+            repeatType: 'mirror', 
+            ease: 'easeInOut' 
+          }}
+          style={{ filter: 'brightness(0.8) contrast(1.2)' }}
+        />
+        
+        {/* Animated particles */}
+        {[...Array(20)].map((_, i) => (
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className="mb-12"
-            >
-              <div className="inline-block p-4 rounded-2xl bg-primary/10 dark:bg-primary/20 mb-8">
-                <FaGlobe className="text-6xl text-primary" />
-              </div>
-              <div className="space-y-4">
-                <motion.div
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-2xl font-semibold text-primary"
-                >
-                  Welcome to the Future of Internet
-                </motion.div>
+            key={i}
+            className="absolute rounded-full bg-[#00C389] opacity-30"
+            style={{
+              width: 15 + Math.random() * 20,
+              height: 15 + Math.random() * 20,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              filter: 'blur(4px)',
+            }}
+            animate={{
+              y: [0, -30, 0],
+              x: [0, 15, 0],
+              opacity: [0.3, 0.7, 0.3],
+            }}
+            transition={{
+              duration: 6 + Math.random() * 10,
+              repeat: Infinity,
+              repeatType: 'loop',
+              delay: Math.random() * 5,
+            }}
+          />
+        ))}
+
+        {/* Hero content */}
+        <div className="relative z-10 flex flex-col justify-center items-center text-center h-full px-6 max-w-4xl mx-auto">
                 <motion.h1 
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold text-black dark:text-white mb-6"
-                >
-                  The Future is <span className="text-primary relative">
-                    IPv6
-                    <span className="absolute -bottom-2 left-0 w-full h-1 bg-primary/50 rounded-full"></span>
-                  </span>
+            className="text-6xl font-extrabold text-white drop-shadow-lg mt-48"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            Think Fast. <span className="text-[#00C389]">Think IPv6.</span>
                 </motion.h1>
                 <motion.p 
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                  className="text-xl md:text-2xl mb-12 text-black/80 dark:text-white/80 leading-relaxed max-w-2xl mx-auto"
-                >
-                  Next generation internet protocol for a connected world
+            className="mt-6 text-xl max-w-xl text-white"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            Join the global movement to future-proof the internet
                 </motion.p>
-              </div>
-            </motion.div>
             <motion.div 
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="flex flex-wrap justify-center gap-6"
+            className="mt-10 flex gap-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
             >
               <Link 
                 to="/get-involved" 
-                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 ease-out transform bg-primary hover:bg-primary-dark rounded-lg hover:scale-105 hover:shadow-lg"
+              className="bg-[#00C389] hover:bg-[#00C389]/90 text-black font-semibold px-8 py-3 rounded-lg shadow-lg transition"
               >
-                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
-                <span className="absolute inset-0 w-full h-full bg-primary border-2 border-primary-dark group-hover:bg-primary-dark"></span>
-                <span className="relative flex items-center gap-2">
                   Get Started
-                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                </span>
                 </Link>
               <Link 
                 to="/resources" 
-                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary transition-all duration-300 ease-out transform border-2 border-primary hover:bg-primary hover:text-white rounded-lg hover:scale-105 hover:shadow-lg"
+              className="border border-[#00C389] text-[#00C389] hover:bg-[#00C389] hover:text-black font-semibold px-8 py-3 rounded-lg shadow-lg transition"
               >
-                <span className="relative flex items-center gap-2">
-                  View Resources
-                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                </span>
+              Learn More
                 </Link>
+            </motion.div>
+
+          {/* Global Stats - Moved further down with enhanced styling */}
+          <motion.div
+            className="mt-32 grid grid-cols-2 md:grid-cols-4 gap-8 w-full max-w-4xl"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+          >
+            {globalStats.map((stat, index) => (
+              <motion.div
+                key={index}
+                className="text-center bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:bg-black/40 transition-all duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 + index * 0.1 }}
+              >
+                <div className="text-[#00C389] mb-3">{stat.icon}</div>
+                <div className="text-4xl font-bold text-white mb-2">{stat.value}</div>
+                <div className="text-sm text-gray-300 font-medium">{stat.label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Why IPv6 Matters Section - New Design */}
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50 dark:from-black dark:to-gray-900">
+        <div className="max-w-6xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+              Why <span className="text-[#00C389]">IPv6 Matters</span>
+            </h2>
+            <p className="text-lg max-w-3xl mx-auto text-gray-700 dark:text-gray-300">
+              IPv6 is not just an upgrade—it's a necessity for the future of the internet
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Address Space Crisis */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-white dark:bg-gray-900 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+            >
+              <div className="w-16 h-16 rounded-xl bg-[#00C389]/10 flex items-center justify-center mb-6">
+                <FaServer className="w-8 h-8 text-[#00C389]" />
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                Address Space Crisis
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                IPv4 addresses are nearly exhausted. IPv6 provides 340 undecillion addresses—enough for every device on Earth and beyond.
+              </p>
+              <ul className="space-y-2 text-gray-600 dark:text-gray-400">
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#00C389]"></span>
+                  <span>340 trillion trillion trillion addresses</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#00C389]"></span>
+                  <span>No more NAT required</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#00C389]"></span>
+                  <span>True end-to-end connectivity</span>
+                </li>
+              </ul>
+            </motion.div>
+
+            {/* Security & Performance */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="bg-white dark:bg-gray-900 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+            >
+              <div className="w-16 h-16 rounded-xl bg-[#00C389]/10 flex items-center justify-center mb-6">
+                <FaLock className="w-8 h-8 text-[#00C389]" />
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                Security & Performance
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                Built-in security features and improved performance make IPv6 the protocol of choice for modern networks.
+              </p>
+              <ul className="space-y-2 text-gray-600 dark:text-gray-400">
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#00C389]"></span>
+                  <span>Mandatory IPsec support</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#00C389]"></span>
+                  <span>Reduced latency by 20%</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#00C389]"></span>
+                  <span>Better routing efficiency</span>
+                </li>
+              </ul>
+            </motion.div>
+
+            {/* Future-Ready */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="bg-white dark:bg-gray-900 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+            >
+              <div className="w-16 h-16 rounded-xl bg-[#00C389]/10 flex items-center justify-center mb-6">
+                <FaRobot className="w-8 h-8 text-[#00C389]" />
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                Future-Ready
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                IPv6 is designed for the future of the internet, supporting IoT, 5G, and emerging technologies.
+              </p>
+              <ul className="space-y-2 text-gray-600 dark:text-gray-400">
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#00C389]"></span>
+                  <span>IoT device support</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#00C389]"></span>
+                  <span>5G network ready</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#00C389]"></span>
+                  <span>Cloud-native architecture</span>
+                </li>
+              </ul>
             </motion.div>
           </div>
         </div>
+      </section>
 
-        {/* Scroll indicator */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
+      {/* Latest Updates Carousel */}
+      <section className="py-20 bg-white dark:bg-black">
+        <div className="max-w-6xl mx-auto px-6">
           <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="flex flex-col items-center gap-2 text-black/60 dark:text-white/60"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
           >
-            <span className="text-sm">Scroll to explore</span>
-            <FaArrowRight className="w-4 h-4 transform rotate-90" />
+            <h2 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+              Latest <span className="text-[#00C389]">Updates</span>
+            </h2>
+            <p className="text-lg max-w-3xl mx-auto text-gray-700 dark:text-gray-300">
+              Stay informed about the latest developments in IPv6 adoption and technology
+            </p>
           </motion.div>
-        </motion.div>
-      </section>
 
-      {/* Quick Stats Section */}
-      <section className="py-16 px-4 bg-white dark:bg-dark-bg-secondary">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00C389] mx-auto"></div>
+            </div>
+          ) : (
+            <Slider {...sliderSettings}>
+              {latestUpdates.map((update) => (
+                <div key={update.id} className="px-4">
               <motion.div
-                key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center"
-              >
-                <div className="text-4xl font-bold text-primary mb-2">
-                  {stat.value}
+                    className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg"
+                  >
+                    {update.image_url && (
+                      <div className="relative h-48 overflow-hidden">
+                        <img
+                          src={update.image_url}
+                          alt={update.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
+                    <div className="p-6">
+                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                        {update.title}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-400 mb-4">
+                        {update.summary}
+                      </p>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                          {new Date(update.published_on).toLocaleDateString()}
+                        </span>
+                        <Link
+                          to={`/blog/${update.id}`}
+                          className="text-[#00C389] hover:text-[#00C389]/80 font-medium flex items-center gap-2"
+                        >
+                          Read More <FaArrowRight />
+                        </Link>
+                      </div>
+                    </div>
+                  </motion.div>
                 </div>
-                <div className="text-black/80 dark:text-white/80">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </div>
+              ))}
+            </Slider>
+          )}
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-secondary dark:to-dark-bg-primary">
-        <div className="container mx-auto">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-center text-black dark:text-white mb-16"
-          >
-            Why <span className="text-primary">IPv6</span> Matters
-          </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {benefits.map((benefit, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-              >
-                <div className="text-yellow-500 mb-6 transform hover:scale-110 transition-transform duration-300">
-                  {benefit.icon}
-                </div>
-                <h3 className="text-xl font-bold text-black dark:text-white mb-4">
-                  {benefit.title}
-                </h3>
-                <p className="text-black/80 dark:text-white/80 mb-6">
-                  {benefit.description}
-                </p>
-                <div className="text-primary font-semibold">{benefit.stat}</div>
-              </motion.div>
-            ))}
-          </div>
+      {/* Key Features Section */}
+      <section className="relative py-16 bg-gradient-to-br from-[#181C2A] via-[#23263A] to-[#10121A] dark:from-[#181C2A] dark:via-[#23263A] dark:to-[#10121A] overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -top-24 -left-24 w-72 h-72 bg-[#00C389]/20 rounded-full blur-2xl opacity-40 animate-pulse" />
+          <div className="absolute bottom-0 right-0 w-56 h-56 bg-[#00C389]/10 rounded-full blur-xl opacity-30 animate-pulse" />
         </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 px-4 bg-white dark:bg-dark-bg-secondary">
-        <div className="container mx-auto">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
+        <div className="relative max-w-6xl mx-auto px-4 z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-center text-black dark:text-white mb-16"
+            className="text-center mb-10"
           >
-            Key <span className="text-primary">Features</span>
-          </motion.h2>
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
+            <h2 className="text-3xl font-bold mb-2 text-white">
+              Key <span className="text-[#00C389]">Features</span>
+            </h2>
+            <p className="text-base max-w-2xl mx-auto text-gray-300">
+              Discover the powerful capabilities that make IPv6 the future of internet connectivity
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {features.map((feature, i) => (
               <motion.div
-                key={index}
+                key={i}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="flex flex-col items-start p-6 bg-white dark:bg-dark-bg-tertiary rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+                transition={{ delay: i * 0.15 }}
+                className="relative group rounded-2xl p-6 bg-white/10 dark:bg-white/10 backdrop-blur-md shadow-lg border border-white/10 hover:border-[#00C389] hover:shadow-[#00C389]/20 transition-all duration-300 overflow-hidden flex flex-col items-center text-center min-h-[200px]"
                 >
-                  <div className="text-yellow-500 transform hover:scale-110 transition-transform duration-300 mb-4">
-                    {feature.icon}
+                {/* Smaller crisp icon */}
+                <div className="mb-4">
+                  <span className="text-[#00C389] text-3xl">{feature.icon}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-black dark:text-white mb-3">
+                <h3 className="text-lg font-semibold text-white mb-2">
                   {feature.title}
                 </h3>
-                  <p className="text-black/80 dark:text-white/80">
+                <p className="text-gray-200 text-sm">
                   {feature.description}
                 </p>
               </motion.div>
             ))}
           </div>
           </div>
+      </section>
+
+      {/* Test Your IPv6 CTA Section */}
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
+        <div className="max-w-6xl mx-auto px-6">
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mt-16"
+            className="text-center"
           >
-            <div className="flex flex-wrap justify-center gap-6">
+            <h2 className="text-4xl font-bold mb-6 text-gray-900 dark:text-white">
+              Ready to Test Your <span className="text-[#00C389]">IPv6</span>?
+            </h2>
+            <p className="text-lg max-w-3xl mx-auto text-gray-700 dark:text-gray-300 mb-10">
+              Check your network's IPv6 readiness and get detailed insights about your connection
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <Link 
-                to="/get-involved" 
-                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 ease-out transform bg-primary hover:bg-primary-dark rounded-lg hover:scale-105 hover:shadow-lg"
+                to="/test-ipv6"
+                className="bg-[#00C389] hover:bg-[#00C389]/90 text-black font-semibold px-8 py-4 rounded-lg shadow-lg transition text-lg"
               >
-                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
-                <span className="absolute inset-0 w-full h-full bg-primary border-2 border-primary-dark group-hover:bg-primary-dark"></span>
-                <span className="relative flex items-center gap-2">
-                Get Started
-                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                </span>
+                Test Your IPv6
               </Link>
               <Link 
                 to="/resources" 
-                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary transition-all duration-300 ease-out transform border-2 border-primary hover:bg-primary hover:text-white rounded-lg hover:scale-105 hover:shadow-lg"
+                className="border border-[#00C389] text-[#00C389] hover:bg-[#00C389] hover:text-black font-semibold px-8 py-4 rounded-lg shadow-lg transition text-lg"
               >
-                <span className="relative flex items-center gap-2">
-                View Resources
-                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                </span>
+                Learn More
               </Link>
             </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-secondary dark:to-dark-bg-primary">
-        <div className="container mx-auto">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-center text-black dark:text-white mb-16"
-          >
-            IPv6 <span className="text-primary">Status</span>
-          </motion.h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              <h3 className="text-2xl font-semibold text-black dark:text-white mb-6">Global Adoption</h3>
-              <div className="space-y-8">
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <span className="text-black/80 dark:text-white/80">Global Adoption</span>
-                    <span className="text-primary font-semibold">40%</span>
-                  </div>
-                  <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: "40%" }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, delay: 0.2 }}
-                      className="h-full bg-primary"
-                    />
-                  </div>
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+              <div className="text-center">
+                <div className="w-12 h-12 rounded-full bg-[#00C389]/10 flex items-center justify-center mx-auto mb-4">
+                  <FaNetworkWired className="w-6 h-6 text-[#00C389]" />
                 </div>
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <span className="text-black/80 dark:text-white/80">Mobile Networks</span>
-                    <span className="text-primary font-semibold">60%</span>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Network Analysis</h3>
+                <p className="text-gray-600 dark:text-gray-400">Detailed insights about your network configuration</p>
                   </div>
-                  <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: "60%" }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, delay: 0.4 }}
-                      className="h-full bg-primary"
-                    />
-                  </div>
+              <div className="text-center">
+                <div className="w-12 h-12 rounded-full bg-[#00C389]/10 flex items-center justify-center mx-auto mb-4">
+                  <FaShieldAlt className="w-6 h-6 text-[#00C389]" />
                 </div>
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <span className="text-black/80 dark:text-white/80">Enterprise Adoption</span>
-                    <span className="text-primary font-semibold">35%</span>
-                  </div>
-                  <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: "35%" }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, delay: 0.6 }}
-                      className="h-full bg-primary"
-                    />
-                  </div>
-                </div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Security Check</h3>
+                <p className="text-gray-600 dark:text-gray-400">Verify your IPv6 security settings</p>
               </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              <h3 className="text-2xl font-semibold text-black dark:text-white mb-6">Regional Overview</h3>
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <FaCheckCircle className="text-yellow-500 text-xl" />
-                  <div>
-                    <h4 className="text-black dark:text-white font-semibold">North America</h4>
-                    <p className="text-black/80 dark:text-white/80">Leading in IPv6 adoption with 45% implementation</p>
-                  </div>
+              <div className="text-center">
+                <div className="w-12 h-12 rounded-full bg-[#00C389]/10 flex items-center justify-center mx-auto mb-4">
+                  <FaChartLine className="w-6 h-6 text-[#00C389]" />
                 </div>
-                <div className="flex items-center gap-4">
-                  <FaCheckCircle className="text-yellow-500 text-xl" />
-                  <div>
-                    <h4 className="text-black dark:text-white font-semibold">Europe</h4>
-                    <p className="text-black/80 dark:text-white/80">Strong adoption rate at 38% across major networks</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <FaExclamationTriangle className="text-yellow-500 text-xl" />
-                  <div>
-                    <h4 className="text-black dark:text-white font-semibold">Asia Pacific</h4>
-                    <p className="text-black/80 dark:text-white/80">Growing adoption with 25% implementation</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <FaExclamationTriangle className="text-yellow-500 text-xl" />
-                  <div>
-                    <h4 className="text-black dark:text-white font-semibold">Africa</h4>
-                    <p className="text-black/80 dark:text-white/80">Early stages with 15% adoption rate</p>
-                  </div>
-                </div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Performance Metrics</h3>
+                <p className="text-gray-600 dark:text-gray-400">Measure your IPv6 connection speed</p>
               </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent dark:from-primary/20 dark:via-primary/10 dark:to-transparent">
-        <div className="container mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-6">
-            Ready to Make the Switch?
-          </h2>
-            <p className="text-black/80 dark:text-white/80 mb-12 text-lg">
-              Join the IPv6 revolution and be part of the next generation of internet connectivity.
-            </p>
-            <div className="flex flex-wrap justify-center gap-6">
-              <Link 
-                to="/get-involved" 
-                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 ease-out transform bg-primary hover:bg-primary-dark rounded-lg hover:scale-105 hover:shadow-lg"
-              >
-                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
-                <span className="absolute inset-0 w-full h-full bg-primary border-2 border-primary-dark group-hover:bg-primary-dark"></span>
-                <span className="relative flex items-center gap-2">
-                  Get Started
-                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                </span>
-              </Link>
-              <Link 
-                to="/contact" 
-                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary transition-all duration-300 ease-out transform border-2 border-primary hover:bg-primary hover:text-white rounded-lg hover:scale-105 hover:shadow-lg"
-              >
-                <span className="relative flex items-center gap-2">
-                  Contact Us
-                  <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                </span>
-              </Link>
             </div>
           </motion.div>
         </div>

@@ -16,6 +16,10 @@ function Resources() {
     fetchResources();
   }, []);
 
+  useEffect(() => {
+    setSearchTerm(searchInput);
+  }, []);
+
   async function fetchResources() {
     try {
       const { data, error } = await supabase
@@ -32,6 +36,15 @@ function Resources() {
       setLoading(false);
     }
   }
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearchTerm(searchInput);
+  };
+
+  const handleCategory = (category) => {
+    setSelectedCategory(category);
+  };
 
   const filteredResources = resources.filter(resource => {
     const matchesCategory = selectedCategory === 'all' || resource.category === selectedCategory;
@@ -55,7 +68,7 @@ function Resources() {
         </div>
 
         {/* Search Bar */}
-        <div className="flex flex-col md:flex-row items-center gap-4 mb-8 justify-center">
+        <form className="flex flex-col md:flex-row items-center gap-4 mb-8 justify-center" onSubmit={handleSearch}>
           <input
             type="text"
             placeholder="Search resources..."
@@ -64,13 +77,13 @@ function Resources() {
             className="w-full md:w-96 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00C389] dark:bg-dark-bg-tertiary dark:text-white"
           />
           <button
-            onClick={() => setSearchTerm(searchInput)}
+            type="submit"
             className="flex items-center gap-2 px-5 py-3 bg-[#00C389] text-white rounded-lg hover:bg-green-600 transition-colors shadow-md"
           >
             <MagnifyingGlassIcon className="h-5 w-5" />
             Search
           </button>
-        </div>
+        </form>
 
         {/* Category Filter */}
         <div className="mb-10">
@@ -78,7 +91,7 @@ function Resources() {
             {categories.map(category => (
               <button
                 key={category}
-                onClick={() => setSelectedCategory(category)}
+                onClick={() => handleCategory(category)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all border shadow-sm ${
                   selectedCategory === category
                     ? 'bg-[#00C389] text-white border-[#00C389]'
