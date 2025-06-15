@@ -36,10 +36,10 @@ function Navbar() {
 />
 
             {/* <div className="flex flex-col">
-              <span className="text-xl font-bold text-primary dark:text-dark-text-primary group-hover:text-[#00C389] transition-colors">
+              <span className="text-xl font-bold text-primary dark:text-dark-text-primary group-hover:text-[#228B22] transition-colors">
                 IPv6
               </span>
-              <span className="text-sm text-primary/80 dark:text-dark-text-secondary group-hover:text-[#00C389] transition-colors">
+              <span className="text-sm text-primary/80 dark:text-dark-text-secondary group-hover:text-[#228B22] transition-colors">
                 Awareness
               </span>
             </div> */}
@@ -63,13 +63,13 @@ function Navbar() {
                     to={path}
                     className={`relative px-2 py-1 font-medium transition-colors ${
                       isActive(path)
-                        ? 'text-[#00C389]'
-                        : 'text-black dark:text-white hover:text-[#00C389]'
+                        ? 'text-[#228B22]'
+                        : 'text-black dark:text-white hover:text-[#228B22]'
                     }`}
                   >
                     {label}
                     {isActive(path) && (
-                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#00C389]" />
+                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#228B22]" />
                     )}
                   </Link>
                 </li>
@@ -78,13 +78,13 @@ function Navbar() {
 
             <button
   onClick={toggleDarkMode}
-  className="p-2 rounded-lg bg-primary/10 dark:bg-dark-bg-secondary hover:bg-[#00C389]/20 dark:hover:bg-[#00C389]/20 transition-colors duration-200"
+  className="p-2 rounded-lg bg-primary/10 dark:bg-dark-bg-secondary hover:bg-[#228B22]/20 dark:hover:bg-[#228B22]/20 transition-colors duration-200"
   aria-label="Toggle dark mode"
 >
   {darkMode ? (
     // Moon icon (dark mode active)
     <svg
-      className="w-5 h-5 text-[#00C389]"
+      className="w-5 h-5 text-[#228B22]"
       fill="currentColor"
       viewBox="0 0 20 20"
       xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +98,7 @@ function Navbar() {
   ) : (
     // Sun icon (light mode active)
     <svg
-      className="w-5 h-5 text-[#00C389]"
+      className="w-5 h-5 text-[#228B22]"
       fill="currentColor"
       viewBox="0 0 20 20"
       xmlns="http://www.w3.org/2000/svg"
@@ -113,7 +113,7 @@ function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-[#00C389]/10 transition-colors"
+            className="md:hidden p-2 rounded-lg hover:bg-[#228B22]/10 transition-colors"
           >
             <svg className="w-6 h-6 text-primary dark:text-dark-text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
@@ -141,8 +141,8 @@ function Navbar() {
                   to={path}
                   className={`block px-4 py-2 rounded-lg transition-colors ${
                     isActive(path)
-                      ? 'bg-[#00C389]/10 text-[#00C389]'
-                      : 'text-black dark:text-white hover:bg-[#00C389]/10 hover:text-[#00C389]'
+                      ? 'bg-[#228B22]/10 text-[#228B22]'
+                      : 'text-black dark:text-white hover:bg-[#228B22]/10 hover:text-[#228B22]'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >

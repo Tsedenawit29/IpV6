@@ -12,7 +12,6 @@ function Footer() {
       { label: 'Our Mission', path: '/OurMission' },
     ],
     resources: [
-      { label: 'Documentation', path: '/Documentation' },
       { label: 'Blog', path: '/Blog' },
       { label: 'Events', path: '/Events' },
       { label: 'Resources', path: '/Resources' },
@@ -22,7 +21,7 @@ function Footer() {
       { label: 'Contact Us', path: '/Contact' },
       { label: 'FAQ', path: '/FAQ' },
       { label: 'IPv6 Dashboard', path: '/IPv6Dashboard' },
-      { label: 'Test IPv6', path: '/TestIPv6' },
+      { label: 'Test IPv6', path: 'https://test-ipv6.com/', isExternal: true },
     ],
     legal: [
       { label: 'Privacy Policy', path: '/PrivacyPolicy' },
@@ -46,7 +45,7 @@ function Footer() {
                 className="h-16 w-auto transform group-hover:scale-105 transition-transform duration-300" 
               />
               <div>
-                <h3 className="text-2xl font-bold text-[#00C389]">
+                <h3 className="text-2xl font-bold text-[#228B22]">
                   IPv6 Awareness
                 </h3>
                 <p className="text-base text-black dark:text-dark-text-secondary">Empowering the future of internet connectivity</p>
@@ -60,7 +59,7 @@ function Footer() {
                 <a
                   key={social.name}
                   href={social.url}
-                  className="text-black dark:text-dark-text-secondary hover:text-[#00C389] dark:hover:text-[#00C389] transform hover:scale-110 transition-all duration-300"
+                  className="text-black dark:text-dark-text-secondary hover:text-[#228B22] dark:hover:text-[#228B22] transform hover:scale-110 transition-all duration-300"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.name}
@@ -75,18 +74,29 @@ function Footer() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               {Object.entries(footerLinks).map(([category, links]) => (
                 <div key={category} className="flex flex-col">
-                  <h4 className="text-lg font-semibold mb-4 text-[#00C389] capitalize">
+                  <h4 className="text-lg font-semibold mb-4 text-[#228B22] capitalize">
                     {category}
                   </h4>
                   <ul className="space-y-3">
-                    {links.map(({ label, path }) => (
+                    {links.map(({ label, path, isExternal }) => (
                       <li key={path}>
-                        <Link
-                          to={path}
-                          className="text-black dark:text-dark-text-secondary hover:text-[#00C389] dark:hover:text-[#00C389] transform hover:translate-x-1 transition-all duration-300 inline-block text-base"
-                        >
-                          {label}
-                        </Link>
+                        {isExternal ? (
+                          <a
+                            href={path}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-black dark:text-dark-text-secondary hover:text-[#228B22] dark:hover:text-[#228B22] transform hover:translate-x-1 transition-all duration-300 inline-block text-base"
+                          >
+                            {label}
+                          </a>
+                        ) : (
+                          <Link
+                            to={path}
+                            className="text-black dark:text-dark-text-secondary hover:text-[#228B22] dark:hover:text-[#228B22] transform hover:translate-x-1 transition-all duration-300 inline-block text-base"
+                          >
+                            {label}
+                          </Link>
+                        )}
                       </li>
                     ))}
                   </ul>

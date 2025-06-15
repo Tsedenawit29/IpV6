@@ -15,13 +15,10 @@ import GetInvolved from './pages/GetInvolved';
 import Contact from './pages/Contact';
 import Blog from './pages/Blog';
 import IPv6Dashboard from './pages/IPv6Dashboard';
-import TestIPv6 from './pages/TestIPv6';
+
 
 // Company Pages
 import OurMission from './pages/OurMission';
-
-// Resource Pages
-import Documentation from './pages/Documentation';
 
 
 // Support Pages
@@ -112,13 +109,9 @@ function App() {
                   <Route path="/IPv6Dashboard" element={<IPv6Dashboard />} />
                   <Route path="/Blog" element={<Blog />} />
                   <Route path="/Contact" element={<Contact />} />
-                  <Route path="/TestIPv6" element={<TestIPv6 />} />
 
                   {/* Company Section - Matches Footer */}
                   <Route path="/OurMission" element={<OurMission />} />
-
-                  {/* Resources Section - Matches Footer */}
-                  <Route path="/Documentation" element={<Documentation />} />
 
                   {/* Support Section - Matches Footer */}
                   <Route path="/FAQ" element={<FAQ />} />

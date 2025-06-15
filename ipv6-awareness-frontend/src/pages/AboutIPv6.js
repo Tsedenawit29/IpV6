@@ -165,9 +165,9 @@ function AboutIPv6() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 font-sans">
+    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-primary/10 font-sans">
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center bg-gradient-to-br from-primary/90 via-primary/80 to-primary-dark text-white overflow-hidden">
+      <section className="relative min-h-[90vh] flex items-center justify-center bg-gradient-to-br from-primary/90 via-primary/80 to-primary-dark dark:from-dark-bg-primary dark:via-primary/90 dark:to-primary-dark text-white overflow-hidden">
         {/* Animated Bubbles Background */}
         <div className="absolute inset-0 overflow-hidden">
           {[...Array(15)].map((_, i) => (
@@ -181,7 +181,7 @@ function AboutIPv6() {
           ))}
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary-dark/90"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary-dark/90 dark:from-dark-bg-primary/90 dark:to-primary-dark/90"></div>
         
         <div className="container mx-auto px-4 relative z-10 mt-20">
           <div className="max-w-5xl mx-auto">
@@ -196,7 +196,7 @@ function AboutIPv6() {
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="inline-block p-4 rounded-2xl bg-accent/20 backdrop-blur-sm mb-8"
+                  className="inline-block p-4 rounded-2xl bg-accent/20 dark:bg-accent/30 backdrop-blur-sm mb-8"
                 >
                   <FaInfoCircle className="text-6xl text-yellow-500" />
                 </motion.div>
@@ -206,7 +206,7 @@ function AboutIPv6() {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="text-3xl font-semibold text-[#228B22]"
+                    className="text-2xl font-semibold text-[#228B22]"
                   >
                     Understanding IPv6
                   </motion.div>
@@ -219,8 +219,8 @@ function AboutIPv6() {
                   >
                     The Next Generation{' '}
                     <span className="relative inline-block group">
-                      <span className="text-[#228B22]">Internet Protocol</span>
-                      <span className="absolute -bottom-2 left-0 w-full h-1 bg-[#228B22]/50 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                      <span className="text-yellow-500 dark:text-[#32CD32]">Internet Protocol</span>
+                      <span className="absolute -bottom-2 left-0 w-full h-1 bg-yellow-500/50 dark:bg-[#32CD32]/50 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
                     </span>
                   </motion.h1>
                   
@@ -228,7 +228,7 @@ function AboutIPv6() {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.4 }}
-                    className="text-xl md:text-2xl text-white/90 leading-relaxed"
+                    className="text-xl md:text-2xl text-white/90 dark:text-white leading-relaxed"
                   >
                     Discover the future of internet addressing and connectivity
                   </motion.p>
@@ -241,8 +241,8 @@ function AboutIPv6() {
                 transition={{ duration: 0.8 }}
                 className="relative"
               >
-                <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-white/5 backdrop-blur-sm p-8">
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-transparent"></div>
+                <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-white/5 dark:bg-dark-bg-tertiary/20 backdrop-blur-sm p-8">
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-transparent dark:from-accent/30 dark:to-transparent"></div>
                   <div className="relative z-10 h-full flex flex-col justify-center items-center text-center">
                     <div className="grid grid-cols-2 gap-8">
                       {[
@@ -258,11 +258,11 @@ function AboutIPv6() {
                           transition={{ delay: 0.2 + index * 0.1 }}
                           className="group cursor-pointer"
                         >
-                          <div className="p-6 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300">
+                          <div className="p-6 rounded-xl bg-white/10 dark:bg-dark-bg-tertiary/30 backdrop-blur-sm hover:bg-white/20 dark:hover:bg-dark-bg-tertiary/40 transition-all duration-300">
                             <div className="text-4xl text-yellow-500 mb-3 transform group-hover:scale-110 transition-transform">
                               {item.icon}
                             </div>
-                            <div className="text-white/90 font-semibold">
+                            <div className="text-white/90 dark:text-white font-semibold">
                               {item.label}
                             </div>
                           </div>
@@ -281,7 +281,7 @@ function AboutIPv6() {
       <div className="relative mt-20">
         {/* Section Content */}
         {sections.map((section, sectionIndex) => (
-          <section key={section.id} id={section.id} className="py-20">
+          <section key={section.id} id={section.id} className="py-20 bg-white dark:bg-dark-bg-primary">
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
                 <motion.div
@@ -292,15 +292,15 @@ function AboutIPv6() {
                 >
                   <div className="flex items-center gap-4">
                     {section.icon}
-                    <h2 className="text-4xl font-bold text-[#228B22]">{section.title}</h2>
+                    <h2 className="text-4xl font-bold text-[#228B22] dark:text-[#32CD32]">{section.title}</h2>
                   </div>
 
                   <div className="relative">
                     <button
                       onClick={prevSlide}
-                      className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 p-2 rounded-full bg-white shadow-lg hover:bg-gray-50 transition-colors"
+                      className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 p-2 rounded-full bg-white dark:bg-dark-bg-tertiary shadow-lg hover:bg-gray-50 dark:hover:bg-dark-bg-secondary transition-colors"
                     >
-                      <FaChevronLeft className="text-[#228B22] text-xl" />
+                      <FaChevronLeft className="text-[#228B22] dark:text-[#32CD32] text-xl" />
                     </button>
 
                     <div className="overflow-hidden">
@@ -311,22 +311,22 @@ function AboutIPv6() {
                           animate={{ opacity: 1, x: 0 }}
                           exit={{ opacity: 0, x: -100 }}
                           transition={{ duration: 0.5 }}
-                          className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+                          className="bg-white dark:bg-dark-bg-secondary rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow"
                         >
                           <div className="space-y-6">
                             <div className="text-yellow-500">
                               {section.features[currentSlide].icon}
                             </div>
-                            <h3 className="text-2xl font-semibold text-[#228B22]">
+                            <h3 className="text-2xl font-semibold text-[#228B22] dark:text-[#32CD32]">
                               {section.features[currentSlide].title}
                             </h3>
-                            <p className="text-gray-600 text-lg">
+                            <p className="text-gray-600 dark:text-gray-300 text-lg">
                               {section.features[currentSlide].description}
                             </p>
                             <ul className="space-y-3">
                               {section.features[currentSlide].details.map((detail, idx) => (
-                                <li key={idx} className="flex items-center gap-3 text-gray-600">
-                                  <span className="w-2 h-2 rounded-full bg-[#228B22]"></span>
+                                <li key={idx} className="flex items-center gap-3 text-gray-600 dark:text-gray-300">
+                                  <span className="w-2 h-2 rounded-full bg-[#228B22] dark:bg-[#32CD32]"></span>
                                   <span className="text-lg">{detail}</span>
                                 </li>
                               ))}
@@ -338,9 +338,9 @@ function AboutIPv6() {
 
                     <button
                       onClick={nextSlide}
-                      className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 p-2 rounded-full bg-white shadow-lg hover:bg-gray-50 transition-colors"
+                      className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 p-2 rounded-full bg-white dark:bg-dark-bg-tertiary shadow-lg hover:bg-gray-50 dark:hover:bg-dark-bg-secondary transition-colors"
                     >
-                      <FaChevronRight className="text-[#228B22] text-xl" />
+                      <FaChevronRight className="text-[#228B22] dark:text-[#32CD32] text-xl" />
                     </button>
                   </div>
 
@@ -350,7 +350,7 @@ function AboutIPv6() {
                       <div
                         key={index}
                         className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                          currentSlide === index ? 'bg-[#228B22] w-8' : 'bg-gray-300'
+                          currentSlide === index ? 'bg-[#228B22] dark:bg-[#32CD32] w-8' : 'bg-gray-300 dark:bg-gray-600'
                         }`}
                       />
                     ))}

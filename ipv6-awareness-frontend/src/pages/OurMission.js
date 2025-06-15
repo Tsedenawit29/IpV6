@@ -57,8 +57,8 @@ function OurMission() {
         <div className="absolute inset-0 hero-pattern"></div>
         
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
-          <div className="absolute -top-24 -left-24 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-accent/10 rounded-full blur-3xl dark:bg-accent/20"></div>
+          <div className="absolute top-1/2 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl dark:bg-primary/20"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -88,7 +88,7 @@ function OurMission() {
               </Link>
               <Link 
                 to="/resources" 
-                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary transition-all duration-300 ease-out transform border-2 border-primary hover:bg-primary hover:text-white rounded-lg hover:scale-105 hover:shadow-lg"
+                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary dark:text-white transition-all duration-300 ease-out transform border-2 border-primary hover:bg-primary hover:text-white rounded-lg hover:scale-105 hover:shadow-lg"
               >
                 <span className="relative flex items-center gap-2">
                   View Resources
@@ -101,77 +101,52 @@ function OurMission() {
       </section>
 
       {/* Mission Carousel Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-dark-bg-primary">
         <div className="container mx-auto px-4">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto"
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center"
           >
-            <div 
-              className="relative"
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
-            >
-              <motion.div
-                key={currentSlide}
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -100 }}
-                transition={{ duration: 0.5 }}
-                className="text-center group"
-              >
-                <motion.div 
-                  className="mb-8 transform transition-transform duration-300 group-hover:scale-110"
-                  whileHover={{ rotate: 5 }}
+            <h2 className="text-4xl font-bold mb-12 text-black dark:text-white">
+              Our <span className="text-primary">Mission</span> Pillars
+            </h2>
+            <div className="relative">
+              <div className="overflow-hidden">
+                <motion.div
+                  className="flex transition-transform duration-500 ease-in-out"
+                  style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                 >
-                  {missionSlides[currentSlide].icon}
+                  {missionSlides.map((slide, index) => (
+                    <div
+                      key={index}
+                      className="w-full flex-shrink-0 px-4"
+                      onMouseEnter={() => setIsHovering(true)}
+                      onMouseLeave={() => setIsHovering(false)}
+                    >
+                      <div className="bg-gradient-to-br from-primary/5 to-accent/5 dark:from-primary/10 dark:to-accent/10 rounded-xl p-8">
+                        <div className="mb-6">{slide.icon}</div>
+                        <h3 className="text-2xl font-bold mb-4 text-black dark:text-white">{slide.title}</h3>
+                        <p className="text-gray-600 dark:text-gray-300">{slide.description}</p>
+                      </div>
+                    </div>
+                  ))}
                 </motion.div>
-                <motion.h2 
-                  className="text-4xl font-bold mb-6 text-black transform transition-all duration-300 group-hover:text-primary"
-                >
-                  {missionSlides[currentSlide].title}
-                </motion.h2>
-                <motion.p 
-                  className="text-xl text-gray-600 mb-12 transform transition-all duration-300 group-hover:text-gray-800"
-                >
-                  {missionSlides[currentSlide].description}
-                </motion.p>
-              </motion.div>
-
-              <div className="flex justify-center gap-4 mb-8">
-                <motion.button
-                  onClick={prevSlide}
-                  className="p-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <FaArrowRight className="w-6 h-6 text-primary transform rotate-180" />
-                </motion.button>
-                <motion.button
-                  onClick={nextSlide}
-                  className="p-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <FaArrowRight className="w-6 h-6 text-primary" />
-                </motion.button>
               </div>
-
-              <div className="flex justify-center gap-2">
-                {missionSlides.map((_, index) => (
-                  <motion.button
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}
-                    className={`w-3 h-3 rounded-full transition-colors ${
-                      currentSlide === index ? 'bg-primary' : 'bg-gray-300'
-                    }`}
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ scale: 0.9 }}
-                  />
-                ))}
-              </div>
+              <button
+                onClick={prevSlide}
+                className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white dark:bg-dark-bg-tertiary shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <FaArrowRight className="w-6 h-6 text-primary transform rotate-180" />
+              </button>
+              <button
+                onClick={nextSlide}
+                className="absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white dark:bg-dark-bg-tertiary shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <FaArrowRight className="w-6 h-6 text-primary" />
+              </button>
             </div>
           </motion.div>
         </div>
@@ -186,7 +161,7 @@ function OurMission() {
             transition={{ duration: 0.8 }}
             className="max-w-4xl mx-auto"
           >
-            <h2 className="text-4xl font-bold mb-12 text-center text-black">
+            <h2 className="text-4xl font-bold mb-12 text-center text-black dark:text-white">
               Our <span className="text-primary">Vision</span>
             </h2>
             
@@ -196,16 +171,16 @@ function OurMission() {
               transition={{ delay: 0.2 }}
               className="space-y-8"
             >
-              <div className="text-lg text-gray-700 leading-relaxed">
-                <p className="mb-6 transform transition-all duration-300 hover:text-primary">
+              <div className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                <p className="mb-6 transform transition-all duration-300 hover:text-primary dark:hover:text-primary-light">
                   We envision a world where IPv6 is the standard protocol for internet communication, 
                   enabling unprecedented growth and innovation in the digital space.
                 </p>
-                <p className="mb-6 transform transition-all duration-300 hover:text-primary">
+                <p className="mb-6 transform transition-all duration-300 hover:text-primary dark:hover:text-primary-light">
                   Our commitment extends beyond mere adoption - we aim to create an ecosystem where 
                   IPv6 implementation is seamless, secure, and accessible to all.
                 </p>
-                <p className="transform transition-all duration-300 hover:text-primary">
+                <p className="transform transition-all duration-300 hover:text-primary dark:hover:text-primary-light">
                   Through collaboration, education, and innovation, we're building the foundation 
                   for a more connected and sustainable digital future.
                 </p>
@@ -216,7 +191,7 @@ function OurMission() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-20 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 dark:from-primary/10 dark:via-accent/10 dark:to-primary/10">
+      <section className="py-20 bg-white dark:bg-dark-bg-primary">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -244,7 +219,7 @@ function OurMission() {
               </Link>
               <Link 
                 to="/contact" 
-                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary transition-all duration-300 ease-out transform bg-transparent hover:bg-primary-dark hover:text-white rounded-lg hover:scale-105 hover:shadow-lg border-2 border-primary"
+                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary dark:text-white transition-all duration-300 ease-out transform bg-transparent hover:bg-primary-dark hover:text-white rounded-lg hover:scale-105 hover:shadow-lg border-2 border-primary"
               >
                 <span className="absolute inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 bg-primary-dark group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
                 <span className="absolute inset-0 w-full h-full bg-transparent border-2 border-primary group-hover:bg-primary-dark"></span>
