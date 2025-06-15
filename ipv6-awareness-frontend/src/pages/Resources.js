@@ -59,7 +59,7 @@ function Resources() {
 
         {/* Hero Section */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-[#00C389] dark:text-green-400 mb-4">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-[#228B22] dark:text-green-400 mb-4">
             IPv6 Resource Hub
           </h1>
           <p className="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
@@ -74,7 +74,7 @@ function Resources() {
             placeholder="Search resources..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className="w-full md:w-96 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00C389] dark:bg-dark-bg-tertiary dark:text-white"
+            className="w-full md:w-96 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#228B22] dark:bg-dark-bg-tertiary dark:text-white"
           />
           <button
             type="submit"
@@ -94,8 +94,8 @@ function Resources() {
                 onClick={() => handleCategory(category)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all border shadow-sm ${
                   selectedCategory === category
-                    ? 'bg-[#00C389] text-white border-[#00C389]'
-                    : 'bg-white dark:bg-dark-bg-tertiary text-[#00C389] dark:text-green-300 border-gray-200 dark:border-gray-600 hover:bg-green-50 dark:hover:bg-dark-bg-secondary'
+                    ? 'bg-[#228B22] text-white border-[#228B22]'
+                    : 'bg-white dark:bg-dark-bg-tertiary text-[#228B22] dark:text-green-300 border-gray-200 dark:border-gray-600 hover:bg-green-50 dark:hover:bg-dark-bg-secondary'
                 }`}
               >
                 {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -146,7 +146,7 @@ function Resources() {
                       href={resource.file_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-[#00C389] hover:text-green-600 transition-colors"
+                      className="inline-flex items-center gap-2 text-[#228B22] hover:text-green-600 transition-colors"
                     >
                       <DocumentIcon className="h-5 w-5" />
                       <span className="font-medium">Download</span>

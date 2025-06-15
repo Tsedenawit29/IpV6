@@ -27,9 +27,9 @@ function TermsOfService() {
   ];
 
   return (
-    <div className="min-h-screen dark:bg-gray-900">
+    <div className="min-h-screen">
       {/* Hero */}
-      <div className="relative py-20 overflow-hidden bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 dark:from-primary/10 dark:via-accent/10 dark:to-primary/10">
+      <div className="relative py-20 overflow-hidden bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 dark:from-dark-bg-primary dark:via-primary/10 dark:to-accent/20">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20" />
           <div className="absolute top-0 left-0 w-full h-full">
@@ -47,9 +47,9 @@ function TermsOfService() {
             className="max-w-4xl mx-auto text-center"
           >
             <h1 className="text-5xl font-bold mb-6 text-black dark:text-white">
-              Terms of <span className="text-primary">Service</span>
+              Terms of <span className="text-primary dark:text-white">Service</span>
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
+            <p className="text-xl text-gray-600 dark:text-white">
               Please read these terms carefully before using our services
             </p>
           </motion.div>
@@ -57,7 +57,7 @@ function TermsOfService() {
       </div>
 
       {/* Terms Sections */}
-      <div className="py-16 bg-white dark:bg-gray-800">
+      <div className="py-16 bg-white dark:bg-dark-bg-primary">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             {termsSections.map((section, index) => (
@@ -77,7 +77,7 @@ function TermsOfService() {
                     <h2 className="text-2xl font-bold mb-4 text-black dark:text-white">
                       {section.title}
                     </h2>
-                    <div className="prose dark:prose-invert max-w-none">
+                    <div className="prose dark:prose-invert max-w-none dark:text-white">
                       {section.content}
                     </div>
                   </div>
@@ -99,13 +99,13 @@ function TermsOfService() {
             className="max-w-4xl mx-auto text-center"
           >
             <h2 className="text-4xl font-bold mb-6 text-black dark:text-white">
-              Additional <span className="text-primary">Information</span>
+              Additional <span className="text-primary dark:text-white">Information</span>
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+            <p className="text-xl text-gray-600 dark:text-white mb-8">
               Last updated: March 15, 2024
             </p>
-            <div className="p-6 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700">
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+            <div className="p-6 rounded-xl bg-white dark:bg-dark-bg-tertiary border-2 border-gray-100 dark:border-dark-border">
+              <p className="text-gray-600 dark:text-white mb-4">
                 For any questions about these terms, please contact us at:
               </p>
               <a

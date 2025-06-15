@@ -33,15 +33,15 @@ function FAQ() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5">
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5 dark:from-primary/10 dark:via-accent/10 dark:to-primary/10">
       {/* Hero */}
       <div className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20" />
           <div className="absolute top-0 left-0 w-full h-full">
-            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl animate-blob" />
-            <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-accent/20 rounded-full filter blur-3xl animate-blob animation-delay-2000" />
-            <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl animate-blob animation-delay-4000" />
+            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl animate-blob dark:bg-primary/30" />
+            <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-accent/20 rounded-full filter blur-3xl animate-blob animation-delay-2000 dark:bg-accent/30" />
+            <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl animate-blob animation-delay-4000 dark:bg-primary/30" />
           </div>
         </div>
 
@@ -52,10 +52,10 @@ function FAQ() {
             transition={{ duration: 0.8 }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h1 className="text-5xl font-bold mb-6 text-black">
+            <h1 className="text-5xl font-bold mb-6 text-black dark:text-white">
               Frequently Asked <span className="text-primary">Questions</span>
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-600 dark:text-gray-300">
               Find answers to common questions about IPv6 implementation and adoption
             </p>
           </motion.div>
@@ -63,7 +63,7 @@ function FAQ() {
       </div>
 
       {/* FAQ List */}
-      <div className="py-16">
+      <div className="py-16 bg-white dark:bg-dark-bg-primary">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             {faqItems.map((item, index) => (
@@ -73,35 +73,32 @@ function FAQ() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="mb-6"
+                className="mb-4"
               >
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-between"
+                  className="w-full flex items-center justify-between p-6 bg-white dark:bg-dark-bg-tertiary rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
                 >
-                  <h3 className="text-xl font-bold text-black text-left">
+                  <span className="text-lg font-semibold text-left text-black dark:text-white">
                     {item.question}
-                  </h3>
-                  <motion.div
-                    animate={{ rotate: openIndex === index ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <FaChevronDown className="w-5 h-5 text-primary" />
-                  </motion.div>
+                  </span>
+                  <FaChevronDown
+                    className={`w-5 h-5 text-primary transform transition-transform duration-300 ${
+                      openIndex === index ? 'rotate-180' : ''
+                    }`}
+                  />
                 </button>
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{
-                    height: openIndex === index ? "auto" : 0,
-                    opacity: openIndex === index ? 1 : 0
-                  }}
-                  transition={{ duration: 0.3 }}
-                  className="overflow-hidden"
-                >
-                  <div className="p-6 bg-white/50 backdrop-blur-sm rounded-b-xl mt-2">
-                    <p className="text-gray-600">{item.answer}</p>
-                  </div>
-                </motion.div>
+                {openIndex === index && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="mt-2 p-6 bg-gray-50 dark:bg-dark-bg-secondary rounded-xl"
+                  >
+                    <p className="text-gray-600 dark:text-gray-300">{item.answer}</p>
+                  </motion.div>
+                )}
               </motion.div>
             ))}
           </div>
@@ -109,7 +106,7 @@ function FAQ() {
       </div>
 
       {/* Additional Resources */}
-      <div className="py-16 bg-white">
+      <div className="py-16 bg-white dark:bg-dark-bg-primary">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -118,36 +115,36 @@ function FAQ() {
             viewport={{ once: true }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h2 className="text-4xl font-bold mb-6 text-black">
+            <h2 className="text-4xl font-bold mb-6 text-black dark:text-white">
               Need More <span className="text-primary">Information</span>?
             </h2>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
               Explore our comprehensive resources to learn more about IPv6
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="p-6 bg-gradient-to-br from-primary/5 to-accent/5 rounded-xl"
+                className="p-6 bg-gradient-to-br from-primary/5 to-accent/5 dark:from-primary/10 dark:to-accent/10 rounded-xl"
               >
                 <FaBook className="w-8 h-8 text-primary mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-2">Documentation</h3>
-                <p className="text-gray-600">Detailed guides and technical documentation</p>
+                <h3 className="text-xl font-bold mb-2 text-black dark:text-white">Documentation</h3>
+                <p className="text-gray-600 dark:text-gray-300">Detailed guides and technical documentation</p>
               </motion.div>
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="p-6 bg-gradient-to-br from-primary/5 to-accent/5 rounded-xl"
+                className="p-6 bg-gradient-to-br from-primary/5 to-accent/5 dark:from-primary/10 dark:to-accent/10 rounded-xl"
               >
                 <FaUsers className="w-8 h-8 text-primary mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-2">Community</h3>
-                <p className="text-gray-600">Join our community of IPv6 experts</p>
+                <h3 className="text-xl font-bold mb-2 text-black dark:text-white">Community</h3>
+                <p className="text-gray-600 dark:text-gray-300">Join our community of IPv6 experts</p>
               </motion.div>
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="p-6 bg-gradient-to-br from-primary/5 to-accent/5 rounded-xl"
+                className="p-6 bg-gradient-to-br from-primary/5 to-accent/5 dark:from-primary/10 dark:to-accent/10 rounded-xl"
               >
                 <FaTools className="w-8 h-8 text-primary mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-2">Tools</h3>
-                <p className="text-gray-600">Implementation tools and utilities</p>
+                <h3 className="text-xl font-bold mb-2 text-black dark:text-white">Tools</h3>
+                <p className="text-gray-600 dark:text-gray-300">Access our IPv6 testing and implementation tools</p>
               </motion.div>
             </div>
           </motion.div>

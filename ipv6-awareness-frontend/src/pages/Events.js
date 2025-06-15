@@ -98,7 +98,7 @@ function Events() {
             className="max-w-4xl mx-auto text-center"
           >
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white">
-              IPv6 <span className="text-[#00C389]">Events</span>
+              IPv6 <span className="text-[#228B22]">Events</span>
             </h1>
             <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
               Discover networking events and learning opportunities about IPv6 technology.
@@ -112,13 +112,13 @@ function Events() {
                   onClick={() => setActiveCategory(category.id)}
                   className={`flex items-center px-4 py-2 rounded-lg transition-all ${
                     activeCategory === category.id
-                      ? 'bg-[#00C389] text-black font-medium shadow-sm'
-                      : 'bg-white/10 text-white border border-white/20 hover:border-[#00C389]'
+                      ? 'bg-[#228B22] text-black font-medium shadow-sm'
+                      : 'bg-white/10 text-white border border-white/20 hover:border-[#228B22]'
                   }`}
                 >
                   <category.icon
                     className={`h-5 w-5 mr-2 ${
-                      activeCategory === category.id ? 'text-black' : 'text-[#00C389]'
+                      activeCategory === category.id ? 'text-black' : 'text-[#228B22]'
                     }`}
                   />
                   {category.name}
@@ -135,7 +135,7 @@ function Events() {
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
             {eventCategories.find((c) => c.id === activeCategory)?.name}
           </h2>
-          <span className="text-sm px-3 py-1 bg-[#00C389]/10 text-[#00C389] rounded-full">
+          <span className="text-sm px-3 py-1 bg-[#228B22]/10 text-[#228B22] rounded-full">
             {filteredEvents.length} {filteredEvents.length === 1 ? 'event' : 'events'}
           </span>
         </div>
@@ -179,7 +179,7 @@ const EventCard = ({ event, index }) => (
         )}
 
         <div className="p-5 flex-grow">
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-[#00C389] transition-colors">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-[#228B22] transition-colors">
             {event.title}
           </h3>
           <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
@@ -188,7 +188,7 @@ const EventCard = ({ event, index }) => (
 
           <div className="space-y-3 mt-auto">
             <div className="flex items-start">
-              <CalendarIcon className="h-5 w-5 mr-3 mt-0.5 text-[#00C389]" />
+              <CalendarIcon className="h-5 w-5 mr-3 mt-0.5 text-[#228B22]" />
               <div>
                 <p className="text-sm font-medium text-gray-900 dark:text-white">
                   {new Date(event.event_date).toLocaleDateString('en-US', {
@@ -202,7 +202,7 @@ const EventCard = ({ event, index }) => (
               </div>
             </div>
             <div className="flex items-start">
-              <MapPinIcon className="h-5 w-5 mr-3 mt-0.5 text-[#00C389]" />
+              <MapPinIcon className="h-5 w-5 mr-3 mt-0.5 text-[#228B22]" />
               <p className="text-sm text-gray-600 dark:text-gray-400">{event.location}</p>
             </div>
           </div>
@@ -210,7 +210,7 @@ const EventCard = ({ event, index }) => (
 
         <div className="px-5 py-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800">
           <div className="flex justify-between items-center">
-            <span className="inline-flex items-center text-sm font-medium text-[#00C389] group-hover:underline">
+            <span className="inline-flex items-center text-sm font-medium text-[#228B22] group-hover:underline">
               View details
               <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-1.5" />
             </span>
@@ -220,7 +220,7 @@ const EventCard = ({ event, index }) => (
                 onClick={(e) => e.stopPropagation()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-3 py-1.5 text-xs font-medium bg-[#00C389] text-white rounded hover:bg-[#00C389]/90 transition-colors shadow-sm"
+                className="inline-flex items-center px-3 py-1.5 text-xs font-medium bg-[#228B22] text-white rounded hover:bg-[#228B22]/90 transition-colors shadow-sm"
               >
                 Register
               </a>
@@ -277,8 +277,8 @@ const ErrorState = ({ error, onRetry }) => (
 const EmptyState = ({ onResetFilter }) => (
   <div className="bg-gray-50 dark:bg-gray-900 rounded-xl p-12 text-center border border-dashed border-gray-200 dark:border-gray-800">
     <div className="max-w-md mx-auto">
-      <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#00C389]/10 flex items-center justify-center">
-        <CalendarIcon className="h-8 w-8 text-[#00C389]" />
+      <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#228B22]/10 flex items-center justify-center">
+        <CalendarIcon className="h-8 w-8 text-[#228B22]" />
       </div>
       <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No events found</h3>
       <p className="text-gray-500 dark:text-gray-500 mb-4">
@@ -286,7 +286,7 @@ const EmptyState = ({ onResetFilter }) => (
       </p>
       <button
         onClick={onResetFilter}
-        className="text-sm font-medium text-[#00C389] hover:underline"
+        className="text-sm font-medium text-[#228B22] hover:underline"
       >
         View all events
       </button>
@@ -301,7 +301,7 @@ const CTASection = () => (
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5 }}
     viewport={{ once: true }}
-    className="bg-gradient-to-r from-[#00C389]/10 to-[#00C389]/5 dark:from-[#00C389]/5 dark:to-[#00C389]/10 border-t border-b border-[#00C389]/20"
+    className="bg-gradient-to-r from-[#228B22]/10 to-[#228B22]/5 dark:from-[#228B22]/5 dark:to-[#228B22]/10 border-t border-b border-[#228B22]/20"
   >
     <div className="container mx-auto px-4 py-16">
       <div className="max-w-3xl mx-auto text-center">
@@ -313,7 +313,7 @@ const CTASection = () => (
         </p>
         <Link
           to="/contact"
-          className="inline-flex items-center px-6 py-3 bg-[#00C389] text-white font-medium rounded-lg hover:bg-[#00C389]/90 transition-colors shadow-sm"
+          className="inline-flex items-center px-6 py-3 bg-[#228B22] text-white font-medium rounded-lg hover:bg-[#228B22]/90 transition-colors shadow-sm"
         >
           Contact Us
           <ArrowTopRightOnSquareIcon className="h-5 w-5 ml-2" />

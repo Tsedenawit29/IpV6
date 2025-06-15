@@ -49,7 +49,7 @@ function IPv6Dashboard() {
   {/* Hero content */}
   <div className="relative z-10 max-w-5xl mx-auto text-center">
     <h1 className="text-5xl font-extrabold mb-4 text-white">
-      Explore the <span className="text-[#00C389]">IPv6 Dashboard</span>
+      Explore the <span className="text-[#228B22]">IPv6 Dashboard</span>
     </h1>
     <p className="text-lg md:text-xl max-w-2xl mx-auto text-gray-300">
       Dive into real-time statistics and adoption trends of IPv6 with curated insights from trusted sources like Google and Cisco.
@@ -91,10 +91,10 @@ function IPv6Dashboard() {
             className="bg-white dark:bg-dark-bg-secondary p-6 rounded-xl shadow-md hover:shadow-lg transition"
           >
             <div className="flex items-center space-x-4 mb-4">
-              <stat.icon className="h-8 w-8 text-[#00C389]" />
+              <stat.icon className="h-8 w-8 text-[#228B22]" />
               <h3 className="text-xl font-semibold">{stat.title}</h3>
             </div>
-            <p className="text-2xl font-bold text-[#00C389]">{stat.value}</p>
+            <p className="text-2xl font-bold text-[#228B22]">{stat.value}</p>
             <p className="text-sm text-gray-600 dark:text-gray-400">{stat.description}</p>
           </div>
         ))}
@@ -109,8 +109,8 @@ function IPv6Dashboard() {
               onClick={() => setActiveTab(tab)}
               className={`px-5 py-2 rounded-full font-medium transition border ${
                 activeTab === tab
-                  ? 'bg-[#00C389] text-white border-[#00C389]'
-                  : 'bg-gray-100 text-black hover:bg-[#00C389] hover:text-white border-gray-300 dark:bg-gray-700 dark:text-white'
+                  ? 'bg-[#228B22] text-white border-[#228B22]'
+                  : 'bg-gray-100 text-black hover:bg-[#228B22] hover:text-white border-gray-300 dark:bg-gray-700 dark:text-white'
               }`}
             >
               {tab} IPv6 Stats
@@ -141,7 +141,7 @@ function IPv6Dashboard() {
             href="https://www.internetsociety.org/deploy360/ipv6/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-[#00C389] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#00a571] transition"
+            className="inline-block bg-[#228B22] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#228B22]/90 transition"
           >
             Learn More About IPv6
           </a>{' '}
