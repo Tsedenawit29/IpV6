@@ -9,17 +9,17 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#228B22', // Forest Green (Your specified default)
-          light: '#4FBE4F',   // A noticeably lighter shade of Forest Green
-          dark: '#1A6B1A',    // A noticeably darker shade of Forest Green
+          DEFAULT: '#00C389', // Your requested consistent green
+          light: '#33E0A0',   // A lighter shade of #00C389
+          dark: '#009A6E',    // A darker shade of #00C389
         },
         secondary: {
-          DEFAULT: '#228B22', // Forest Green (Matches primary for consistency, as per your original request)
-          light: '#4FBE4F',
-          dark: '#1A6B1A',
+          DEFAULT: '#00C389', // Matches primary for consistency
+          light: '#33E0A0',
+          dark: '#009A6E',
         },
         accent: {
-          DEFAULT: '#FFD700', // Gold
+          DEFAULT: '#00C389', // Gold (keeping this as a separate accent)
           light: '#FFE44D',
           dark: '#CCAC00',
         },

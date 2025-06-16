@@ -13,6 +13,7 @@ function Footer() {
       { label: 'Our Mission', path: '/OurMission' },
     ],
     resources: [
+      { label: 'Documentation', path: '/Documentation' },
       { label: 'Blog', path: '/Blog' },
       { label: 'Events', path: '/Events' },
       { label: 'Resources', path: '/Resources' },
@@ -22,7 +23,7 @@ function Footer() {
       { label: 'Contact Us', path: '/Contact' },
       { label: 'FAQ', path: '/FAQ' },
       { label: 'IPv6 Dashboard', path: '/IPv6Dashboard' },
-      { label: 'Test IPv6', path: 'https://test-ipv6.com/', isExternal: true },
+      { label: 'Test IPv6', path: '/TestIPv6' },
     ],
     legal: [
       { label: 'Privacy Policy', path: '/PrivacyPolicy' },
@@ -31,10 +32,10 @@ function Footer() {
   };
 
   const socialLinks = [
-    { name: 'Twitter', url: 'https://twitter.com/your_ipv6_handle', icon: <FaTwitter size={24} /> },
-    { name: 'LinkedIn', url: 'https://linkedin.com/company/your_ipv6_company', icon: <FaLinkedinIn size={24} /> },
-    { name: 'YouTube', url: 'https://youtube.com/your_ipv6_channel', icon: <FaYoutube size={24} /> },
-    { name: 'GitHub', url: 'https://github.com/your_ipv6_repo', icon: <FaGithub size={24} /> },
+    { name: 'Twitter', url: 'https://twitter.com/ipv6forum', icon: <FaTwitter size={24} /> },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/company/ipv6-forum', icon: <FaLinkedinIn size={24} /> },
+    { name: 'YouTube', url: 'https://www.youtube.com/@ipv6forum', icon: <FaYoutube size={24} /> },
+    { name: 'GitHub', url: 'https://github.com/ipv6', icon: <FaGithub size={24} /> },
   ];
 
   return (
@@ -49,7 +50,7 @@ function Footer() {
                 className="h-16 w-auto transform group-hover:scale-105 transition-transform duration-300" 
               />
               <div>
-                <h3 className="text-2xl font-bold text-[#228B22]">
+                <h3 className="text-2xl font-bold text-[#00C389]">
                   IPv6 Awareness
                 </h3>
                 <p className="text-base text-black dark:text-dark-text-secondary">Empowering the future of internet connectivity</p>
@@ -63,7 +64,7 @@ function Footer() {
                 <a
                   key={social.name}
                   href={social.url}
-                  className="text-black dark:text-dark-text-secondary hover:text-[#228B22] dark:hover:text-[#228B22] transform hover:scale-110 transition-all duration-300"
+                  className="text-black dark:text-dark-text-secondary hover:text-[#00C389] dark:hover:text-[#00C389] transform hover:scale-110 transition-all duration-300"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.name}
@@ -78,29 +79,18 @@ function Footer() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               {Object.entries(footerLinks).map(([category, links]) => (
                 <div key={category} className="flex flex-col">
-                  <h4 className="text-lg font-semibold mb-4 text-[#228B22] capitalize">
+                  <h4 className="text-lg font-semibold mb-4 text-[#00C389] capitalize">
                     {category}
                   </h4>
                   <ul className="space-y-3">
-                    {links.map(({ label, path, isExternal }) => (
+                    {links.map(({ label, path }) => (
                       <li key={path}>
-                        {isExternal ? (
-                          <a
-                            href={path}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-black dark:text-dark-text-secondary hover:text-[#228B22] dark:hover:text-[#228B22] transform hover:translate-x-1 transition-all duration-300 inline-block text-base"
-                          >
-                            {label}
-                          </a>
-                        ) : (
-                          <Link
-                            to={path}
-                            className="text-black dark:text-dark-text-secondary hover:text-[#228B22] dark:hover:text-[#228B22] transform hover:translate-x-1 transition-all duration-300 inline-block text-base"
-                          >
-                            {label}
-                          </Link>
-                        )}
+                        <Link
+                          to={path}
+                          className="text-black dark:text-dark-text-secondary hover:text-[#00C389] dark:hover:text-[#00C389] transform hover:translate-x-1 transition-all duration-300 inline-block text-base"
+                        >
+                          {label}
+                        </Link>
                       </li>
                     ))}
                   </ul>

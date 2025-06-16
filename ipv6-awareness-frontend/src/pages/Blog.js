@@ -58,7 +58,7 @@ function Blog() {
       onClick={onClick}
       className={`absolute top-1/2 transform -translate-y-1/2 z-10 p-2 rounded-full shadow-md transition-all
         ${direction === 'left' ? 'left-2' : 'right-2'}
-        bg-white text-black dark:bg-gray-800 dark:text-white hover:bg-[#228B22]/20`}
+        bg-white text-black dark:bg-gray-800 dark:text-white hover:bg-[#00C389]/20`}
       aria-label={direction === 'left' ? 'Previous' : 'Next'}
     >
       {direction === 'left' ? <ChevronLeftIcon className="h-6 w-6" /> : <ChevronRightIcon className="h-6 w-6" />}
@@ -114,10 +114,10 @@ function Blog() {
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center px-6 z-20">
                   <div className="text-center">
                     <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-4">
-                      Find the <span style={{ color: '#228B22' }}>Latest Blogs</span>
+                      Find the <span style={{ color: '#00C389' }}>Latest Blogs</span>
                     </h1>
                     <p className="text-2xl font-medium text-gray-200">
-                      Learn everything about <span style={{ color: '#228B22' }}>IPv6</span> from tutorials, news, and expert case studies
+                      Learn everything about <span style={{ color: '#00C389' }}>IPv6</span> from tutorials, news, and expert case studies
                     </p>
                   </div>
                 </div>
@@ -134,10 +134,10 @@ function Blog() {
               onClick={() => setSelectedTab(tab)}
               className={`flex items-center px-4 py-2 rounded-lg transition-all
                 ${selectedTab === tab
-                  ? 'bg-[#228B22] text-black font-medium shadow-sm'
-                  : 'bg-white/10 text-white border border-white/20 hover:border-[#228B22]'}`}
+                  ? 'bg-[#00C389] text-black font-medium shadow-sm'
+                  : 'bg-white/10 text-white border border-white/20 hover:border-[#00C389]'}`}
             >
-              <span className={`text-sm font-medium ${selectedTab === tab ? 'text-black' : 'text-[#228B22]'}`}>{tab}</span>
+              <span className={`text-sm font-medium ${selectedTab === tab ? 'text-black' : 'text-[#00C389]'}`}>{tab}</span>
             </button>
           ))}
         </div>
@@ -159,7 +159,7 @@ function Blog() {
                 <div className="mt-4 flex justify-between items-center">
                   <button
                     onClick={() => handleDownload(post)}
-                    className="text-sm text-[#228B22] font-medium hover:underline"
+                    className="text-sm text-[#00C389] font-medium hover:underline"
                   >
                     Read more
                   </button>

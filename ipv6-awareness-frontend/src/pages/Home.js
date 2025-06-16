@@ -118,7 +118,7 @@ function Home() {
   ];
 
   const globalStats = [
-    { value: '40%', label: 'Global IPv6 Adoption', icon: <FaChartLine className="text-4xl" /> },
+    { value: '45%+', label: 'Global IPv6 Adoption', icon: <FaChartLine className="text-4xl" /> },
     { value: '100+', label: 'Countries Deployed', icon: <FaGlobe className="text-4xl" /> },
     { value: '1B+', label: 'IPv6-Capable Devices', icon: <FaMobileAlt className="text-4xl" /> },
     { value: '24/7', label: 'Support Available', icon: <FaServer className="text-4xl" /> },
@@ -203,18 +203,20 @@ function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
             >
-              <Link 
-                to="/get-involved" 
-              className="bg-[#00C389] hover:bg-[#00C389]/90 text-black font-semibold px-8 py-3 rounded-lg shadow-lg transition"
+              <a 
+                href="https://test-ipv6.com/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary"
               >
-                  Get Started
-                </Link>
+                Test Your IPv6
+              </a>
               <Link 
-                to="/resources" 
-              className="border border-[#00C389] text-[#00C389] hover:bg-[#00C389] hover:text-black font-semibold px-8 py-3 rounded-lg shadow-lg transition"
+                to="/about" 
+                className="btn btn-outline"
               >
-              Learn More
-                </Link>
+                Learn More
+              </Link>
             </motion.div>
 
           {/* Global Stats - Moved further down with enhanced styling */}
@@ -474,57 +476,34 @@ function Home() {
           </div>
       </section>
 
-      {/* Test Your IPv6 CTA Section */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
-        <div className="max-w-6xl mx-auto px-6">
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
+      {/* CTA Section */}
+      <section className="py-20 bg-[#1A1E26] text-white dark:bg-black">
+        <div className="container mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center"
+            viewport={{ once: true, amount: 0.2 }}
+            className="max-w-3xl mx-auto"
           >
-            <h2 className="text-4xl font-bold mb-6 text-gray-900 dark:text-white">
-              Ready to Test Your <span className="text-[#00C389]">IPv6</span>?
+            <h2 className="text-3xl font-bold mb-6 dark:text-white">
+              Ready to explore IPv6 adoption?
             </h2>
-            <p className="text-lg max-w-3xl mx-auto text-gray-700 dark:text-gray-300 mb-10">
-              Check your network's IPv6 readiness and get detailed insights about your connection
+            <p className="text-xl text-gray-300 mb-8">
+              Access our interactive dashboard to see global IPv6 deployment metrics and trends.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Link 
-                to="/test-ipv6"
-                className="bg-[#00C389] hover:bg-[#00C389]/90 text-black font-semibold px-8 py-4 rounded-lg shadow-lg transition text-lg"
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link
+                to="/IPv6Dashboard" 
+                className="btn btn-secondary"
               >
-                Test Your IPv6
+                View IPv6 Dashboard <FaArrowRight className="ml-2" />
               </Link>
-              <Link 
-                to="/resources" 
-                className="border border-[#00C389] text-[#00C389] hover:bg-[#00C389] hover:text-black font-semibold px-8 py-4 rounded-lg shadow-lg transition text-lg"
+              <Link
+                to="/get-involved"
+                className="btn btn-ghost"
               >
-                Learn More
+                Get Involved <FaArrowRight className="ml-2" />
               </Link>
-            </div>
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              <div className="text-center">
-                <div className="w-12 h-12 rounded-full bg-[#00C389]/10 flex items-center justify-center mx-auto mb-4">
-                  <FaNetworkWired className="w-6 h-6 text-[#00C389]" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Network Analysis</h3>
-                <p className="text-gray-600 dark:text-gray-400">Detailed insights about your network configuration</p>
-                  </div>
-              <div className="text-center">
-                <div className="w-12 h-12 rounded-full bg-[#00C389]/10 flex items-center justify-center mx-auto mb-4">
-                  <FaShieldAlt className="w-6 h-6 text-[#00C389]" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Security Check</h3>
-                <p className="text-gray-600 dark:text-gray-400">Verify your IPv6 security settings</p>
-              </div>
-              <div className="text-center">
-                <div className="w-12 h-12 rounded-full bg-[#00C389]/10 flex items-center justify-center mx-auto mb-4">
-                  <FaChartLine className="w-6 h-6 text-[#00C389]" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Performance Metrics</h3>
-                <p className="text-gray-600 dark:text-gray-400">Measure your IPv6 connection speed</p>
-              </div>
             </div>
           </motion.div>
         </div>
