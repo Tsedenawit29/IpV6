@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import FileUpload from './FileUpload';
-import Swal from 'sweetalert2';
+import DeleteConfirmation from './DeleteConfirmation';
 
 const DataTable = ({
   tableName,
@@ -18,6 +18,7 @@ const DataTable = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({});
   const [editingId, setEditingId] = useState(null);
+  const [deleteConfirmation, setDeleteConfirmation] = useState({ isOpen: false, id: null });
 
   useEffect(() => {
     fetchData();
@@ -71,25 +72,21 @@ const DataTable = ({
   };
 
   const handleDelete = async (id) => {
-    const result = await Swal.fire({
-      title: 'Are you sure?',
-      text: 'This action cannot be undone!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#00C389',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-    });
-    if (!result.isConfirmed) return;
+    setDeleteConfirmation({ isOpen: true, id });
+  };
+
+  const confirmDelete = async () => {
     try {
       const { error } = await supabase
         .from(tableName)
         .delete()
-        .eq('id', id);
+        .eq('id', deleteConfirmation.id);
       if (error) throw error;
       fetchData();
     } catch (error) {
       setError(error.message);
+    } finally {
+      setDeleteConfirmation({ isOpen: false, id: null });
     }
   };
 
@@ -185,33 +182,33 @@ const DataTable = ({
             setEditingId(null);
             setIsModalOpen(true);
           }}
-          className="px-4 py-2 bg-secondary-light dark:bg-secondary-dark text-white rounded-md hover:bg-opacity-90"
+          className="btn btn-primary"
         >
           Add New
         </button>
       </div>
 
       {/* Data Table */}
-      <div className="bg-primary-light dark:bg-primary-dark shadow-md rounded-lg overflow-hidden">
+      <div className="bg-white dark:bg-dark-bg-secondary shadow-md rounded-lg overflow-hidden">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-secondary-light dark:bg-secondary-dark">
+          <thead className="bg-gray-50 dark:bg-dark-bg-tertiary">
             <tr>
               {columns.map((column) => (
                 <th
                   key={column.key}
-                  className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider"
                 >
                   {column.label}
                 </th>
               ))}
-              <th className="px-6 py-3 text-right text-xs font-medium text-white uppercase tracking-wider">
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
-          <tbody className="bg-primary-light dark:bg-primary-dark divide-y divide-gray-200">
+          <tbody className="bg-white dark:bg-dark-bg-secondary divide-y divide-gray-200">
             {data.map((item) => (
-              <tr key={item.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
+              <tr key={item.id} className="hover:bg-[#00C389]/5 dark:hover:bg-[#00C389]/10">
                 {columns.map((column) => (
                   <td key={column.key} className="px-6 py-4 whitespace-nowrap text-text-light dark:text-text-dark">
                     {column.render ? column.render(item) : item[column.key]}
@@ -220,13 +217,13 @@ const DataTable = ({
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <button
                     onClick={() => handleEdit(item)}
-                    className="text-secondary-light dark:text-secondary-dark hover:text-opacity-80 mr-4"
+                    className="text-[#00C389] hover:text-[#009C6B] mr-4"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(item.id)}
-                    className="text-red-600 hover:text-red-900"
+                    className="text-red-600 hover:text-red-700"
                   >
                     Delete
                   </button>
@@ -268,13 +265,13 @@ const DataTable = ({
                     setEditingId(null);
                     setFormData({});
                   }}
-                  className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+                  className="btn btn-outline"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-secondary-light dark:bg-secondary-dark text-white rounded-md hover:bg-opacity-90"
+                  className="btn btn-primary"
                 >
                   {editingId ? 'Update' : 'Add'}
                 </button>
@@ -283,6 +280,15 @@ const DataTable = ({
           </div>
         </div>
       )}
+
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmation
+        isOpen={deleteConfirmation.isOpen}
+        onClose={() => setDeleteConfirmation({ isOpen: false, id: null })}
+        onConfirm={confirmDelete}
+        title="Delete Confirmation"
+        message="Are you sure you want to delete this item? This action cannot be undone."
+      />
     </div>
   );
 };

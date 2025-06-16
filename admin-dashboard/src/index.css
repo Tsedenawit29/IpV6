@@ -18,23 +18,23 @@
 
   /* Primary Button */
   .btn-primary {
-    @apply bg-[#00C389] text-white hover:bg-[#00C389]/90 focus:ring-[#00C389]/50 shadow-lg hover:shadow-xl;
+    @apply bg-[#00C389] text-white hover:bg-[#009C6B] focus:ring-[#00C389]/50 shadow-lg hover:shadow-xl;
   }
 
   /* Secondary Button */
   .btn-secondary {
-    @apply bg-secondary text-white hover:bg-secondary-dark
-           focus:ring-secondary/50 shadow-md hover:shadow-lg;
+    @apply bg-[#00C389]/10 text-[#00C389] hover:bg-[#00C389]/20
+           focus:ring-[#00C389]/50 shadow-md hover:shadow-lg;
   }
 
   /* Accent Button */
   .btn-accent {
-    @apply bg-[#00C389] text-primary hover:bg-[#00C389]/90 focus:ring-[#00C389]/50 shadow-lg hover:shadow-xl;
+    @apply bg-[#00C389] text-white hover:bg-[#009C6B] focus:ring-[#00C389]/50 shadow-lg hover:shadow-xl;
   }
 
   /* Outline Button */
   .btn-outline {
-    @apply border-2 border-[#00C389] text-[#00C389] hover:bg-[#00C389]/10 focus:ring-[#00C389]/50;
+    @apply border-2 border-[#00C389] text-[#00C389] hover:bg-[#00C389] hover:text-white focus:ring-[#00C389]/50;
   }
 
   /* Card Styles */
@@ -75,7 +75,7 @@
   }
 
   .table-row {
-    @apply hover:bg-gray-50 dark:hover:bg-dark-bg-secondary;
+    @apply hover:bg-[#00C389]/5 dark:hover:bg-[#00C389]/10;
   }
 
   .table-cell {

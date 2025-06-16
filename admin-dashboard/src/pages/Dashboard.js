@@ -172,7 +172,7 @@ function Dashboard() {
           email: message.email
         })) || []),
       ].sort((a, b) => new Date(b.date) - new Date(a.date))
-        .slice(0, 10);
+        .slice(0, 4);
 
       console.log('Combined activities:', allActivities.length);
       setRecentActivity(allActivities);
@@ -313,25 +313,25 @@ function Dashboard() {
           <div className="grid grid-cols-2 gap-4">
             <button 
               onClick={() => navigate('/events')}
-              className="p-4 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+              className="p-4 bg-[#00C389] text-white rounded-lg hover:bg-[#009C6B] transition-colors"
             >
               Create Event
             </button>
             <button 
               onClick={() => navigate('/resources')}
-              className="p-4 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+              className="p-4 bg-[#00C389] text-white rounded-lg hover:bg-[#009C6B] transition-colors"
             >
               Add Resource
             </button>
             <button 
               onClick={() => navigate('/blog-posts')}
-              className="p-4 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+              className="p-4 bg-[#00C389] text-white rounded-lg hover:bg-[#009C6B] transition-colors"
             >
               New Blog Post
             </button>
             <button 
               onClick={() => navigate('/contact-messages')}
-              className="p-4 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+              className="p-4 bg-[#00C389] text-white rounded-lg hover:bg-[#009C6B] transition-colors"
             >
               View Messages
             </button>

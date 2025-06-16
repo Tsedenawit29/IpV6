@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import toast from 'react-hot-toast';
-import { Menu } from '@headlessui/react';
-import { UserCircleIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState('');
 
@@ -19,58 +19,72 @@ const Navbar = () => {
     getUser();
   }, []);
 
-  const handleSignOut = async () => {
+  const handleLogout = async () => {
     try {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
-      
       toast.success('Signed out successfully');
       navigate('/login');
     } catch (error) {
-      console.error('Error signing out:', error);
+      console.error('Error logging out:', error.message);
       toast.error('Failed to sign out');
     }
   };
 
   return (
-    <nav className="bg-white dark:bg-dark-bg-tertiary shadow-sm">
+    <nav className="bg-white dark:bg-dark-bg-secondary shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <h1 className="text-xl font-semibold text-primary dark:text-dark-text-primary">
-              IPv6 Awareness Admin
-            </h1>
+            <Link to="/" className="flex-shrink-0 flex items-center">
+              <img
+                className="h-8 w-auto"
+                src="/logo.png"
+                alt="IPv6 Awareness"
+              />
+            </Link>
           </div>
-          <div className="flex items-center">
-            <Menu as="div" className="relative ml-3">
-              <Menu.Button className="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                <UserCircleIcon className="h-8 w-8 text-primary dark:text-dark-text-primary" />
-              </Menu.Button>
-              <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-dark-bg-tertiary ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <Menu.Item>
-                  {({ active }) => (
-                    <div className={`px-4 py-2 text-sm text-gray-700 dark:text-dark-text-primary ${active ? 'bg-gray-100 dark:bg-dark-bg-secondary' : ''}`}>
-                      {userEmail}
-                    </div>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
-                      onClick={handleSignOut}
-                      className={`${
-                        active ? 'bg-gray-100 dark:bg-dark-bg-secondary' : ''
-                      } block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-dark-text-primary`}
-                    >
-                      Sign out
-                    </button>
-                  )}
-                </Menu.Item>
-              </Menu.Items>
-            </Menu>
+
+          {/* Desktop menu */}
+          <div className="hidden sm:flex sm:items-center sm:space-x-4">
+            <button
+              onClick={handleLogout}
+              className="btn btn-outline"
+            >
+              Logout
+            </button>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="sm:hidden flex items-center">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#00C389]"
+            >
+              <span className="sr-only">Open main menu</span>
+              {isOpen ? (
+                <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+              ) : (
+                <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+              )}
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Mobile menu */}
+      {isOpen && (
+        <div className="sm:hidden">
+          <div className="pt-2 pb-3 space-y-1">
+            <button
+              onClick={handleLogout}
+              className="block w-full text-left px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-[#00C389]/5 dark:hover:bg-[#00C389]/10"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
