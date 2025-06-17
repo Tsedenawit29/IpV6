@@ -2,62 +2,107 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './styles/hero.css';
+
 @layer base {
   body {
-    @apply bg-white dark:bg-primary text-primary dark:text-white;
+    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white;
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  p {
+    @apply text-base md:text-lg leading-relaxed;
   }
 }
 
 @layer components {
   /* Button Base Styles */
   .btn {
-    @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300 
-           transform hover:-translate-y-1 active:translate-y-0
-           focus:outline-none focus:ring-2 focus:ring-offset-2
-           bg-white dark:bg-primary-dark text-primary dark:text-white;
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl;
   }
 
   /* Primary Button */
   .btn-primary {
-    @apply bg-white dark:bg-primary-dark text-primary dark:text-white
-           hover:bg-primary/10 dark:hover:bg-primary/20
-           focus:ring-primary/50
-           shadow-lg hover:shadow-xl;
+    @apply bg-[#00C389] text-black hover:bg-[#00C389]/90;
   }
 
   /* Secondary Button */
   .btn-secondary {
-    @apply bg-white dark:bg-primary-dark text-primary dark:text-white
-           hover:bg-secondary/10 dark:hover:bg-secondary/20
-           focus:ring-secondary/50
-           shadow-md hover:shadow-lg;
-  }
-
-  /* Accent Button */
-  .btn-accent {
-    @apply bg-white dark:bg-primary-dark text-primary dark:text-white
-           hover:bg-accent/10 dark:hover:bg-accent/20
-           focus:ring-accent/50
-           shadow-lg hover:shadow-xl;
+    @apply bg-white text-black hover:bg-gray-100 border border-gray-200;
   }
 
   /* Outline Button */
   .btn-outline {
-    @apply bg-transparent border-2 border-primary text-primary 
-           dark:border-white dark:text-white
-           hover:bg-primary/10 dark:hover:bg-white/10
-           focus:ring-primary/50;
+    @apply border-2 border-[#00C389] text-[#00C389] hover:bg-[#00C389] hover:text-black;
   }
 
   /* Ghost Button */
   .btn-ghost {
-    @apply bg-transparent text-primary dark:text-white
-           hover:bg-primary/5 dark:hover:bg-white/5
-           focus:ring-primary/50;
+    @apply bg-transparent text-[#00C389] hover:bg-[#00C389]/10;
   }
 
   /* Text Gradient */
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-[#e6b800];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#00C389] to-[#008C68];
   }
+
+  /* Card Styles */
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300;
+  }
+
+  /* Section Styles */
+  .section {
+    @apply py-16 md:py-20;
+  }
+
+  /* Container Styles */
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1.5s ease-out forwards;
+}
+
+.animate-slideUp {
+  animation: slideUp 1s ease-out forwards;
 }

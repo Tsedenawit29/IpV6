@@ -1,15 +1,15 @@
 import DataTable from '../../components/DataTable';
 
-const ContactMessages = () => {
-  const columns = [
-    { key: 'name', label: 'Name' },
-    { key: 'email', label: 'Email' },
-    { key: 'message', label: 'Message' },
-    {
-      key: 'created_at',
-      label: 'Received At',
-      render: (item) => new Date(item.created_at).toLocaleDateString(),
-    },
+const columns = [
+  { key: 'name', label: 'Name' },
+  { key: 'email', label: 'Email' },
+  { key: 'subject', label: 'Subject' },
+  { key: 'message', label: 'Message' },
+  {
+    key: 'submitted_at',
+    label: 'Received At',
+    render: (item) => new Date(item.submitted_at).toLocaleString(),
+  },
   ];
 
   return (

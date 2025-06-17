@@ -1,127 +1,160 @@
 import React from 'react';
-import { ScaleIcon, ExclamationTriangleIcon, DocumentCheckIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+import { motion } from 'framer-motion';
+import { FaFileContract, FaUserCheck, FaTools, FaExclamationTriangle } from 'react-icons/fa';
 
 function TermsOfService() {
+  const sections = [
+    {
+      title: 'Service Usage',
+      icon: <FaFileContract className="w-6 h-6" />,
+      content: `By using our IPv6 testing and educational services, you agree to:
+      • Use the services for legitimate IPv6 testing and learning
+      • Provide accurate information when using our tools
+      • Not attempt to manipulate or abuse the testing systems
+      • Respect the privacy and security of other users
+      
+      We reserve the right to limit or terminate access for misuse.`
+    },
+    {
+      title: 'User Responsibilities',
+      icon: <FaUserCheck className="w-6 h-6" />,
+      content: `As a user of our services, you are responsible for:
+      • Maintaining the security of your account
+      • Ensuring your network configurations are legal
+      • Reporting any security vulnerabilities
+      • Using IPv6 testing tools responsibly
+      
+      You must comply with all applicable laws and regulations.`
+    },
+    {
+      title: 'Service Limitations',
+      icon: <FaTools className="w-6 h-6" />,
+      content: `Our IPv6 services are provided "as is" with:
+      • No guarantee of 100% uptime
+      • Limited support for legacy systems
+      • Standard testing capabilities
+      • Basic educational resources
+      
+      We continuously work to improve our services.`
+    },
+    {
+      title: 'Disclaimer',
+      icon: <FaExclamationTriangle className="w-6 h-6" />,
+      content: `We are not responsible for:
+      • Network issues beyond our control
+      • Results of IPv6 testing on your systems
+      • Third-party service disruptions
+      • Data loss during testing
+      
+      Always backup your data before testing.`
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary pt-20">
-      <div className="container mx-auto px-4 py-12">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-dark-text-primary mb-6">
-            Terms of Service
-          </h1>
-          <p className="text-lg text-primary/70 dark:text-dark-text-secondary max-w-3xl mx-auto">
-            Please read these terms carefully before using our services.
-          </p>
+    <div className="min-h-screen pt-20">
+      {/* Hero Section */}
+      <section className="relative min-h-[30vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#F8FAFC] to-[#E6F7F2] dark:from-black dark:to-gray-900">
+          <div className="absolute top-0 left-0 w-full h-full">
+            <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#00C389]/10 rounded-full blur-3xl"></div>
+            <div className="absolute top-1/2 -right-24 w-96 h-96 bg-[#00C389]/10 rounded-full blur-3xl"></div>
+            <div className="absolute -bottom-24 left-1/2 w-96 h-96 bg-[#00C389]/10 rounded-full blur-3xl"></div>
+          </div>
         </div>
 
-        {/* Main Content */}
-        <div className="max-w-4xl mx-auto">
-          {/* Last Updated */}
-          <div className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 mb-8 shadow-lg">
-            <p className="text-primary/60 dark:text-dark-text-secondary/60">
-              Last Updated: March 15, 2024
+        <div className="container px-4 mx-auto relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-[#1A1E26] dark:text-white">
+              Terms of <span className="text-[#00C389]">Service</span>
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+              Please read these terms carefully before using our services.
             </p>
-          </div>
+          </motion.div>
+        </div>
+      </section>
 
-          {/* Terms Sections */}
-          <div className="space-y-8">
-            <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
-              <div className="flex items-center mb-6">
-                <ScaleIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
-                <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary">
-                  Agreement to Terms
-                </h2>
-              </div>
-              <div className="space-y-4 text-primary/80 dark:text-dark-text-secondary">
-                <p>
-                  By accessing or using our services, you agree to be bound by these Terms of Service. If you disagree with any part of the terms, you may not access our services.
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>You must be at least 18 years old to use our services</li>
-                  <li>You must provide accurate and complete information</li>
-                  <li>You are responsible for maintaining the security of your account</li>
-                </ul>
-              </div>
-            </section>
-
-            <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
-              <div className="flex items-center mb-6">
-                <ExclamationTriangleIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
-                <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary">
-                  Prohibited Activities
-                </h2>
-              </div>
-              <div className="space-y-4 text-primary/80 dark:text-dark-text-secondary">
-                <p>
-                  You agree not to engage in any of the following activities:
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Violating any applicable laws or regulations</li>
-                  <li>Interfering with the proper functioning of our services</li>
-                  <li>Attempting to gain unauthorized access</li>
-                  <li>Using our services for any illegal purposes</li>
-                </ul>
-              </div>
-            </section>
-
-            <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
-              <div className="flex items-center mb-6">
-                <DocumentCheckIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
-                <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary">
-                  Intellectual Property
-                </h2>
-              </div>
-              <div className="space-y-4 text-primary/80 dark:text-dark-text-secondary">
-                <p>
-                  Our services and their original content, features, and functionality are owned by us and are protected by international copyright, trademark, and other intellectual property laws.
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>You may not copy, modify, or distribute our content</li>
-                  <li>You may not use our trademarks without permission</li>
-                  <li>You retain rights to your own content</li>
-                </ul>
-              </div>
-            </section>
-
-            <section className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-8 shadow-lg">
-              <div className="flex items-center mb-6">
-                <UserCircleIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-4" />
-                <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary">
-                  User Responsibilities
-                </h2>
-              </div>
-              <div className="space-y-4 text-primary/80 dark:text-dark-text-secondary">
-                <p>
-                  As a user of our services, you are responsible for:
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Maintaining the confidentiality of your account</li>
-                  <li>All activities that occur under your account</li>
-                  <li>Ensuring your use complies with these terms</li>
-                  <li>Reporting any security breaches or violations</li>
-                </ul>
-              </div>
-            </section>
-          </div>
-
-          {/* Contact Information */}
-          <div className="mt-12 text-center">
-            <h2 className="text-2xl font-semibold text-primary dark:text-dark-text-primary mb-4">
-              Questions About Our Terms?
-            </h2>
-            <p className="text-primary/70 dark:text-dark-text-secondary mb-6">
-              If you have any questions about these Terms of Service, please contact us.
-            </p>
-            <a
-              href="/contact"
-              className="inline-flex items-center px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300"
+      {/* Main Content */}
+      <section className="py-12 bg-white dark:bg-gray-900">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            {/* Introduction */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="mb-12"
             >
-              Contact Us
-            </a>
+              <h2 className="text-3xl font-bold mb-6 text-[#1A1E26] dark:text-white">Welcome to IPv6 Awareness</h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                These Terms of Service govern your use of our IPv6 testing and educational services. By accessing or using our services, you agree to be bound by these terms.
+              </p>
+              <p className="text-gray-600 dark:text-gray-300">
+                Our services are designed to help users understand, test, and implement IPv6 in their networks. We provide tools, resources, and educational content to support IPv6 adoption.
+              </p>
+            </motion.div>
+
+            {/* Terms Sections */}
+            <div className="grid md:grid-cols-2 gap-8">
+              {sections.map((section, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8"
+                >
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-12 h-12 rounded-lg bg-[#00C389]/10 flex items-center justify-center">
+                      {section.icon}
+                    </div>
+                    <h3 className="text-xl font-semibold text-[#1A1E26] dark:text-white">
+                      {section.title}
+                    </h3>
+                  </div>
+                  <div className="text-gray-600 dark:text-gray-300 whitespace-pre-line">
+                    {section.content}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Additional Information */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="mt-12 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8"
+            >
+              <h3 className="text-2xl font-bold mb-6 text-[#1A1E26] dark:text-white">Contact Information</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                For any questions about these Terms of Service, please contact us at:
+              </p>
+              <div className="space-y-2">
+                <p className="text-gray-600 dark:text-gray-300">
+                  Email: legal@ipv6forum.org
+                </p>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Address: IPv6 Forum Headquarters, 123 IPv6 Street, Internet City, IC 12345
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Last Updated */}
+            <div className="mt-8 text-center text-gray-500 dark:text-gray-400">
+              Last updated: {new Date().toLocaleDateString()}
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

@@ -22,13 +22,16 @@ function Sidebar({ session }) {
 
   return (
     <div className="flex flex-col h-full bg-white dark:bg-dark-bg-secondary border-r border-gray-200 dark:border-dark-border">
-      {/* Logo */}
-      <div className="flex items-center justify-center h-16 px-4 border-b border-gray-200 dark:border-dark-border">
+      {/* Logo and Tagline */}
+      <div className="flex flex-col items-center justify-center h-24 px-4 border-b border-gray-200 dark:border-dark-border">
         <img
-          src="/logo2.png"
+          src="/logo.jpg"
           alt="Logo"
-          className="h-12 w-auto"
+          className="h-16 w-auto mb-2"
         />
+        <p className="text-sm font-medium text-primary dark:text-primary-light">
+          Think Fast, Think IPv6
+        </p>
       </div>
 
       {/* Navigation */}
@@ -42,7 +45,7 @@ function Sidebar({ session }) {
               className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
                 isActive
                   ? 'bg-primary text-white'
-                  : 'text-gray-600 dark:text-dark-text-secondary hover:bg-gray-100 dark:hover:bg-dark-bg-tertiary'
+                  : 'text-gray-600 dark:text-dark-text-secondary hover:bg-[#009C6B] hover:text-white dark:hover:bg-[#009C6B]'
               }`}
             >
               <item.icon className="h-5 w-5 mr-3" />

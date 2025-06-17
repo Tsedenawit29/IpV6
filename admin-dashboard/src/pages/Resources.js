@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { PlusIcon, PencilIcon, TrashIcon, PhotoIcon, DocumentTextIcon, TagIcon, LinkIcon, UserIcon, CalendarIcon, StarIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
+import DeleteConfirmation from '../components/DeleteConfirmation';
 
 function Resources() {
   const [resources, setResources] = useState([]);
@@ -24,6 +25,8 @@ function Resources() {
   const [selectedResource, setSelectedResource] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [tagInput, setTagInput] = useState('');
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [resourceToDelete, setResourceToDelete] = useState(null);
 
   const categories = ['documentation', 'tutorials', 'tools'];
 
@@ -216,23 +219,32 @@ function Resources() {
     }
   }
 
-  async function handleDelete(id) {
-    if (!window.confirm('Are you sure you want to delete this resource?')) return;
+  const handleDeleteClick = (resource) => {
+    setResourceToDelete(resource);
+    setDeleteModalOpen(true);
+  };
 
+  const handleDeleteConfirm = async () => {
+    if (!resourceToDelete) return;
+    
     try {
       const { error } = await supabase
         .from('ipv6_resources')
         .delete()
-        .eq('id', id);
-
+        .eq('id', resourceToDelete.id);
+      
       if (error) throw error;
+      
       toast.success('Resource deleted successfully');
       fetchResources();
     } catch (error) {
       console.error('Error deleting resource:', error);
       toast.error('Failed to delete resource');
+    } finally {
+      setDeleteModalOpen(false);
+      setResourceToDelete(null);
     }
-  }
+  };
 
   const handleAddTag = () => {
     if (tagInput.trim() && !formData.tags.includes(tagInput.trim())) {
@@ -495,7 +507,7 @@ function Resources() {
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <CalendarIcon className="h-5 w-5 text-gray-400" />
+                  <CalendarIcon className="h-5 w-5 text-gray-400 dark:text-white" />
                 </div>
                 <input
                   type="date"
@@ -555,7 +567,7 @@ function Resources() {
                   <PencilIcon className="h-5 w-5" />
                 </button>
                 <button
-                  onClick={() => handleDelete(resource.id)}
+                  onClick={() => handleDeleteClick(resource)}
                   className="p-2 text-gray-400 hover:text-red-500 dark:hover:text-red-500 transition-colors"
                 >
                   <TrashIcon className="h-5 w-5" />
@@ -619,6 +631,17 @@ function Resources() {
           </div>
         ))}
       </div>
+
+      <DeleteConfirmation
+        isOpen={deleteModalOpen}
+        onClose={() => {
+          setDeleteModalOpen(false);
+          setResourceToDelete(null);
+        }}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Resource"
+        message={`Are you sure you want to delete "${resourceToDelete?.title}"? This action cannot be undone.`}
+      />
     </div>
   );
 }

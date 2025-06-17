@@ -1,200 +1,289 @@
 // === src/pages/GetInvolved.js ===
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaUsers, FaHandshake, FaLightbulb, FaCode, FaBook, FaGlobe, FaArrowRight, FaExternalLinkAlt, FaGithub, FaDiscord, FaTwitter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { FaArrowRight, FaNetworkWired, FaCode, FaHandshake, FaGraduationCap, FaRocket, FaChartLine, FaTools } from 'react-icons/fa';
 
 function GetInvolved() {
-  const handleExternalLink = (url) => {
-    window.open(url, '_blank');
-  };
-
-  const sections = [
+  const userPaths = [
     {
-      title: "Join Our Community",
-      description: "Connect with IPv6 enthusiasts and experts worldwide",
-      icon: <FaUsers className="w-8 h-8" />,
-      items: [
+      title: 'Network Engineers',
+      description: 'Learn about IPv6 implementation, testing, and best practices for your network.',
+      icon: <FaNetworkWired className="text-4xl text-[#00C389]" />,
+      actions: [
         {
-          title: 'IPv6 Forum',
-          description: 'Join the global IPv6 community',
-          link: 'https://www.ipv6forum.com/',
-          icon: <FaGlobe />
+          text: 'Test Your IPv6',
+          link: 'https://test-ipv6.com/',
+          external: true
         },
         {
-          title: 'Discord Server',
-          description: 'Chat with community members',
-          link: 'https://discord.gg/ipv6',
-          icon: <FaDiscord />
-        },
-        {
-          title: 'Twitter',
-          description: 'Follow IPv6 updates',
-          link: 'https://twitter.com/ipv6forum',
-          icon: <FaTwitter />
+          text: 'View Resources',
+          link: '/resources',
+          external: false
         }
       ]
     },
     {
-      title: "Contribute to IPv6",
-      description: "Help improve IPv6 adoption through code and documentation",
-      icon: <FaCode className="w-8 h-8" />,
-      items: [
+      title: 'Developers',
+      description: 'Find tools, libraries, and documentation to implement IPv6 in your applications.',
+      icon: <FaCode className="text-4xl text-[#00C389]" />,
+      actions: [
         {
-          title: 'GitHub Repository',
-          description: 'Contribute to our open-source projects',
-          link: 'https://github.com/ipv6',
-          icon: <FaGithub />
+          text: 'Development Guide',
+          link: '/resources',
+          external: false
         },
         {
-          title: 'Documentation',
-          description: 'Help improve our guides and tutorials',
-          link: 'https://www.ietf.org/',
-          icon: <FaBook />
-        },
-        {
-          title: 'Bug Reports',
-          description: 'Report issues and suggest improvements',
-          link: 'https://github.com/ipv6/issues',
-          icon: <FaExternalLinkAlt />
+          text: 'Code Examples',
+          link: '/resources',
+          external: false
         }
       ]
     },
     {
-      title: "Learn & Share",
-      description: "Expand your knowledge and share it with others",
-      icon: <FaBook className="w-8 h-8" />,
-      items: [
+      title: 'Organizations',
+      description: 'Get support for IPv6 adoption, training, and implementation in your organization.',
+      icon: <FaHandshake className="text-4xl text-[#00C389]" />,
+      actions: [
         {
-          title: 'Tutorials',
-          description: 'Access our learning resources',
-          link: 'https://www.ietf.org/',
-          icon: <FaBook />
+          text: 'Contact Us',
+          link: '/contact',
+          external: false
         },
         {
-          title: 'Webinars',
-          description: 'Join our educational sessions',
-          link: 'https://www.worldipv6launch.org/',
-          icon: <FaExternalLinkAlt />
+          text: 'Learn More',
+          link: '/about-ipv6',
+          external: false
+        }
+      ]
+    },
+    {
+      title: 'Everyone',
+      description: 'Learn about IPv6, its importance, and how it affects the future of the internet.',
+      icon: <FaGraduationCap className="text-4xl text-[#00C389]" />,
+      actions: [
+        {
+          text: 'About IPv6',
+          link: '/about-ipv6',
+          external: false
         },
         {
-          title: 'Blog',
-          description: 'Read and share articles',
-          link: 'https://www.ipv6forum.com/',
-          icon: <FaExternalLinkAlt />
+          text: 'FAQ',
+          link: '/faq',
+          external: false
         }
       ]
     }
   ];
 
+  const quickStats = [
+    {
+      title: 'IPv6 Ready',
+      value: '30%',
+      icon: <FaRocket className="text-2xl text-[#00C389]" />,
+      description: 'of websites support IPv6'
+    },
+    {
+      title: 'Growth Rate',
+      value: '15%',
+      icon: <FaChartLine className="text-2xl text-[#00C389]" />,
+      description: 'yearly IPv6 adoption'
+    },
+    {
+      title: 'Tools Available',
+      value: '100+',
+      icon: <FaTools className="text-2xl text-[#00C389]" />,
+      description: 'for IPv6 implementation'
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-[#121212] dark:to-[#1E1E1E] pt-20">
-      {/* Page Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="text-center py-12 bg-white dark:bg-[#1E1E1E] shadow-lg"
-      >
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#121212] dark:text-white mb-4">
-            Get Involved
-          </h1>
-          <p className="text-lg text-[#121212]/80 dark:text-white/80 max-w-2xl mx-auto">
-            Join our community and help shape the future of IPv6
-          </p>
-        </div>
-      </motion.div>
-
-      {/* Main Content */}
-      <div className="container mx-auto px-4 py-12">
-        {/* Sections Grid */}
-        <div className="grid grid-cols-1 gap-8">
-          {sections.map((section, sectionIndex) => (
-            <motion.section
-              key={sectionIndex}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: sectionIndex * 0.2 }}
-              className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-8 shadow-lg border border-[#FFD700]/10"
-            >
-              <div className="flex items-center gap-4 mb-8">
-                <div className="p-4 bg-[#FFD700]/10 rounded-xl text-[#FFD700] border border-[#FFD700]/20">
-                  {section.icon}
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-[#121212] dark:text-white">
-                    {section.title}
-                  </h2>
-                  <p className="text-[#121212]/80 dark:text-white/80">
-                    {section.description}
-                  </p>
-                </div>
-              </div>
-
-              {/* Minimized Feature Display */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {section.items.map((item, itemIndex) => (
-                  <div
-                    key={itemIndex}
-                    className="flex flex-col p-4 rounded-xl transition-all duration-300 border border-[#FFD700]/10" // Simplified styling
-                  >
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="text-[#FFD700]">
-                        {item.icon}
-                      </div>
-                      <h3 className="text-lg font-semibold text-[#121212] dark:text-white">
-                        {item.title}
-                      </h3>
-                    </div>
-                    <p className="text-sm text-[#121212]/80 dark:text-white/80 mb-4">
-                      {item.description}
-                    </p>
-                    <button
-                      onClick={() => handleExternalLink(item.link)}
-                      className="btn btn-primary w-full flex items-center justify-center gap-2 text-sm py-2" // Smaller button
-                    >
-                      Visit {item.title.split(' ')[0]} {/* More concise button text */}
-                      <FaArrowRight className="w-3 h-3" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </motion.section>
-          ))}
+    <div className="min-h-screen pt-20">
+      {/* Hero Section with Parallax Effect */}
+      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#F8FAFC] to-[#E6F7F2] dark:from-black dark:to-gray-900">
+          <div className="absolute top-0 left-0 w-full h-full">
+            <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#00C389]/10 rounded-full blur-3xl"></div>
+            <div className="absolute top-1/2 -right-24 w-96 h-96 bg-[#00C389]/10 rounded-full blur-3xl"></div>
+            <div className="absolute -bottom-24 left-1/2 w-96 h-96 bg-[#00C389]/10 rounded-full blur-3xl"></div>
+          </div>
         </div>
 
-        {/* Call to Action */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-center mt-12"
-        >
-          <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl p-12 shadow-lg border border-[#FFD700]/10">
-            <h2 className="text-3xl font-bold text-[#121212] dark:text-white mb-4">
-              Ready to Make a Difference?
-            </h2>
-            <p className="text-lg text-[#121212]/80 dark:text-white/80 mb-8 max-w-2xl mx-auto">
-              Join our community today and help shape the future of IPv6 adoption
+        <div className="container px-4 mx-auto relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-[#1A1E26] dark:text-white">
+              Join the <span className="text-[#00C389]">IPv6</span> Revolution
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+              Be part of the next generation of internet technology
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                to="/signup"
-                className="btn btn-primary"
+              <a 
+                href="https://test-ipv6.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-[#00C389] text-white rounded-lg font-medium hover:bg-[#00C389]/90 transition duration-300 flex items-center shadow-md"
               >
-                Get Started
-              </Link>
+                Test Your IPv6 <FaArrowRight className="ml-2" />
+              </a>
               <Link
-                to="/contact"
-                className="btn btn-secondary"
+                to="/about-ipv6"
+                className="px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition duration-300 shadow-md dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700"
               >
-                Contact Us
+                Learn More
               </Link>
             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Quick Stats Section */}
+      <section className="py-12 bg-white dark:bg-gray-900">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-8">
+            {quickStats.map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="p-6 rounded-xl bg-gradient-to-br from-[#F8FAFC] to-[#E6F7F2] dark:from-gray-800 dark:to-gray-900 shadow-lg"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-[#00C389]/10 flex items-center justify-center">
+                    {stat.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-[#1A1E26] dark:text-white">{stat.title}</h3>
+                    <p className="text-3xl font-bold text-[#00C389]">{stat.value}</p>
+                  </div>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300">{stat.description}</p>
+              </motion.div>
+            ))}
           </div>
-        </motion.section>
-      </div>
+        </div>
+      </section>
+
+      {/* User Paths Section with Cards */}
+      <section className="py-20 bg-gradient-to-br from-[#F8FAFC] to-[#E6F7F2] dark:from-gray-900 dark:to-black">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold mb-6 text-[#1A1E26] dark:text-white">
+              Choose Your <span className="text-[#00C389]">Path</span>
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              Find the right resources and tools for your needs
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {userPaths.map((path, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ 
+                  duration: 0.5,
+                  delay: index * 0.2,
+                  type: "spring",
+                  stiffness: 100
+                }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="group p-8 rounded-xl bg-white dark:bg-gray-800 hover:shadow-xl transition-all duration-300"
+              >
+                <div className="flex items-start gap-6">
+                  <motion.div 
+                    className="w-16 h-16 rounded-xl bg-[#00C389]/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
+                    whileHover={{ rotate: 5 }}
+                  >
+                    {path.icon}
+                  </motion.div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-semibold mb-4 text-[#1A1E26] dark:text-white">
+                      {path.title}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                      {path.description}
+                    </p>
+                    <div className="flex flex-wrap gap-4">
+                      {path.actions.map((action, actionIndex) => (
+                        action.external ? (
+                          <a
+                            key={actionIndex}
+                            href={action.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-6 py-3 bg-[#00C389] text-white rounded-lg font-medium hover:bg-[#00C389]/90 transition duration-300 flex items-center shadow-md"
+                          >
+                            {action.text} <FaArrowRight className="ml-2" />
+                          </a>
+                        ) : (
+                          <Link
+                            key={actionIndex}
+                            to={action.link}
+                            className="px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition duration-300 shadow-md dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700"
+                          >
+                            {action.text}
+                          </Link>
+                        )
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="py-20 bg-gradient-to-br from-[#F8FAFC] to-[#E6F7F2] dark:from-gray-900 dark:to-black">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h2 className="text-4xl font-bold mb-6 text-[#1A1E26] dark:text-white">
+              Ready to <span className="text-[#00C389]">Start</span>?
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+              Take the first step towards IPv6 adoption today
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <a 
+                href="https://test-ipv6.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-[#00C389] text-white rounded-lg font-medium hover:bg-[#00C389]/90 transition duration-300 flex items-center shadow-md"
+              >
+                Test Your IPv6 <FaArrowRight className="ml-2" />
+              </a>
+              <Link
+                to="/resources"
+                className="px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition duration-300 shadow-md dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700"
+              >
+                Explore Resources
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 }

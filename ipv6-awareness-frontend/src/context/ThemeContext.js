@@ -5,25 +5,22 @@ const ThemeContext = createContext();
 // Theme configuration
 const themeConfig = {
   light: {
-    primary: '#004D00',
-    secondary: '#FFD700',
-    accent: '#00FF00',
-    background: '#FFFFFF',
-    text: '#004D00',
-    card: '#FFFFFF',
-    border: '#E5E7EB',
-    hover: '#F3F4F6'
+    primary: '#00C47C',
+    secondary: '#00C47C',
+    background: '#ffffff',
+    text: '#000000',
+    accent: '#00C47C',
   },
   dark: {
-    primary: '#FFFFFF',
-    secondary: '#FFD700',
-    accent: '#FFD700',
-    background: '#121212',
-    text: '#FFFFFF',
-    card: '#1E1E1E',
-    border: '#2D2D2D',
-    hover: '#2D2D2D'
-  }
+    primary: '#00C47C',
+    secondary: '#00C47C',
+    background: '#1a1a1a',
+    text: '#ffffff',
+    accent: '#00C47C',
+  },
+  card: '#FFFFFF',
+  border: '#E5E7EB',
+  hover: '#F3F4F6'
 };
 
 export function ThemeProvider({ children }) {

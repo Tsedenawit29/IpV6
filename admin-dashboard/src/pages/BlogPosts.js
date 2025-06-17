@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { PlusIcon, PencilIcon, TrashIcon, PhotoIcon, CalendarIcon, UserIcon, TagIcon, BookOpenIcon, QueueListIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
+import DeleteConfirmation from '../components/DeleteConfirmation';
 
 function BlogPosts() {
   const [posts, setPosts] = useState([]);
@@ -11,6 +12,7 @@ function BlogPosts() {
   const [formData, setFormData] = useState({
     title: '',
     short_description: '',
+    full_description: '',
     image_url: '',
     file_url: '',
     category: '',
@@ -20,6 +22,8 @@ function BlogPosts() {
   });
   const [selectedPost, setSelectedPost] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [postToDelete, setPostToDelete] = useState(null);
 
   const categories = ['news', 'tutorials', 'case-studies'];
 
@@ -126,6 +130,7 @@ function BlogPosts() {
       setFormData({
         title: '',
         short_description: '',
+        full_description: '',
         image_url: '',
         file_url: '',
         category: '',
@@ -161,23 +166,32 @@ function BlogPosts() {
     }
   }
 
-  async function handleDelete(id) {
-    if (!window.confirm('Are you sure you want to delete this blog post?')) return;
+  const handleDeleteClick = (post) => {
+    setPostToDelete(post);
+    setDeleteModalOpen(true);
+  };
 
+  const handleDeleteConfirm = async () => {
+    if (!postToDelete) return;
+    
     try {
       const { error } = await supabase
         .from('ipv6_blog_posts')
         .delete()
-        .eq('id', id);
-
+        .eq('id', postToDelete.id);
+      
       if (error) throw error;
+      
       toast.success('Blog post deleted successfully');
       fetchPosts();
     } catch (error) {
       console.error('Error deleting blog post:', error);
       toast.error('Failed to delete blog post');
+    } finally {
+      setDeleteModalOpen(false);
+      setPostToDelete(null);
     }
-  }
+  };
 
   if (loading) {
     return (
@@ -239,6 +253,20 @@ function BlogPosts() {
                 value={formData.short_description}
                 onChange={(e) => setFormData({ ...formData, short_description: e.target.value })}
                 rows="3"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                required
+              />
+            </div>
+
+            {/* Full Description */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2">
+                Full Description
+              </label>
+              <textarea
+                value={formData.full_description}
+                onChange={(e) => setFormData({ ...formData, full_description: e.target.value })}
+                rows="6"
                 className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
                 required
               />
@@ -347,13 +375,13 @@ function BlogPosts() {
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <CalendarIcon className="h-5 w-5 text-gray-400" />
+                  <CalendarIcon className="h-5 w-5 text-gray-900 dark:text-white" />
                 </div>
                 <input
                   type="date"
                   value={formData.published_on}
                   onChange={(e) => setFormData({ ...formData, published_on: e.target.value })}
-                  className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                  className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors [&::-webkit-calendar-picker-indicator]:dark:invert"
                   required
                 />
               </div>
@@ -428,7 +456,7 @@ function BlogPosts() {
                   <PencilIcon className="h-5 w-5" />
                 </button>
                 <button
-                  onClick={() => handleDelete(post.id)}
+                  onClick={() => handleDeleteClick(post)}
                   className="p-2 text-gray-400 hover:text-red-500 dark:hover:text-red-500 transition-colors"
                 >
                   <TrashIcon className="h-5 w-5" />
@@ -478,6 +506,17 @@ function BlogPosts() {
           </div>
         ))}
       </div>
+
+      <DeleteConfirmation
+        isOpen={deleteModalOpen}
+        onClose={() => {
+          setDeleteModalOpen(false);
+          setPostToDelete(null);
+        }}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Blog Post"
+        message={`Are you sure you want to delete "${postToDelete?.title}"? This action cannot be undone.`}
+      />
     </div>
   );
 }

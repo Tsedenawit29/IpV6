@@ -1,19 +1,18 @@
 // === src/pages/Blog.js ===
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
+import { UserIcon, CalendarIcon, DocumentIcon } from '@heroicons/react/24/outline';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import { Link } from 'react-router-dom';
-import { 
-  UserIcon, 
-  CalendarIcon, 
-  TagIcon, 
-  ArrowTopRightOnSquareIcon,
-  DocumentIcon 
-} from '@heroicons/react/24/outline';
 
 function Blog() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [selectedTab, setSelectedTab] = useState('All');
+  const [expandedPost, setExpandedPost] = useState(null);
 
   useEffect(() => {
     fetchBlogPosts();
@@ -27,165 +26,168 @@ function Blog() {
         .order('published_on', { ascending: false });
 
       if (error) throw error;
-
       setPosts(data || []);
     } catch (error) {
       console.error('Error fetching blog posts:', error);
-      setError('Failed to load blog posts. Please try again later.');
     } finally {
       setLoading(false);
     }
   }
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary pt-20">
-        <div className="container mx-auto px-4 py-8">
-          <div className="animate-pulse space-y-8">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white dark:bg-dark-bg-tertiary rounded-xl p-6 shadow-lg">
-                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
-                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div>
-                <div className="h-32 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
-                <div className="flex space-x-4">
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24"></div>
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24"></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const handleDownload = (e, post) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (post.file_url) {
+      const link = document.createElement('a');
+      link.href = post.file_url;
+      link.download = '';
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
 
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary pt-20">
-        <div className="container mx-auto px-4 py-8">
-          <div className="bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-100 p-4 rounded-lg shadow-lg">
-            <h3 className="font-semibold mb-2">Error Loading Blog Posts</h3>
-            <p className="mb-4">{error}</p>
-            <div className="text-sm text-red-600 dark:text-red-300 mb-4">
-              Please check if:
-              <ul className="list-disc list-inside mt-2">
-                <li>The database connection is working</li>
-                <li>The table name is correct</li>
-                <li>You have the necessary permissions</li>
-              </ul>
-            </div>
-            <button
-              onClick={fetchBlogPosts}
-              className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-            >
-              Try Again
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const handleReadMore = (postId) => {
+    setExpandedPost(expandedPost === postId ? null : postId);
+  };
+
+  const featuredPosts = posts.slice(0, 3);
+  const baseCategories = ['All', 'News', 'Tutorials', 'Case-Studies'];
+  const tabs = baseCategories;
+
+  const filteredPosts =
+    selectedTab === 'All'
+      ? posts
+      : posts.filter(post => post.category?.toLowerCase() === selectedTab.toLowerCase());
+
+  const CustomArrow = ({ direction, onClick }) => (
+    <button
+      onClick={onClick}
+      className={`absolute top-1/2 transform -translate-y-1/2 z-10 p-2 rounded-full shadow-md transition-all
+        ${direction === 'left' ? 'left-2' : 'right-2'}
+        bg-white text-black dark:bg-gray-800 dark:text-white hover:bg-[#00C389]/20`}
+      aria-label={direction === 'left' ? 'Previous' : 'Next'}
+    >
+      {direction === 'left' ? <ChevronLeftIcon className="h-6 w-6" /> : <ChevronRightIcon className="h-6 w-6" />}
+    </button>
+  );
+
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 600,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 7000,
+    nextArrow: <CustomArrow direction="right" />,
+    prevArrow: <CustomArrow direction="left" />,
+    className: 'rounded-xl shadow-lg',
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5 dark:from-dark-bg-primary dark:to-dark-bg-secondary pt-20">
-      <div className="container mx-auto px-4 py-8">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-dark-text-primary mb-4">
-            IPv6 Blog
-          </h1>
-          <p className="text-lg text-primary/70 dark:text-dark-text-secondary max-w-2xl mx-auto">
-            Stay updated with the latest news, insights, and developments in the world of IPv6
-          </p>
-        </div>
+    <div className="min-h-screen bg-white dark:bg-dark-bg-primary pt-24 text-black dark:text-white">
+      <div className="container mx-auto px-4 py-12">
 
-        {/* Blog Posts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post) => (
-            <article
-              key={post.id}
-              className="bg-white dark:bg-dark-bg-tertiary rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-            >
-              {post.image_url && (
-                <div className="relative h-48 w-full">
+        {/* Carousel */}
+        <section className="max-w-5xl mx-auto mb-16 relative">
+          <Slider {...sliderSettings}>
+            {featuredPosts.map((post) => (
+              <div
+                key={post.id}
+                className="relative group rounded-xl overflow-hidden shadow-xl h-96"
+              >
+                <div
+                  className="absolute inset-0 blur-md scale-110"
+                  style={{
+                    backgroundImage: `url(${post.image_url || ''})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    filter: 'blur(20px) brightness(0.7)',
+                    zIndex: 1,
+                  }}
+                />
+                {post.image_url ? (
                   <img
                     src={post.image_url}
                     alt={post.title}
-                    className="w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-contain z-10 mx-auto my-auto"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                </div>
-              )}
-              <div className="p-6">
-                <div className="flex items-center space-x-4 text-sm text-primary/60 dark:text-dark-text-secondary/60 mb-4">
-                  <div className="flex items-center">
-                    <UserIcon className="h-4 w-4 mr-1" />
-                    <span>{post.author}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <CalendarIcon className="h-4 w-4 mr-1" />
-                    <span>{post.published_on ? new Date(post.published_on).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    }) : 'Not published'}</span>
-                  </div>
-                </div>
-
-                <h2 className="text-xl font-semibold text-primary dark:text-dark-text-primary mb-3 line-clamp-2">
-                  {post.title}
-                </h2>
-
-                <p className="text-primary/80 dark:text-dark-text-secondary mb-4 line-clamp-3">
-                  {post.short_description || post.content}
-                </p>
-
-                {post.tags && (
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {post.tags.map((tag, index) => (
-                      <span
-                        key={index}
-                        className="px-3 py-1 text-xs rounded-full bg-primary/10 dark:bg-dark-text-accent/10 text-primary dark:text-dark-text-accent"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                ) : (
+                  <div className="w-full h-full bg-gray-200 flex items-center justify-center z-10">
+                    <DocumentIcon className="h-24 w-24 text-gray-400" />
                   </div>
                 )}
-
-                <div className="flex items-center justify-between">
-                  <Link
-                    to={`/blog/${post.id}`}
-                    className="inline-flex items-center text-green-500 dark:text-green-400 hover:text-green-600 dark:hover:text-green-300 transition-colors duration-300"
-                  >
-                    Read More
-                    <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-1" />
-                  </Link>
-
-                  {post.file_url && (
-                    <a
-                      href={post.file_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-primary/60 dark:text-dark-text-secondary/60 hover:text-green-500 dark:hover:text-green-400 transition-colors duration-300"
-                    >
-                      <DocumentIcon className="h-4 w-4 mr-1" />
-                      <span className="text-sm">View Attachment</span>
-                    </a>
-                  )}
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center px-6 z-20">
+                  <div className="text-center">
+                    <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-4">
+                      Find the <span style={{ color: '#00C389' }}>Latest Blogs</span>
+                    </h1>
+                    <p className="text-2xl font-medium text-gray-200">
+                      Learn everything about <span style={{ color: '#00C389' }}>IPv6</span> from tutorials, news, and expert case studies
+                    </p>
+                  </div>
                 </div>
               </div>
-            </article>
+            ))}
+          </Slider>
+        </section>
+
+        {/* Tabs */}
+        <div className="flex justify-center flex-wrap gap-3 mb-12">
+          {tabs.map(tab => (
+            <button
+              key={tab}
+              onClick={() => setSelectedTab(tab)}
+              className={`flex items-center px-4 py-2 rounded-lg transition-all
+                ${selectedTab === tab
+                  ? 'bg-[#00C389] text-black font-medium shadow-sm'
+                  : 'bg-white/10 text-white border border-white/20 hover:border-[#00C389]'}`}
+            >
+              <span className={`text-sm font-medium ${selectedTab === tab ? 'text-black' : 'text-[#00C389]'}`}>{tab}</span>
+            </button>
           ))}
         </div>
 
-        {posts.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-primary/60 dark:text-dark-text-secondary">
-              No blog posts available at the moment.
-            </p>
-          </div>
-        )}
+        {/* Blog posts */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredPosts.map(post => (
+            <Link
+              key={post.id}
+              to={`/blog/${post.id}`}
+              className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-all"
+            >
+              {post.image_url && (
+                <img src={post.image_url} alt={post.title} className="w-full h-48 object-cover" />
+              )}
+              <div className="p-5">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{post.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-3">
+                  {post.short_description}
+                </p>
+                <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                  <CalendarIcon className="h-4 w-4 mr-1" />
+                  {new Date(post.published_on).toLocaleDateString()}
+                </div>
+                <div className="mt-4 flex justify-between items-center">
+                  <span className="text-sm text-[#00C389] font-medium">
+                    Read more
+                  </span>
+                  {post.file_url && (
+                    <button
+                      onClick={(e) => handleDownload(e, post)}
+                      className="flex items-center text-[#00C389] hover:text-[#00C389]/90"
+                    >
+                      <DocumentIcon className="h-5 w-5 mr-1" />
+                      <span className="text-sm">Download</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
