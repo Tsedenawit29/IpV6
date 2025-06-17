@@ -90,15 +90,14 @@ const Contact = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="py-12 bg-white dark:bg-dark-bg-primary">
+      <section className="py-16 bg-gray-50 dark:bg-dark-bg-primary">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8">
             {/* Contact Info */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
               className="space-y-6"
             >
               <div>
@@ -162,9 +161,8 @@ const Contact = () => {
             {/* Contact Form */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
               className="bg-gradient-to-br from-white to-gray-50 dark:from-dark-bg-secondary dark:to-dark-bg-tertiary rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
             >
               <form onSubmit={handleSubmit} className="space-y-4">
