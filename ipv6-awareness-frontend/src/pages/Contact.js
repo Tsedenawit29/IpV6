@@ -34,6 +34,7 @@ const Contact = () => {
       if (error) {
         console.error('Supabase error:', error);
         throw new Error(error.message || 'Failed to send message');
+
       }
 
       toast.success('Message sent successfully!');
@@ -45,7 +46,9 @@ const Contact = () => {
       });
     } catch (error) {
       console.error('Error sending message:', error);
+
       toast.error(error.message || 'Failed to send message. Please try again.');
+
     } finally {
       setLoading(false);
     }
@@ -227,6 +230,7 @@ const Contact = () => {
 
                 <button
                   type="submit"
+
                   disabled={loading}
                   className="group relative inline-flex items-center justify-center w-full px-6 py-3 font-bold text-white transition-all duration-300 ease-out transform bg-[#00C389] hover:bg-[#009C6B] rounded-lg hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -241,6 +245,7 @@ const Contact = () => {
                       <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                     </span>
                   )}
+
                 </button>
               </form>
             </motion.div>

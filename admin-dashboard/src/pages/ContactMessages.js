@@ -96,6 +96,7 @@ function ContactMessages() {
                       </p>
                       <p className="flex items-center">
                         <EnvelopeIcon className="h-4 w-4 mr-1" />
+
                         Email: <a href={`mailto:${message.email}`} className="text-[#00C389] hover:underline">{message.email}</a>
                       </p>
                       <p className="flex items-center">

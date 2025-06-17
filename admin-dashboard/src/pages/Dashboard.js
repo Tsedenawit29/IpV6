@@ -86,7 +86,7 @@ function Dashboard() {
         .from('ipv6_resources')
         .select('*')
         .order('date', { ascending: false })
-        .limit(5);
+        .limit(3);
 
       if (resourcesError) {
         console.error('Error fetching resources:', resourcesError);
@@ -99,7 +99,7 @@ function Dashboard() {
         .from('ipv6_blog_posts')
         .select('*')
         .order('published_on', { ascending: false })
-        .limit(5);
+        .limit(3);
 
       if (blogError) {
         console.error('Error fetching blog posts:', blogError);
@@ -112,7 +112,7 @@ function Dashboard() {
         .from('ipv6_events')
         .select('*')
         .order('event_date', { ascending: false })
-        .limit(5);
+        .limit(3);
 
       if (eventsError) {
         console.error('Error fetching events:', eventsError);
@@ -125,7 +125,7 @@ function Dashboard() {
         .from('ipv6_contact_messages')
         .select('*')
         .order('submitted_at', { ascending: false })
-        .limit(5);
+        .limit(3);
 
       if (messagesError) {
         console.error('Error fetching messages:', messagesError);
@@ -172,6 +172,7 @@ function Dashboard() {
           email: message.email
         })) || []),
       ].sort((a, b) => new Date(b.date) - new Date(a.date))
+
         .slice(0, 4);
 
       console.log('Combined activities:', allActivities.length);
