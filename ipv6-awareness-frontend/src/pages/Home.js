@@ -55,12 +55,29 @@ function Home() {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 1,
+    slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 3000,
+    pauseOnHover: true,
     nextArrow: <CustomArrow direction="right" />,
     prevArrow: <CustomArrow direction="left" />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        }
+      }
+    ]
   };
 
   const benefits = [
@@ -387,37 +404,38 @@ function Home() {
             <Slider {...sliderSettings}>
               {latestUpdates.map((update) => (
                 <div key={update.id} className="px-4">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                    className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg"
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 h-[400px]"
                   >
-                    {update.image_url && (
-                      <div className="relative h-48 overflow-hidden">
-                        <img
-                          src={update.image_url}
-                          alt={update.title}
-                          className="w-full h-full object-cover"
-                        />
+                    <div className="absolute inset-0">
+                      <img
+                        src={update.image_url || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80'}
+                        alt={update.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30"></div>
+                    </div>
+                    <div className="relative h-full flex flex-col p-6">
+                      <div className="flex-grow">
+                        <h3 className="text-xl font-semibold text-white mb-2 line-clamp-2 group-hover:text-[#00C389] transition-colors duration-300">
+                          {update.title}
+                        </h3>
+                        <p className="text-gray-200 mb-4 line-clamp-3 group-hover:text-white transition-colors duration-300">
+                          {update.summary}
+                        </p>
                       </div>
-                    )}
-                    <div className="p-6">
-                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                        {update.title}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-400 mb-4">
-                        {update.summary}
-                      </p>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                      <div className="flex justify-between items-center pt-4 border-t border-white/20">
+                        <span className="text-sm text-gray-300 group-hover:text-[#00C389] transition-colors duration-300">
                           {new Date(update.published_on).toLocaleDateString()}
                         </span>
                         <Link
                           to={`/blog/${update.id}`}
-                          className="text-[#00C389] hover:text-[#00C389]/80 font-medium flex items-center gap-2"
+                          className="text-[#00C389] hover:text-white font-medium flex items-center gap-2 transition-all duration-300 group-hover:gap-3"
                         >
-                          Read More <FaArrowRight />
+                          Read More <FaArrowRight className="transform group-hover:translate-x-1 transition-transform duration-300" />
                         </Link>
                       </div>
                     </div>
@@ -499,7 +517,7 @@ function Home() {
                 View IPv6 Dashboard <FaArrowRight className="ml-2" />
               </Link>
               <Link
-                to="/get-involved"
+                to="/GetInvolved"
                 className="btn btn-ghost"
               >
                 Get Involved <FaArrowRight className="ml-2" />

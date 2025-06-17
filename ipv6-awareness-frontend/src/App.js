@@ -15,6 +15,7 @@ import GetInvolved from './pages/GetInvolved';
 import Contact from './pages/Contact';
 import Blog from './pages/Blog';
 import IPv6Dashboard from './pages/IPv6Dashboard';
+import BlogPost from './pages/BlogPost';
 
 
 // Company Pages
@@ -108,6 +109,7 @@ function App() {
                   <Route path="/GetInvolved" element={<GetInvolved />} />
                   <Route path="/IPv6Dashboard" element={<IPv6Dashboard />} />
                   <Route path="/Blog" element={<Blog />} />
+                  <Route path="/Blog/:id" element={<BlogPost />} />
                   <Route path="/Contact" element={<Contact />} />
 
                   {/* Company Section - Matches Footer */}
@@ -120,8 +122,7 @@ function App() {
                   <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
                   <Route path="/TermsOfService" element={<TermsOfService />} />
 
-Tsi, [6/12/2025 12:06 PM]
-{/* 404 Page */}
+                  {/* 404 Page */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </PageTransition>

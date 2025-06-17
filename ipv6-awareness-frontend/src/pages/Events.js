@@ -165,70 +165,72 @@ const EventCard = ({ event, index }) => (
     whileHover={{ y: -5 }}
     className="group"
   >
-    <Link to={`/events/${event.id}`} className="block h-full">
-      <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm dark:shadow-none border border-gray-100 dark:border-gray-800 h-full flex flex-col overflow-hidden hover:shadow-md transition-all duration-300">
-        {event.image_url && (
-          <div className="relative h-48 w-full overflow-hidden">
-            <img
-              src={event.image_url}
-              alt={event.title}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-          </div>
-        )}
-
-        <div className="p-5 flex-grow">
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-[#00C389] transition-colors">
-            {event.title}
-          </h3>
-          <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
-            {event.description}
-          </p>
-
-          <div className="space-y-3 mt-auto">
-            <div className="flex items-start">
-              <CalendarIcon className="h-5 w-5 mr-3 mt-0.5 text-[#00C389]" />
-              <div>
-                <p className="text-sm font-medium text-gray-900 dark:text-white">
-                  {new Date(event.event_date).toLocaleDateString('en-US', {
-                    weekday: 'short',
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric',
-                  })}
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-500">{event.time}</p>
-              </div>
-            </div>
-            <div className="flex items-start">
-              <MapPinIcon className="h-5 w-5 mr-3 mt-0.5 text-[#00C389]" />
-              <p className="text-sm text-gray-600 dark:text-gray-400">{event.location}</p>
-            </div>
-          </div>
+    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm dark:shadow-none border border-gray-100 dark:border-gray-800 h-full flex flex-col overflow-hidden hover:shadow-md transition-all duration-300">
+      {event.image_url && (
+        <div className="relative h-48 w-full overflow-hidden">
+          <img
+            src={event.image_url}
+            alt={event.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
         </div>
+      )}
 
-        <div className="px-5 py-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800">
-          <div className="flex justify-between items-center">
-            <span className="inline-flex items-center text-sm font-medium text-[#00C389] group-hover:underline">
-              View details
-              <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-1.5" />
-            </span>
-            {event.registration_url && (
-              <a
-                href={event.registration_url}
-                onClick={(e) => e.stopPropagation()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-3 py-1.5 text-xs font-medium bg-[#00C389] text-white rounded hover:bg-[#00C389]/90 transition-colors shadow-sm"
-              >
-                Register
-              </a>
-            )}
+      <div className="p-5 flex-grow">
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-[#00C389] transition-colors">
+          {event.title}
+        </h3>
+        <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
+          {event.short_description}
+        </p>
+
+        <div className="space-y-3 mt-auto">
+          <div className="flex items-start">
+            <CalendarIcon className="h-5 w-5 mr-3 mt-0.5 text-[#00C389]" />
+            <div>
+              <p className="text-sm font-medium text-gray-900 dark:text-white">
+                {new Date(event.event_date).toLocaleDateString('en-US', {
+                  weekday: 'short',
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric',
+                })}
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-500">{event.time}</p>
+            </div>
+          </div>
+          <div className="flex items-start">
+            <MapPinIcon className="h-5 w-5 mr-3 mt-0.5 text-[#00C389]" />
+            <p className="text-sm text-gray-600 dark:text-gray-400">{event.location}</p>
           </div>
         </div>
       </div>
-    </Link>
+
+      <div className="px-5 py-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800">
+        <div className="flex justify-between items-center">
+          <a
+            href={event.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center text-sm font-medium text-[#00C389] group-hover:underline"
+          >
+            View more
+            <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-1.5" />
+          </a>
+          {event.registration_url && (
+            <a
+              href={event.registration_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-3 py-1.5 text-xs font-medium bg-[#00C389] text-white rounded hover:bg-[#00C389]/90 transition-colors shadow-sm"
+            >
+              Register
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
   </motion.div>
 );
 

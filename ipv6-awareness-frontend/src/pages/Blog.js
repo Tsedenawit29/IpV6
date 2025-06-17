@@ -6,11 +6,13 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { Link } from 'react-router-dom';
 
 function Blog() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedTab, setSelectedTab] = useState('All');
+  const [expandedPost, setExpandedPost] = useState(null);
 
   useEffect(() => {
     fetchBlogPosts();
@@ -32,7 +34,9 @@ function Blog() {
     }
   }
 
-  const handleDownload = (post) => {
+  const handleDownload = (e, post) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (post.file_url) {
       const link = document.createElement('a');
       link.href = post.file_url;
@@ -42,6 +46,10 @@ function Blog() {
       link.click();
       document.body.removeChild(link);
     }
+  };
+
+  const handleReadMore = (postId) => {
+    setExpandedPost(expandedPost === postId ? null : postId);
   };
 
   const featuredPosts = posts.slice(0, 3);
@@ -143,35 +151,41 @@ function Blog() {
         </div>
 
         {/* Blog posts */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPosts.map(post => (
-            <div key={post.id} className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm overflow-hidden">
+            <Link
+              key={post.id}
+              to={`/blog/${post.id}`}
+              className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-all"
+            >
               {post.image_url && (
                 <img src={post.image_url} alt={post.title} className="w-full h-48 object-cover" />
               )}
               <div className="p-5">
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{post.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-3">{post.summary}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-3">
+                  {post.short_description}
+                </p>
                 <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                   <CalendarIcon className="h-4 w-4 mr-1" />
                   {new Date(post.published_on).toLocaleDateString()}
                 </div>
                 <div className="mt-4 flex justify-between items-center">
-                  <button
-                    onClick={() => handleDownload(post)}
-                    className="text-sm text-[#00C389] font-medium hover:underline"
-                  >
+                  <span className="text-sm text-[#00C389] font-medium">
                     Read more
-                  </button>
-                  {post.author && (
-                    <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                      <UserIcon className="h-4 w-4 mr-1" />
-                      {post.author}
-                    </div>
+                  </span>
+                  {post.file_url && (
+                    <button
+                      onClick={(e) => handleDownload(e, post)}
+                      className="flex items-center text-[#00C389] hover:text-[#00C389]/90"
+                    >
+                      <DocumentIcon className="h-5 w-5 mr-1" />
+                      <span className="text-sm">Download</span>
+                    </button>
                   )}
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

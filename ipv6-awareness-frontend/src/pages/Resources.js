@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
-import { DocumentIcon, MagnifyingGlassIcon, TagIcon } from '@heroicons/react/24/outline';
+import { DocumentIcon, MagnifyingGlassIcon, TagIcon, UserIcon, CalendarIcon, ClockIcon } from '@heroicons/react/24/outline';
 
 function Resources() {
   const [resources, setResources] = useState([]);
@@ -59,8 +59,9 @@ function Resources() {
 
         {/* Hero Section */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-[#00C389] dark:text-[#00C389] mb-4">
-            IPv6 Resource Hub
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
+            <span className="text-black dark:text-white">Resource Hub</span>{' '}
+            <span className="text-[#00C389]">IPv6</span>
           </h1>
           <p className="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
             Discover handpicked IPv6 guides, tools, and tutorials to level up your network knowledge.
@@ -119,7 +120,7 @@ function Resources() {
                 />
               )}
               <div className="p-6">
-                <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-2">
+                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-2">
                   <div className="flex items-center">
                     <TagIcon className="h-4 w-4 mr-1" />
                     {resource.category}
@@ -128,6 +129,24 @@ function Resources() {
                     <div className="flex items-center">
                       <DocumentIcon className="h-4 w-4 mr-1" />
                       {resource.type}
+                    </div>
+                  )}
+                  {resource.author && (
+                    <div className="flex items-center">
+                      <UserIcon className="h-4 w-4 mr-1" />
+                      {resource.author}
+                    </div>
+                  )}
+                  {resource.date && (
+                    <div className="flex items-center">
+                      <CalendarIcon className="h-4 w-4 mr-1 text-gray-500 dark:text-white" />
+                      {new Date(resource.date).toLocaleDateString()}
+                    </div>
+                  )}
+                  {resource.time && (
+                    <div className="flex items-center">
+                      <ClockIcon className="h-4 w-4 mr-1 text-gray-500 dark:text-white" />
+                      {resource.time}
                     </div>
                   )}
                 </div>
@@ -141,17 +160,30 @@ function Resources() {
                 </p>
 
                 <div className="flex items-center justify-between">
-                  {resource.file_url && (
-                    <a
-                      href={resource.file_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-[#00C389] hover:text-[#00C389]/90 transition-colors"
-                    >
-                      <DocumentIcon className="h-5 w-5" />
-                      <span className="font-medium">Download</span>
-                    </a>
-                  )}
+                  <div className="flex items-center gap-4">
+                    {resource.file_url && (
+                      <a
+                        href={resource.file_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-[#00C389] hover:text-[#00C389]/90 transition-colors"
+                      >
+                        <DocumentIcon className="h-5 w-5" />
+                        <span className="font-medium">Download</span>
+                      </a>
+                    )}
+                    {resource.url && (
+                      <a
+                        href={resource.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-[#00C389] hover:text-[#00C389]/90 transition-colors"
+                      >
+                        <DocumentIcon className="h-5 w-5" />
+                        <span className="font-medium">View Resource</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

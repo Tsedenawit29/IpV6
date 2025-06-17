@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { PlusIcon, PencilIcon, TrashIcon, CalendarIcon, ClockIcon, MapPinIcon, LinkIcon, TagIcon, PhotoIcon, DocumentTextIcon, QueueListIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
-import Swal from 'sweetalert2';
+import DeleteConfirmation from '../components/DeleteConfirmation';
 import EditModal from '../components/EditModal';
 
 export default function Events() {
@@ -25,6 +25,8 @@ export default function Events() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [editData, setEditData] = useState(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [eventToDelete, setEventToDelete] = useState(null);
 
   const eventTypes = [
     { value: 'conference', label: 'Conference' },
@@ -149,30 +151,32 @@ export default function Events() {
     }
   };
 
-  async function handleDelete(id) {
-    const result = await Swal.fire({
-      title: 'Are you sure?',
-      text: 'This action cannot be undone!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#00C389',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-    });
-    if (!result.isConfirmed) return;
+  const handleDeleteClick = (event) => {
+    setEventToDelete(event);
+    setDeleteModalOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!eventToDelete) return;
+    
     try {
       const { error } = await supabase
         .from('ipv6_events')
         .delete()
-        .eq('id', id);
+        .eq('id', eventToDelete.id);
+      
       if (error) throw error;
+      
       toast.success('Event deleted successfully');
       fetchEvents();
     } catch (error) {
       console.error('Error deleting event:', error);
       toast.error('Failed to delete event');
+    } finally {
+      setDeleteModalOpen(false);
+      setEventToDelete(null);
     }
-  }
+  };
 
   const handleUpdate = (event) => {
     // Note: Authentication check for update is done in handleSubmit
@@ -317,14 +321,14 @@ export default function Events() {
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <CalendarIcon className="h-5 w-5 text-gray-400" />
+                    <CalendarIcon className="h-5 w-5 text-gray-900 dark:text-white" />
                   </div>
                   <input
                     type="date"
                     name="event_date"
                     value={formData.event_date}
                     onChange={(e) => setFormData({ ...formData, event_date: e.target.value })}
-                    className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                    className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors [&::-webkit-calendar-picker-indicator]:dark:invert"
                     required
                   />
                 </div>
@@ -335,14 +339,14 @@ export default function Events() {
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <ClockIcon className="h-5 w-5 text-gray-400" />
+                    <ClockIcon className="h-5 w-5 text-gray-900 dark:text-white" />
                   </div>
                   <input
                     type="time"
                     name="event_time"
                     value={formData.event_time}
                     onChange={(e) => setFormData({ ...formData, event_time: e.target.value })}
-                    className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                    className="w-full pl-10 px-4 py-2 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg-secondary text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-colors [&::-webkit-calendar-picker-indicator]:dark:invert"
                     required
                   />
                 </div>
@@ -538,7 +542,7 @@ export default function Events() {
                       <PencilIcon className="h-5 w-5" />
                     </button>
                     <button
-                      onClick={() => handleDelete(event.id)}
+                      onClick={() => handleDeleteClick(event)}
                       className="text-red-600 hover:text-red-800"
                     >
                       <TrashIcon className="h-5 w-5" />
@@ -558,6 +562,17 @@ export default function Events() {
           onSave={handleSave}
         />
       )}
+
+      <DeleteConfirmation
+        isOpen={deleteModalOpen}
+        onClose={() => {
+          setDeleteModalOpen(false);
+          setEventToDelete(null);
+        }}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Event"
+        message={`Are you sure you want to delete "${eventToDelete?.title}"? This action cannot be undone.`}
+      />
     </div>
   );
 }
