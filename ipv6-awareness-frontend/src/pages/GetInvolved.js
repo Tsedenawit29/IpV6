@@ -98,91 +98,192 @@ function GetInvolved() {
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-dark-bg-primary">
-      <div className="container mx-auto px-4 py-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-6">
-            Get Involved with IPv6
-          </h1>
-          <p className="text-lg text-black/80 dark:text-white/80 max-w-3xl mx-auto">
-            Join the global IPv6 community and help shape the future of internet connectivity.
-            Choose your path below to get started.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          {userPaths.map((path, index) => (
-            <motion.div
-              key={path.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white dark:bg-dark-bg-secondary rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
-            >
-              <div className="mb-4">{path.icon}</div>
-              <h3 className="text-xl font-semibold text-black dark:text-white mb-3">
-                {path.title}
-              </h3>
-              <p className="text-black/70 dark:text-white/70 mb-6">
-                {path.description}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3">
-                {path.actions.map((action) => (
-                  action.external ? (
-                    <a
-                      key={action.text}
-                      href={action.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn btn-primary flex-1 text-center"
-                    >
-                      {action.text}
-                      <FaArrowRight className="ml-2" />
-                    </a>
-                  ) : (
-                    <Link
-                      key={action.text}
-                      to={action.link}
-                      className="btn btn-primary flex-1 text-center"
-                    >
-                      {action.text}
-                      <FaArrowRight className="ml-2" />
-                    </Link>
-                  )
-                ))}
-              </div>
-            </motion.div>
-          ))}
+    <div className="min-h-screen pt-20">
+      {/* Hero Section with Parallax Effect */}
+      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#F8FAFC] to-[#E6F7F2] dark:from-black dark:to-gray-900">
+          <div className="absolute top-0 left-0 w-full h-full">
+            <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#00C389]/10 rounded-full blur-3xl"></div>
+            <div className="absolute top-1/2 -right-24 w-96 h-96 bg-[#00C389]/10 rounded-full blur-3xl"></div>
+            <div className="absolute -bottom-24 left-1/2 w-96 h-96 bg-[#00C389]/10 rounded-full blur-3xl"></div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {quickStats.map((stat, index) => (
-            <motion.div
-              key={stat.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white dark:bg-dark-bg-secondary rounded-xl shadow-lg p-6 text-center"
-            >
-              <div className="flex justify-center mb-4">{stat.icon}</div>
-              <h3 className="text-2xl font-bold text-[#00C389] mb-2">
-                {stat.value}
-              </h3>
-              <p className="text-lg font-semibold text-black dark:text-white mb-2">
-                {stat.title}
-              </p>
-              <p className="text-black/70 dark:text-white/70">
-                {stat.description}
-              </p>
-            </motion.div>
-          ))}
+        <div className="container px-4 mx-auto relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-[#1A1E26] dark:text-white">
+              Join the <span className="text-[#00C389]">IPv6</span> Revolution
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+              Be part of the next generation of internet technology
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <a 
+                href="https://test-ipv6.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-[#00C389] text-white rounded-lg font-medium hover:bg-[#00C389]/90 transition duration-300 flex items-center shadow-md"
+              >
+                Test Your IPv6 <FaArrowRight className="ml-2" />
+              </a>
+              <Link
+                to="/about-ipv6"
+                className="px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition duration-300 shadow-md dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700"
+              >
+                Learn More
+              </Link>
+            </div>
+          </motion.div>
         </div>
-      </div>
+      </section>
+
+      {/* Quick Stats Section */}
+      <section className="py-12 bg-white dark:bg-gray-900">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-8">
+            {quickStats.map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="p-6 rounded-xl bg-gradient-to-br from-[#F8FAFC] to-[#E6F7F2] dark:from-gray-800 dark:to-gray-900 shadow-lg"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-[#00C389]/10 flex items-center justify-center">
+                    {stat.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-[#1A1E26] dark:text-white">{stat.title}</h3>
+                    <p className="text-3xl font-bold text-[#00C389]">{stat.value}</p>
+                  </div>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300">{stat.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* User Paths Section with Cards */}
+      <section className="py-20 bg-gradient-to-br from-[#F8FAFC] to-[#E6F7F2] dark:from-gray-900 dark:to-black">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold mb-6 text-[#1A1E26] dark:text-white">
+              Choose Your <span className="text-[#00C389]">Path</span>
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              Find the right resources and tools for your needs
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {userPaths.map((path, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ 
+                  duration: 0.5,
+                  delay: index * 0.2,
+                  type: "spring",
+                  stiffness: 100
+                }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="group p-8 rounded-xl bg-white dark:bg-gray-800 hover:shadow-xl transition-all duration-300"
+              >
+                <div className="flex items-start gap-6">
+                  <motion.div 
+                    className="w-16 h-16 rounded-xl bg-[#00C389]/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
+                    whileHover={{ rotate: 5 }}
+                  >
+                    {path.icon}
+                  </motion.div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-semibold mb-4 text-[#1A1E26] dark:text-white">
+                      {path.title}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                      {path.description}
+                    </p>
+                    <div className="flex flex-wrap gap-4">
+                      {path.actions.map((action, actionIndex) => (
+                        action.external ? (
+                          <a
+                            key={actionIndex}
+                            href={action.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-6 py-3 bg-[#00C389] text-white rounded-lg font-medium hover:bg-[#00C389]/90 transition duration-300 flex items-center shadow-md"
+                          >
+                            {action.text} <FaArrowRight className="ml-2" />
+                          </a>
+                        ) : (
+                          <Link
+                            key={actionIndex}
+                            to={action.link}
+                            className="px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition duration-300 shadow-md dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700"
+                          >
+                            {action.text}
+                          </Link>
+                        )
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="py-20 bg-gradient-to-br from-[#F8FAFC] to-[#E6F7F2] dark:from-gray-900 dark:to-black">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h2 className="text-4xl font-bold mb-6 text-[#1A1E26] dark:text-white">
+              Ready to <span className="text-[#00C389]">Start</span>?
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+              Take the first step towards IPv6 adoption today
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <a 
+                href="https://test-ipv6.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-[#00C389] text-white rounded-lg font-medium hover:bg-[#00C389]/90 transition duration-300 flex items-center shadow-md"
+              >
+                Test Your IPv6 <FaArrowRight className="ml-2" />
+              </a>
+              <Link
+                to="/resources"
+                className="px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition duration-300 shadow-md dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700"
+              >
+                Explore Resources
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 }
