@@ -13,17 +13,16 @@ function Footer() {
       { label: 'Our Mission', path: '/OurMission' },
     ],
     resources: [
-      { label: 'Documentation', path: '/Documentation' },
+      { label: 'Resources', path: '/Resources' },
       { label: 'Blog', path: '/Blog' },
       { label: 'Events', path: '/Events' },
-      { label: 'Resources', path: '/Resources' },
       { label: 'Get Involved', path: '/GetInvolved' },
     ],
     support: [
       { label: 'Contact Us', path: '/Contact' },
       { label: 'FAQ', path: '/FAQ' },
       { label: 'IPv6 Dashboard', path: '/IPv6Dashboard' },
-      { label: 'Test IPv6', path: '/TestIPv6' },
+      { label: 'Test IPv6', path: 'https://test-ipv6.com/', external: true },
     ],
     legal: [
       { label: 'Privacy Policy', path: '/PrivacyPolicy' },
@@ -51,7 +50,7 @@ function Footer() {
               />
               <div>
                 <h3 className="text-2xl font-bold text-[#00C389]">
-                  IPv6 Awareness
+                  IPv6 Ethiopia
                 </h3>
                 <p className="text-base text-black dark:text-dark-text-secondary">Empowering the future of internet connectivity</p>
               </div>
@@ -83,14 +82,25 @@ function Footer() {
                     {category}
                   </h4>
                   <ul className="space-y-3">
-                    {links.map(({ label, path }) => (
+                    {links.map(({ label, path, external }) => (
                       <li key={path}>
-                        <Link
-                          to={path}
-                          className="text-black dark:text-dark-text-secondary hover:text-[#00C389] dark:hover:text-[#00C389] transform hover:translate-x-1 transition-all duration-300 inline-block text-base"
-                        >
-                          {label}
-                        </Link>
+                        {external ? (
+                          <a
+                            href={path}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-black dark:text-dark-text-secondary hover:text-[#00C389] dark:hover:text-[#00C389] transform hover:translate-x-1 transition-all duration-300 inline-block text-base"
+                          >
+                            {label}
+                          </a>
+                        ) : (
+                          <Link
+                            to={path}
+                            className="text-black dark:text-dark-text-secondary hover:text-[#00C389] dark:hover:text-[#00C389] transform hover:translate-x-1 transition-all duration-300 inline-block text-base"
+                          >
+                            {label}
+                          </Link>
+                        )}
                       </li>
                     ))}
                   </ul>

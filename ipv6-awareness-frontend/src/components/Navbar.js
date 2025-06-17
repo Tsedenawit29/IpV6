@@ -163,10 +163,10 @@ function Navbar() {
         </div>
 
         {/* Mobile Navigation */}
-        <div className={`md:hidden transition-all duration-300 ${
-          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        <div className={`lg:hidden transition-all duration-300 ${
+          isMenuOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'
         } overflow-hidden bg-white dark:bg-dark-bg-secondary`}>
-          <ul className="py-4 space-y-4">
+          <div className="grid grid-cols-2 gap-2 p-4">
             {[
               { path: '/', label: 'Home' },
               { path: '/AboutIPv6', label: 'About IPv6' },
@@ -177,52 +177,21 @@ function Navbar() {
               { path: '/blog', label: 'Blog' },
               { path: '/contact', label: 'Contact' }
             ].map(({ path, label }) => (
-              <li key={path}>
-                <Link
-                  to={path}
-                  className={`block px-4 py-2 rounded-lg transition-colors ${
-                    isActive(path)
-                      ? 'bg-[#00C389]/10 text-[#00C389]'
-                      : 'text-black dark:text-white hover:bg-[#00C389]/10 hover:text-[#00C389]'
-                  }`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {label}
-                </Link>
-              </li>
+              <Link
+                key={path}
+                to={path}
+                className={`px-4 py-3 rounded-lg transition-colors text-center ${
+                  isActive(path)
+                    ? 'bg-[#00C389]/10 text-[#00C389]'
+                    : 'text-black dark:text-white hover:bg-[#00C389]/10 hover:text-[#00C389]'
+                }`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {label}
+              </Link>
             ))}
-          </ul>
+          </div>
         </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="lg:hidden absolute top-full left-0 right-0 bg-white dark:bg-dark-bg-primary shadow-lg border-t border-gray-200 dark:border-gray-800"
-          >
-            <div className="container mx-auto px-4 py-4">
-              <nav className="grid grid-cols-2 gap-4">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`text-lg font-medium px-4 py-2 rounded-lg transition-colors duration-200 text-center ${
-                      location.pathname === link.path
-                        ? 'text-[#00C389] dark:text-[#00C389]'
-                        : 'text-gray-600 dark:text-gray-300 hover:text-[#00C389] dark:hover:text-[#00C389]'
-                    }`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-              </nav>
-            </div>
-          </motion.div>
-        )}
       </div>
     </nav>
   );
