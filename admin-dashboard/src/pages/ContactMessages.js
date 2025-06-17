@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { TrashIcon, EnvelopeIcon, UserIcon, ChatBubbleBottomCenterTextIcon, QuestionMarkCircleIcon, CalendarIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
+import DeleteConfirmation from '../components/DeleteConfirmation';
 
 function ContactMessages() {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [messageToDelete, setMessageToDelete] = useState(null);
 
   useEffect(() => {
     fetchMessages();
@@ -31,14 +34,19 @@ function ContactMessages() {
     }
   }
 
-  async function handleDelete(id) {
-    if (!window.confirm('Are you sure you want to delete this message?')) return;
+  const handleDeleteClick = (message) => {
+    setMessageToDelete(message);
+    setDeleteModalOpen(true);
+  };
 
+  const handleDeleteConfirm = async () => {
+    if (!messageToDelete) return;
+    
     try {
       const { error } = await supabase
         .from('ipv6_contact_messages')
         .delete()
-        .eq('id', id);
+        .eq('id', messageToDelete.id);
 
       if (error) throw error;
       toast.success('Message deleted successfully');
@@ -46,8 +54,11 @@ function ContactMessages() {
     } catch (error) {
       console.error('Error deleting message:', error);
       toast.error('Failed to delete message');
+    } finally {
+      setDeleteModalOpen(false);
+      setMessageToDelete(null);
     }
-  }
+  };
 
   if (loading) {
     return (
@@ -96,7 +107,6 @@ function ContactMessages() {
                       </p>
                       <p className="flex items-center">
                         <EnvelopeIcon className="h-4 w-4 mr-1" />
-
                         Email: <a href={`mailto:${message.email}`} className="text-[#00C389] hover:underline">{message.email}</a>
                       </p>
                       <p className="flex items-center">
@@ -107,7 +117,7 @@ function ContactMessages() {
                   </div>
                   <div className="flex justify-end">
                     <button
-                      onClick={() => handleDelete(message.id)}
+                      onClick={() => handleDeleteClick(message)}
                       className="text-red-600 hover:text-red-800 flex items-center"
                     >
                       <TrashIcon className="h-5 w-5 mr-1" />
@@ -120,6 +130,17 @@ function ContactMessages() {
           )}
         </div>
       </div>
+
+      <DeleteConfirmation
+        isOpen={deleteModalOpen}
+        onClose={() => {
+          setDeleteModalOpen(false);
+          setMessageToDelete(null);
+        }}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Message"
+        message={`Are you sure you want to delete the message from "${messageToDelete?.name}"? This action cannot be undone.`}
+      />
     </div>
   );
 }
