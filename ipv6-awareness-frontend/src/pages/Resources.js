@@ -161,17 +161,17 @@ function Resources() {
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    {resource.file_url && (
-                      <a
-                        href={resource.file_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-[#00C389] hover:text-[#00C389]/90 transition-colors"
-                      >
-                        <DocumentIcon className="h-5 w-5" />
-                        <span className="font-medium">Download</span>
-                      </a>
-                    )}
+                  {resource.file_url && (
+                    <a
+                      href={resource.file_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-[#00C389] hover:text-[#00C389]/90 transition-colors"
+                    >
+                      <DocumentIcon className="h-5 w-5" />
+                      <span className="font-medium">Download</span>
+                    </a>
+                  )}
                     {resource.url && (
                       <a
                         href={resource.url}

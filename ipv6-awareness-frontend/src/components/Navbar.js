@@ -3,12 +3,22 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import logo from '../assets/images/logo.jpg';
+import { motion } from 'framer-motion';
+import { FaSun, FaMoon } from 'react-icons/fa';
 
 function Navbar() {
   const { darkMode, toggleDarkMode } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+
+  const navLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+    { name: 'Our Mission', path: '/our-mission' },
+    { name: 'Resources', path: '/resources' },
+    { name: 'Contact', path: '/contact' }
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -111,14 +121,45 @@ function Navbar() {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-[#00C389]/10 transition-colors"
-          >
-            <svg className="w-6 h-6 text-primary dark:text-dark-text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-            </svg>
-          </button>
+          <div className="lg:hidden flex items-center space-x-4">
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-lg bg-gray-100 dark:bg-dark-bg-tertiary hover:bg-gray-200 dark:hover:bg-dark-bg-secondary transition-colors duration-200"
+            >
+              {darkMode ? (
+                <FaSun className="w-5 h-5 text-[#00C389]" />
+              ) : (
+                <FaMoon className="w-5 h-5 text-[#00C389]" />
+              )}
+            </button>
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 rounded-lg bg-gray-100 dark:bg-dark-bg-tertiary hover:bg-gray-200 dark:hover:bg-dark-bg-secondary transition-colors duration-200"
+            >
+              <svg
+                className="w-6 h-6 text-[#00C389]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {isMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -152,6 +193,36 @@ function Navbar() {
             ))}
           </ul>
         </div>
+
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="lg:hidden absolute top-full left-0 right-0 bg-white dark:bg-dark-bg-primary shadow-lg border-t border-gray-200 dark:border-gray-800"
+          >
+            <div className="container mx-auto px-4 py-4">
+              <nav className="grid grid-cols-2 gap-4">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`text-lg font-medium px-4 py-2 rounded-lg transition-colors duration-200 text-center ${
+                      location.pathname === link.path
+                        ? 'text-[#00C389] dark:text-[#00C389]'
+                        : 'text-gray-600 dark:text-gray-300 hover:text-[#00C389] dark:hover:text-[#00C389]'
+                    }`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+          </motion.div>
+        )}
       </div>
     </nav>
   );

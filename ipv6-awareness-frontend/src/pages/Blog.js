@@ -181,7 +181,7 @@ function Blog() {
                     >
                       <DocumentIcon className="h-5 w-5 mr-1" />
                       <span className="text-sm">Download</span>
-                    </button>
+                  </button>
                   )}
                 </div>
               </div>

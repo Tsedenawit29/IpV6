@@ -173,13 +173,13 @@ function BlogPosts() {
 
   const handleDeleteConfirm = async () => {
     if (!postToDelete) return;
-    
+
     try {
       const { error } = await supabase
         .from('ipv6_blog_posts')
         .delete()
         .eq('id', postToDelete.id);
-      
+
       if (error) throw error;
       
       toast.success('Blog post deleted successfully');

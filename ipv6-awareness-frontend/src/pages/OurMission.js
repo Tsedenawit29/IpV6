@@ -76,7 +76,7 @@ function OurMission() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link 
-                to="/get-involved" 
+                to="/GetInvolved" 
                 className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 ease-out transform bg-[#00C389] hover:bg-[#009C6B] rounded-lg hover:scale-105 hover:shadow-lg"
               >
                 <span className="relative flex items-center gap-2">
@@ -207,7 +207,7 @@ function OurMission() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link 
-                to="/get-involved" 
+                to="/GetInvolved" 
                 className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 ease-out transform bg-[#00C389] hover:bg-[#009C6B] rounded-lg hover:scale-105 hover:shadow-lg"
               >
                 <span className="relative flex items-center gap-2">

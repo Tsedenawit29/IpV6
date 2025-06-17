@@ -226,13 +226,13 @@ function Resources() {
 
   const handleDeleteConfirm = async () => {
     if (!resourceToDelete) return;
-    
+
     try {
       const { error } = await supabase
         .from('ipv6_resources')
         .delete()
         .eq('id', resourceToDelete.id);
-      
+
       if (error) throw error;
       
       toast.success('Resource deleted successfully');
