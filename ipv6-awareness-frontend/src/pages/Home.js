@@ -138,7 +138,6 @@ function Home() {
     { value: '45%+', label: 'Global IPv6 Adoption', icon: <FaChartLine className="text-4xl" /> },
     { value: '100+', label: 'Countries Deployed', icon: <FaGlobe className="text-4xl" /> },
     { value: '1B+', label: 'IPv6-Capable Devices', icon: <FaMobileAlt className="text-4xl" /> },
-    { value: '24/7', label: 'Support Available', icon: <FaServer className="text-4xl" /> },
   ];
 
   // Animation variants for framer-motion
@@ -238,7 +237,7 @@ function Home() {
 
           {/* Global Stats - Moved further down with enhanced styling */}
           <motion.div
-            className="mt-12 sm:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 w-full max-w-4xl"
+            className="mt-12 sm:mt-20 grid grid-cols-3 gap-4 sm:gap-8 w-full max-w-4xl"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
