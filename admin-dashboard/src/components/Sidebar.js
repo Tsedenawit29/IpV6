@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import {
   HomeIcon,
   CalendarIcon,
@@ -16,22 +17,43 @@ const navigation = [
   { name: 'Contact Messages', href: '/contact-messages', icon: EnvelopeIcon },
 ];
 
-function Sidebar({ session }) {
+function Sidebar({ session, onClose }) {
   const location = useLocation();
   const userEmail = session?.user?.email || 'admin@example.com';
 
+  const handleLinkClick = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
+
   return (
     <div className="flex flex-col h-full bg-white dark:bg-dark-bg-secondary border-r border-gray-200 dark:border-dark-border">
+      {/* Mobile close button */}
+      <div className="lg:hidden flex justify-end p-4">
+        <button
+          onClick={onClose}
+          className="p-2 rounded-lg text-gray-500 dark:text-dark-text-secondary hover:bg-gray-100 dark:hover:bg-dark-bg-tertiary transition-colors"
+        >
+          <XMarkIcon className="h-6 w-6" />
+        </button>
+      </div>
+
       {/* Logo and Tagline */}
       <div className="flex flex-col items-center justify-center h-24 px-4 border-b border-gray-200 dark:border-dark-border">
-        <img
-          src="/logo.jpg"
-          alt="Logo"
-          className="h-16 w-auto mb-2"
-        />
-        <p className="text-sm font-medium text-primary dark:text-primary-light">
-          Think Fast, Think IPv6
-        </p>
+        <div className="flex items-center space-x-2">
+          <img
+            src="/logo.jpg"
+            alt="Logo"
+            className="h-14 sm:h-16 w-auto"
+          />
+          <div className="flex items-center">
+            <span className="text-sm sm:text-base font-bold text-black dark:text-white">
+              <span className="text-[#00b741]">IPv6</span>{' '}
+              <span className="text-[#c99a06]">ETHIOPIA</span>
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Navigation */}
@@ -42,6 +64,7 @@ function Sidebar({ session }) {
             <Link
               key={item.name}
               to={item.href}
+              onClick={handleLinkClick}
               className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
                 isActive
                   ? 'bg-primary text-white'
@@ -58,16 +81,16 @@ function Sidebar({ session }) {
       {/* User Section */}
       <div className="p-4 border-t border-gray-200 dark:border-dark-border">
         <div className="flex items-center">
-          <img
-            className="h-8 w-8 rounded-full"
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            alt="User Avatar"
-          />
-          <div className="ml-3">
-            <p className="text-sm font-medium text-gray-700 dark:text-dark-text-primary">
+          <div className="h-8 w-8 rounded-full bg-black flex items-center justify-center flex-shrink-0">
+            <span className="text-white font-bold text-sm">
+              {userEmail.charAt(0).toUpperCase()}
+            </span>
+          </div>
+          <div className="ml-3 min-w-0 flex-1">
+            <p className="text-sm font-medium text-gray-700 dark:text-dark-text-primary truncate">
               Admin User
             </p>
-            <p className="text-xs text-gray-500 dark:text-dark-text-secondary">
+            <p className="text-xs text-gray-500 dark:text-dark-text-secondary truncate">
               {userEmail}
             </p>
           </div>

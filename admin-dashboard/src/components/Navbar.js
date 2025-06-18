@@ -36,12 +36,18 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex-shrink-0 flex items-center">
+            <Link to="/" className="flex-shrink-0 flex items-center space-x-2">
               <img
-                className="h-8 w-auto"
+                className="h-6 sm:h-8 w-auto"
                 src="/logo.png"
                 alt="IPv6 Awareness"
               />
+              <div className="flex items-center">
+                <span className="text-sm sm:text-lg font-bold text-black dark:text-white">
+                  <span className="text-[#00b741]">IPv6</span>{' '}
+                  <span className="text-[#c99a06]">ETHIOPIA</span>
+                </span>
+              </div>
             </Link>
           </div>
 

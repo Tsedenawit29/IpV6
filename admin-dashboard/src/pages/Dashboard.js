@@ -13,14 +13,14 @@ import toast from 'react-hot-toast';
 
 function StatCard({ title, value, icon: Icon, color }) {
   return (
-    <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg p-6 border border-gray-200 dark:border-dark-border">
+    <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg p-4 sm:p-6 border border-gray-200 dark:border-dark-border">
       <div className="flex items-center">
-        <div className={`p-3 rounded-lg bg-primary bg-opacity-10`}>
-          <Icon className="h-6 w-6 text-primary" />
+        <div className={`p-2 sm:p-3 rounded-lg bg-primary bg-opacity-10 flex-shrink-0`}>
+          <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
         </div>
-        <div className="ml-4">
-          <p className="text-sm font-medium text-gray-500 dark:text-dark-text-secondary">{title}</p>
-          <p className="text-2xl font-semibold text-gray-900 dark:text-white">{value}</p>
+        <div className="ml-3 sm:ml-4 min-w-0 flex-1">
+          <p className="text-xs sm:text-sm font-medium text-gray-500 dark:text-dark-text-secondary">{title}</p>
+          <p className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white">{value}</p>
         </div>
       </div>
     </div>
@@ -197,10 +197,10 @@ function Dashboard() {
   ];
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center mb-8">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
             Dashboard
           </h1>
           <p className="mt-1 text-sm text-gray-500 dark:text-dark-text-secondary">
@@ -209,7 +209,7 @@ function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {statsData.map((stat) => (
           <StatCard
             key={stat.name}
@@ -221,29 +221,29 @@ function Dashboard() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg p-6 border border-gray-200 dark:border-dark-border">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+        <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg p-4 sm:p-6 border border-gray-200 dark:border-dark-border">
           <h2 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
             Recent Activity
           </h2>
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {recentActivity.length > 0 ? (
               recentActivity.map((activity, index) => (
-                <div key={index} className="flex items-start space-x-4 p-3 hover:bg-gray-50 dark:hover:bg-dark-hover rounded-lg transition-colors">
-                  <div className="p-2 rounded-lg bg-primary bg-opacity-10">
-                    <activity.icon className="h-5 w-5 text-primary" />
+                <div key={index} className="flex items-start space-x-3 sm:space-x-4 p-2 sm:p-3 hover:bg-gray-50 dark:hover:bg-dark-hover rounded-lg transition-colors">
+                  <div className="p-1.5 sm:p-2 rounded-lg bg-primary bg-opacity-10 flex-shrink-0">
+                    <activity.icon className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <div>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                      <div className="flex-1 min-w-0">
                         <span className="text-xs font-medium text-primary mb-1 block">
                           {activity.type}
                         </span>
-                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                        <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
                           {activity.title}
                         </p>
                       </div>
-                      <span className="text-xs text-gray-500 dark:text-dark-text-secondary">
+                      <span className="text-xs text-gray-500 dark:text-dark-text-secondary mt-1 sm:mt-0 sm:ml-2">
                         {new Date(activity.date).toLocaleDateString()}
                       </span>
                     </div>
@@ -251,9 +251,9 @@ function Dashboard() {
                       {activity.description}
                     </p>
                     {activity.type === 'New Event Created' && (
-                      <div className="mt-1 flex items-center text-xs text-gray-500 dark:text-dark-text-secondary">
-                        <span className="mr-2">📍 {activity.location}</span>
-                        <span className={`px-2 py-0.5 rounded-full ${
+                      <div className="mt-1 flex flex-col sm:flex-row sm:items-center text-xs text-gray-500 dark:text-dark-text-secondary">
+                        <span className="mr-0 sm:mr-2 mb-1 sm:mb-0">📍 {activity.location}</span>
+                        <span className={`px-2 py-0.5 rounded-full w-fit ${
                           activity.status === 'upcoming' ? 'bg-green-100 text-green-800' :
                           activity.status === 'ongoing' ? 'bg-blue-100 text-blue-800' :
                           'bg-gray-100 text-gray-800'
@@ -266,13 +266,13 @@ function Dashboard() {
                       <div className="mt-1 text-xs text-gray-500 dark:text-dark-text-secondary">
                         <span>From: {activity.from}</span>
                         <span className="mx-2">•</span>
-                        <span>{activity.email}</span>
+                        <span className="truncate">{activity.email}</span>
                       </div>
                     )}
                     {activity.type === 'New Blog Post' && (
-                      <div className="mt-1 flex items-center text-xs text-gray-500 dark:text-dark-text-secondary">
-                        <span className="mr-2">By: {activity.author}</span>
-                        <span className={`px-2 py-0.5 rounded-full ${
+                      <div className="mt-1 flex flex-col sm:flex-row sm:items-center text-xs text-gray-500 dark:text-dark-text-secondary">
+                        <span className="mr-0 sm:mr-2 mb-1 sm:mb-0">By: {activity.author}</span>
+                        <span className={`px-2 py-0.5 rounded-full w-fit ${
                           activity.status === 'published' ? 'bg-green-100 text-green-800' :
                           activity.status === 'draft' ? 'bg-yellow-100 text-yellow-800' :
                           'bg-gray-100 text-gray-800'
@@ -282,8 +282,8 @@ function Dashboard() {
                       </div>
                     )}
                     {activity.type === 'New Resource Added' && (
-                      <div className="mt-1 flex items-center text-xs text-gray-500 dark:text-dark-text-secondary">
-                        <span className="mr-2">Category: {activity.category}</span>
+                      <div className="mt-1 flex flex-col sm:flex-row sm:items-center text-xs text-gray-500 dark:text-dark-text-secondary">
+                        <span className="mr-0 sm:mr-2 mb-1 sm:mb-0">Category: {activity.category}</span>
                         {activity.url && (
                           <a 
                             href={activity.url} 
@@ -307,32 +307,32 @@ function Dashboard() {
           </div>
         </div>
 
-        <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg p-6 border border-gray-200 dark:border-dark-border">
+        <div className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg p-4 sm:p-6 border border-gray-200 dark:border-dark-border">
           <h2 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
             Quick Actions
           </h2>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <button 
               onClick={() => navigate('/events')}
-              className="p-4 bg-[#00C389] text-white rounded-lg hover:bg-[#009C6B] transition-colors"
+              className="p-3 sm:p-4 bg-[#00C389] text-white rounded-lg hover:bg-[#009C6B] transition-colors text-sm sm:text-base"
             >
               Create Event
             </button>
             <button 
               onClick={() => navigate('/resources')}
-              className="p-4 bg-[#00C389] text-white rounded-lg hover:bg-[#009C6B] transition-colors"
+              className="p-3 sm:p-4 bg-[#00C389] text-white rounded-lg hover:bg-[#009C6B] transition-colors text-sm sm:text-base"
             >
               Add Resource
             </button>
             <button 
               onClick={() => navigate('/blog-posts')}
-              className="p-4 bg-[#00C389] text-white rounded-lg hover:bg-[#009C6B] transition-colors"
+              className="p-3 sm:p-4 bg-[#00C389] text-white rounded-lg hover:bg-[#009C6B] transition-colors text-sm sm:text-base"
             >
               New Blog Post
             </button>
             <button 
               onClick={() => navigate('/contact-messages')}
-              className="p-4 bg-[#00C389] text-white rounded-lg hover:bg-[#009C6B] transition-colors"
+              className="p-3 sm:p-4 bg-[#00C389] text-white rounded-lg hover:bg-[#009C6B] transition-colors text-sm sm:text-base"
             >
               View Messages
             </button>
