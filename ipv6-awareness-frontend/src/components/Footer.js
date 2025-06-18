@@ -56,7 +56,7 @@ function Footer() {
               </div>
             </div>
             <p className="text-lg text-black dark:text-dark-text-secondary mb-8">
-            Promoting IPv6 adoption and education in Ethiopia through comprehensive resources, training.
+            Promoting IPv6 adoption and education in Ethiopia through comprehensive resources, training, and community engagement.
             </p>
             <div className="flex space-x-6">
               {socialLinks.map((social) => (
