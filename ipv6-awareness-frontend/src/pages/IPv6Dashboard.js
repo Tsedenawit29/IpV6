@@ -35,7 +35,7 @@ function IPv6Dashboard() {
       {/* Hero Section */}
       <section
         className="relative w-full flex items-center justify-center px-4 overflow-hidden bg-black dark:bg-black"
-        style={{ minHeight: '60vh', paddingTop: '4rem', paddingBottom: '2rem' }}
+        style={{ minHeight: '50vh', paddingTop: '6rem', paddingBottom: '2rem' }}
       >
         {/* Background image */}
         <img
@@ -46,10 +46,10 @@ function IPv6Dashboard() {
 
         {/* Hero content */}
         <div className="relative z-10 max-w-5xl mx-auto text-center">
-          <h1 className="text-5xl font-extrabold mb-4 text-white">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-white">
             Explore the <span className="text-[#00C389]">IPv6 Dashboard</span>
           </h1>
-          <p className="text-lg md:text-xl max-w-2xl mx-auto text-gray-300">
+          <p className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto text-gray-300 px-4">
             Dive into real-time statistics and adoption trends of IPv6 with curated insights from trusted sources like Google and Cisco.
           </p>
         </div>
@@ -81,30 +81,30 @@ function IPv6Dashboard() {
       </section>
 
       {/* Static Highlights */}
-      <section className="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-3 gap-8">
+      <section className="max-w-6xl mx-auto px-4 py-8 sm:py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
         {stats.map((stat) => (
           <div
             key={stat.title}
-            className="bg-white dark:bg-dark-bg-secondary p-6 rounded-xl shadow-md hover:shadow-lg transition"
+            className="bg-white dark:bg-dark-bg-secondary p-4 sm:p-6 rounded-xl shadow-md hover:shadow-lg transition"
           >
-            <div className="flex items-center space-x-4 mb-4">
-              <stat.icon className="h-8 w-8 text-[#00C389]" />
-              <h3 className="text-xl font-semibold">{stat.title}</h3>
+            <div className="flex items-center space-x-3 sm:space-x-4 mb-3 sm:mb-4">
+              <stat.icon className="h-6 w-6 sm:h-8 sm:w-8 text-[#00C389]" />
+              <h3 className="text-lg sm:text-xl font-semibold">{stat.title}</h3>
             </div>
-            <p className="text-2xl font-bold text-[#00C389]">{stat.value}</p>
-            <p className="text-sm text-gray-600 dark:text-gray-400">{stat.description}</p>
+            <p className="text-xl sm:text-2xl font-bold text-[#00C389]">{stat.value}</p>
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{stat.description}</p>
           </div>
         ))}
       </section>
 
       {/* Tabs */}
-      <section className="max-w-6xl mx-auto px-4 py-12">
-        <div className="flex justify-center gap-4 mb-6">
+      <section className="max-w-6xl mx-auto px-4 py-8 sm:py-12">
+        <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 mb-6">
           {Object.keys(iframeSources).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-5 py-2 rounded-full font-medium transition border ${
+              className={`px-3 sm:px-5 py-2 rounded-full font-medium transition border text-sm sm:text-base ${
                 activeTab === tab
                   ? 'bg-[#00C389] text-white border-[#00C389]'
                   : 'bg-gray-100 text-black hover:bg-[#00C389] hover:text-white border-gray-300 dark:bg-gray-700 dark:text-white'
@@ -115,12 +115,12 @@ function IPv6Dashboard() {
           ))}
         </div>
 
-        <div className="bg-gray-100 dark:bg-dark-bg-tertiary p-4 rounded-xl shadow-lg">
+        <div className="bg-gray-100 dark:bg-dark-bg-tertiary p-2 sm:p-4 rounded-xl shadow-lg">
           <div className="aspect-w-16 aspect-h-9">
             <iframe
               src={iframeSources[activeTab]}
               title={`${activeTab} IPv6 Stats`}
-              className="w-full h-[80vh] border-0 rounded-lg dark:invert"
+              className="w-full h-[60vh] sm:h-[70vh] md:h-[80vh] border-0 rounded-lg dark:invert"
               loading="lazy"
             ></iframe>
           </div>
@@ -128,28 +128,30 @@ function IPv6Dashboard() {
       </section>
 
       {/* Footer CTA Section */}
-      <section className="bg-gray-100 dark:bg-gray-900 py-16 px-4">
+      <section className="bg-gray-100 dark:bg-gray-900 py-12 sm:py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to enable the future?</h2>
-          <p className="text-gray-700 dark:text-gray-300 mb-6">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">Ready to enable the future?</h2>
+          <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 mb-6 px-4">
             IPv6 is not just the future of the internet — it's the present. Explore resources, best practices, and global statistics to better understand your network's IPv6 readiness.
           </p>
-          <a
-            href="https://www.internetsociety.org/deploy360/ipv6/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-[#00C389] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#00C389]/90 transition"
-          >
-            Learn More About IPv6
-          </a>{' '}
-          <a
-            href="https://test-ipv6.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block ml-4 bg-[#00C389] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#00C389]/90 transition"
-          >
-            Test Your IPv6
-          </a>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+            <a
+              href="https://www.internetsociety.org/deploy360/ipv6/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-[#00C389] text-white font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-[#00C389]/90 transition text-sm sm:text-base"
+            >
+              Learn More About IPv6
+            </a>
+            <a
+              href="https://test-ipv6.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-[#00C389] text-white font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-[#00C389]/90 transition text-sm sm:text-base"
+            >
+              Test Your IPv6
+            </a>
+          </div>
         </div>
       </section>
 

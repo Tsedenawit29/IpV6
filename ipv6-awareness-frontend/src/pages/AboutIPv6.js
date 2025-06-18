@@ -47,6 +47,16 @@ const AbstractShape = ({ type, color, size, position, rotation }) => {
 function AboutIPv6() {
   const [currentSection, setCurrentSection] = useState(0);
 
+  const scrollToFeatures = () => {
+    const featuresSection = document.getElementById('features');
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   const sections = [
     {
       id: 'overview',
@@ -200,45 +210,45 @@ function AboutIPv6() {
           />
         </div>
 
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
               <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="space-y-8"
+                className="space-y-6 sm:space-y-8"
               >
                 <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="inline-flex items-center px-4 py-2 rounded-full bg-[#00C389]/10 text-[#00C389] text-sm font-medium dark:bg-gray-800 dark:text-[#00C389]"
+                className="inline-flex items-center px-3 sm:px-4 py-2 rounded-full bg-[#00C389]/10 text-[#00C389] text-sm font-medium dark:bg-gray-800 dark:text-[#00C389]"
               >
                 <FaRocket className="mr-2" /> The Future of Networking
                 </motion.div>
                 
-              <h1 className="text-5xl md:text-6xl font-bold leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                 <span className="text-[#1A1E26] dark:text-white">Understanding </span>
                 <span className="text-[#00C389]">IPv6</span>
               </h1>
 
-              <p className="text-xl text-gray-600 leading-relaxed max-w-2xl dark:text-gray-300">
+              <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-2xl dark:text-gray-300">
                 The next-generation Internet Protocol designed to overcome IPv4 limitations and enable secure, scalable global connectivity for decades to come.
               </p>
 
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                 <Link 
                   to="/IPv6Dashboard" 
-                  className="px-6 py-3 bg-[#00C389] text-white rounded-lg font-medium hover:bg-[#00C389]/90 transition duration-300 flex items-center shadow-md"
+                  className="px-4 sm:px-6 py-3 bg-[#00C389] text-white rounded-lg font-medium hover:bg-[#00C389]/90 transition duration-300 flex items-center justify-center shadow-md"
                 >
                   Explore Dashboard <FaArrowRight className="ml-2" />
                 </Link>
-                <Link 
-                  to="#features" 
-                  className="px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition duration-300 shadow-md dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700"
+                <button 
+                  onClick={scrollToFeatures}
+                  className="px-4 sm:px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition duration-300 shadow-md dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 flex items-center justify-center"
                 >
                   Learn More
-                </Link>
+                </button>
                 </div>
               </motion.div>
 
@@ -248,35 +258,35 @@ function AboutIPv6() {
               transition={{ delay: 0.2, duration: 0.8 }}
               className="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden dark:bg-gray-800 dark:border-gray-700"
             >
-              <div className="p-8 bg-[#1A1E26] text-white dark:bg-gray-700">
-                <h3 className="text-2xl font-semibold mb-2">IPv6 by the Numbers</h3>
-                <p className="text-gray-300 mb-6">Key metrics that define IPv6 capabilities</p>
+              <div className="p-4 sm:p-8 bg-[#1A1E26] text-white dark:bg-gray-700">
+                <h3 className="text-xl sm:text-2xl font-semibold mb-2">IPv6 by the Numbers</h3>
+                <p className="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">Key metrics that define IPv6 capabilities</p>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                   {stats.map((stat, index) => (
                         <motion.div
                           key={index}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4 + index * 0.1 }}
-                      className="bg-[#00C389]/10 p-4 rounded-lg dark:bg-gray-600/20"
+                      className="bg-[#00C389]/10 p-3 sm:p-4 rounded-lg dark:bg-gray-600/20"
                     >
                       <div className="flex items-center mb-2">
                         <div className="p-2 rounded-full bg-[#00C389]/20 mr-3 dark:bg-gray-700">
                           {stat.icon}
                             </div>
-                        <span className="text-3xl font-bold">{stat.value}</span>
+                        <span className="text-2xl sm:text-3xl font-bold">{stat.value}</span>
                             </div>
-                      <p className="text-sm text-gray-300">{stat.label}</p>
+                      <p className="text-xs sm:text-sm text-gray-300">{stat.label}</p>
                         </motion.div>
                       ))}
                     </div>
               </div>
               
-              <div className="p-8 dark:bg-gray-800">
-                <h4 className="font-medium text-gray-700 mb-4 dark:text-gray-300">IPv6 Address Example:</h4>
-                <div className="bg-gray-50 p-4 rounded-lg dark:bg-gray-900">
-                  <code className="font-mono text-gray-800 dark:text-gray-200">
+              <div className="p-4 sm:p-8 dark:bg-gray-800">
+                <h4 className="font-medium text-gray-700 mb-3 sm:mb-4 dark:text-gray-300 text-sm sm:text-base">IPv6 Address Example:</h4>
+                <div className="bg-gray-50 p-3 sm:p-4 rounded-lg dark:bg-gray-900">
+                  <code className="font-mono text-gray-800 dark:text-gray-200 text-xs sm:text-sm break-all">
                     2001:0db8:85a3:0000:0000:8a2e:0370:7334
                   </code>
                   </div>
@@ -287,24 +297,24 @@ function AboutIPv6() {
       </section>
 
       {/* Key Features Section */}
-      <section id="features" className="py-24 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4 dark:text-white">
+      <section id="features" className="py-16 sm:py-24 bg-gray-50 dark:bg-gray-900">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 dark:text-white">
               IPv6 <span className="text-[#00C389]">Key Features</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto dark:text-gray-300">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto dark:text-gray-300">
               Designed for the modern internet with security, scalability, and performance at its core
             </p>
           </div>
 
-          <div className="flex justify-center mb-12">
-            <div className="inline-flex bg-gray-100 rounded-lg p-1 dark:bg-gray-800">
+          <div className="flex justify-center mb-8 sm:mb-12">
+            <div className="inline-flex flex-col sm:flex-row bg-gray-100 rounded-lg p-1 dark:bg-gray-800">
               {sections.map((section, index) => (
                 <button
                   key={section.id}
                   onClick={() => setCurrentSection(index)}
-                  className={`px-6 py-3 rounded-md font-medium transition-all ${currentSection === index ? 'bg-white text-[#00C389] shadow-sm dark:bg-gray-700 dark:text-white' : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'}`}
+                  className={`px-4 sm:px-6 py-2 sm:py-3 rounded-md font-medium transition-all text-sm sm:text-base ${currentSection === index ? 'bg-white text-[#00C389] shadow-sm dark:bg-gray-700 dark:text-white' : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'}`}
                 >
                   {section.title}
                 </button>
@@ -319,7 +329,7 @@ function AboutIPv6() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+              className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8"
             >
               {sections[currentSection].features.map((feature, index) => (
                 <motion.div
@@ -330,18 +340,18 @@ function AboutIPv6() {
                   transition={{ delay: index * 0.1 }}
                   className="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden dark:bg-gray-800 dark:border-gray-700"
                 >
-                  <div className="p-8">
-                    <h3 className="text-2xl font-semibold text-gray-900 mb-3 dark:text-white">
+                  <div className="p-6 sm:p-8">
+                    <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-3 dark:text-white">
                       {feature.title}
                             </h3>
-                    <p className="text-gray-600 mb-6 dark:text-gray-300">
+                    <p className="text-gray-600 mb-4 sm:mb-6 dark:text-gray-300 text-sm sm:text-base">
                       {feature.description}
                             </p>
-                            <ul className="space-y-3">
+                            <ul className="space-y-2 sm:space-y-3">
                       {feature.highlights.map((highlight, hIndex) => (
                         <li key={hIndex} className="flex items-start">
                           <FaCheckCircle className="text-[#00C389] mt-1 mr-3 flex-shrink-0" />
-                          <span className="text-gray-700 dark:text-gray-300">{highlight}</span>
+                          <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">{highlight}</span>
                                 </li>
                               ))}
                             </ul>
@@ -354,13 +364,13 @@ function AboutIPv6() {
       </section>
 
       {/* Technical Comparison Section */}
-      <section className="py-24 bg-white dark:bg-gray-900">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4 dark:text-white">
+      <section className="py-16 sm:py-24 bg-white dark:bg-gray-900">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 dark:text-white">
               IPv4 vs <span className="text-[#00C389]">IPv6</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto dark:text-gray-300">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto dark:text-gray-300">
               Key technical differences between the protocols
             </p>
           </div>
@@ -370,36 +380,36 @@ function AboutIPv6() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200 dark:border-gray-700">
-                    <th className="px-6 py-4 text-left font-medium text-gray-700 dark:text-gray-300">Feature</th>
-                    <th className="px-6 py-4 text-left font-medium text-gray-700 dark:text-gray-300">IPv4</th>
-                    <th className="px-6 py-4 text-left font-medium text-[#00C389]">IPv6</th>
+                    <th className="px-3 sm:px-6 py-3 sm:py-4 text-left font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Feature</th>
+                    <th className="px-3 sm:px-6 py-3 sm:py-4 text-left font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">IPv4</th>
+                    <th className="px-3 sm:px-6 py-3 sm:py-4 text-left font-medium text-[#00C389] text-sm sm:text-base">IPv6</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
                   <tr>
-                    <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">Address Length</td>
-                    <td className="px-6 py-4 text-gray-600 dark:text-gray-300">32 bits</td>
-                    <td className="px-6 py-4 text-gray-600 dark:text-gray-300">128 bits</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 font-medium text-gray-900 dark:text-white text-sm sm:text-base">Address Length</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-gray-600 dark:text-gray-300 text-sm sm:text-base">32 bits</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-gray-600 dark:text-gray-300 text-sm sm:text-base">128 bits</td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">Address Space</td>
-                    <td className="px-6 py-4 text-gray-600 dark:text-gray-300">4.3 billion</td>
-                    <td className="px-6 py-4 text-gray-600 dark:text-gray-300">340 undecillion</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 font-medium text-gray-900 dark:text-white text-sm sm:text-base">Address Space</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-gray-600 dark:text-gray-300 text-sm sm:text-base">4.3 billion</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-gray-600 dark:text-gray-300 text-sm sm:text-base">340 undecillion</td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">Header Size</td>
-                    <td className="px-6 py-4 text-gray-600 dark:text-gray-300">Variable (20-60 bytes)</td>
-                    <td className="px-6 py-4 text-gray-600 dark:text-gray-300">Fixed (40 bytes)</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 font-medium text-gray-900 dark:text-white text-sm sm:text-base">Header Size</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-gray-600 dark:text-gray-300 text-sm sm:text-base">Variable (20-60 bytes)</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-gray-600 dark:text-gray-300 text-sm sm:text-base">Fixed (40 bytes)</td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">Security</td>
-                    <td className="px-6 py-4 text-gray-600 dark:text-gray-300">Optional (IPsec)</td>
-                    <td className="px-6 py-4 text-gray-600 dark:text-gray-300">Mandatory (IPsec)</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 font-medium text-gray-900 dark:text-white text-sm sm:text-base">Security</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-gray-600 dark:text-gray-300 text-sm sm:text-base">Optional (IPsec)</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-gray-600 dark:text-gray-300 text-sm sm:text-base">Mandatory (IPsec)</td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">Configuration</td>
-                    <td className="px-6 py-4 text-gray-600 dark:text-gray-300">Manual or DHCP</td>
-                    <td className="px-6 py-4 text-gray-600 dark:text-gray-300">Auto-configuration</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 font-medium text-gray-900 dark:text-white text-sm sm:text-base">Configuration</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-gray-600 dark:text-gray-300 text-sm sm:text-base">Manual or DHCP</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-gray-600 dark:text-gray-300 text-sm sm:text-base">Auto-configuration</td>
                   </tr>
                 </tbody>
               </table>
@@ -409,18 +419,18 @@ function AboutIPv6() {
       </section>
 
       {/* Technical Deep Dive Section */}
-      <section className="py-24 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4 dark:text-white">
+      <section className="py-16 sm:py-24 bg-gray-50 dark:bg-gray-900">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 dark:text-white">
               Technical <span className="text-[#00C389]">Details</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto dark:text-gray-300">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto dark:text-gray-300">
               In-depth look at IPv6 architecture and implementation
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
             {technicalDetails.map((detail, index) => (
               <motion.div
                 key={index}
@@ -428,19 +438,19 @@ function AboutIPv6() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white p-8 rounded-xl shadow-md border border-gray-100 dark:bg-gray-800 dark:border-gray-700"
+                className="bg-white p-6 sm:p-8 rounded-xl shadow-md border border-gray-100 dark:bg-gray-800 dark:border-gray-700"
               >
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 dark:text-white">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 dark:text-white">
                   {detail.title}
                 </h3>
-                <p className="text-gray-600 mb-4 dark:text-gray-300">
+                <p className="text-gray-600 mb-4 dark:text-gray-300 text-sm sm:text-base">
                   {detail.description}
                 </p>
                 <ul className="space-y-2">
                   {detail.items.map((item, i) => (
                     <li key={i} className="flex items-start">
                       <span className="inline-block w-2 h-2 rounded-full bg-[#00C389] mt-2 mr-2 flex-shrink-0 dark:bg-gray-500"></span>
-                      <span className="text-gray-700 dark:text-gray-300">{item}</span>
+                      <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -451,21 +461,21 @@ function AboutIPv6() {
       </section>
 
       {/* Adoption Timeline Section */}
-      <section className="py-24 bg-white dark:bg-gray-900">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4 dark:text-white">
+      <section className="py-16 sm:py-24 bg-white dark:bg-gray-900">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 dark:text-white">
               IPv6 <span className="text-[#00C389]">Adoption Timeline</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto dark:text-gray-300">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto dark:text-gray-300">
               Key milestones in the evolution and deployment of IPv6
             </p>
           </div>
 
           <div className="relative max-w-4xl mx-auto">
-            <div className="absolute left-1/2 h-full w-0.5 bg-gray-200 dark:bg-gray-700 transform -translate-x-1/2"></div>
+            <div className="absolute left-1/2 h-full w-0.5 bg-gray-200 dark:bg-gray-700 transform -translate-x-1/2 hidden md:block"></div>
             
-            <div className="space-y-12">
+            <div className="space-y-8 sm:space-y-12">
               {milestones.map((milestone, index) => (
                 <motion.div
                   key={index}
@@ -473,20 +483,20 @@ function AboutIPv6() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ delay: index * 0.1 }}
-                  className="relative pl-16"
+                  className="relative pl-12 sm:pl-16"
                 >
-                  <div className="absolute left-1/2 -ml-8 top-0 w-16 h-16 rounded-full bg-[#00C389]/10 flex items-center justify-center text-[#00C389] dark:bg-gray-700 dark:text-white">
+                  <div className="absolute left-0 sm:left-1/2 sm:-ml-8 top-0 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-[#00C389]/10 flex items-center justify-center text-[#00C389] dark:bg-gray-700 dark:text-white">
                     {milestone.icon}
                   </div>
-                  <div className={`ml-8 ${index % 2 === 0 ? 'text-left' : 'text-right'} md:${index % 2 === 0 ? 'md:ml-0 md:mr-[calc(50%+40px)]' : 'md:ml-[calc(50%+40px)] md:mr-0'}`}>
-                    <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 dark:bg-gray-800 dark:border-gray-700">
+                  <div className="ml-0 sm:ml-8 text-left">
+                    <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100 dark:bg-gray-800 dark:border-gray-700">
                       <div className="text-sm font-medium text-[#00C389] mb-1">
                         {milestone.year}
                       </div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2 dark:text-white">
+                      <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 dark:text-white">
                         {milestone.title}
                       </h3>
-                      <p className="text-gray-600 dark:text-gray-300">
+                      <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
                         {milestone.description}
                       </p>
                     </div>

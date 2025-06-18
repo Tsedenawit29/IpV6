@@ -64,7 +64,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen pt-20">
       {/* Hero Section */}
-      <section className="relative min-h-[30vh] flex items-center justify-center bg-white dark:bg-dark-bg-primary overflow-hidden">
+      <section className="relative min-h-[25vh] sm:min-h-[30vh] flex items-center justify-center bg-white dark:bg-dark-bg-primary overflow-hidden">
         {/* Background gradients and bulbs */}
         <div className="absolute inset-0 z-0">
           <div className="absolute -top-16 -left-16 w-64 h-64 bg-accent/20 rounded-full blur-[80px]"></div>
@@ -79,10 +79,10 @@ const Contact = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-2 text-black dark:text-white">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 text-black dark:text-white">
               Contact <span className="text-[#00C389]">Us</span>
             </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-300">
+            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
               We'd love to hear from you. Reach out with any questions.
             </p>
           </motion.div>
@@ -90,9 +90,9 @@ const Contact = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="py-16 bg-gray-50 dark:bg-dark-bg-primary">
+      <section className="py-12 sm:py-16 bg-gray-50 dark:bg-dark-bg-primary">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Contact Info */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -101,58 +101,58 @@ const Contact = () => {
               className="space-y-6"
             >
               <div>
-                <h2 className="text-2xl font-bold text-black dark:text-white mb-2">
+                <h2 className="text-xl sm:text-2xl font-bold text-black dark:text-white mb-2">
                   Get in <span className="text-[#00C389]">Touch</span>
                 </h2>
-                <p className="text-gray-600 dark:text-gray-300">
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
                   Whether you're curious about features or want support—we're ready to answer any and all questions.
                 </p>
               </div>
 
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-[#00C389]/10 flex items-center justify-center">
-                    <FaEnvelope className="text-xl text-[#00C389]" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#00C389]/10 flex items-center justify-center flex-shrink-0">
+                    <FaEnvelope className="text-lg sm:text-xl text-[#00C389]" />
                   </div>
                   <div>
-                    <h3 className="text-base font-semibold text-black dark:text-white mb-0.5">Email</h3>
-                    <p className="text-gray-600 dark:text-gray-300">contact@rasbyte.com</p>
+                    <h3 className="text-sm sm:text-base font-semibold text-black dark:text-white mb-0.5">Email</h3>
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">contact@rasbyte.com</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-[#00C389]/10 flex items-center justify-center">
-                    <FaPhone className="text-xl text-[#00C389]" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#00C389]/10 flex items-center justify-center flex-shrink-0">
+                    <FaPhone className="text-lg sm:text-xl text-[#00C389]" />
                   </div>
                   <div>
-                    <h3 className="text-base font-semibold text-black dark:text-white mb-0.5">Phone</h3>
-                    <p className="text-gray-600 dark:text-gray-300">+1 (571) 388-9886</p>
+                    <h3 className="text-sm sm:text-base font-semibold text-black dark:text-white mb-0.5">Phone</h3>
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">+1 (571) 388-9886</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-[#00C389]/10 flex items-center justify-center">
-                    <FaMapMarkerAlt className="text-xl text-[#00C389]" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#00C389]/10 flex items-center justify-center flex-shrink-0">
+                    <FaMapMarkerAlt className="text-lg sm:text-xl text-[#00C389]" />
                   </div>
                   <div>
-                    <h3 className="text-base font-semibold text-black dark:text-white mb-0.5">Location</h3>
-                    <p className="text-gray-600 dark:text-gray-300">16708 Richmond Hwy,
+                    <h3 className="text-sm sm:text-base font-semibold text-black dark:text-white mb-0.5">Location</h3>
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">16708 Richmond Hwy,
                     Suite 111 Dumfries, VA 22026</p>
                   </div>
                 </div>
               </div>
 
               <div className="pt-4">
-                <h3 className="text-base font-semibold text-black dark:text-white mb-3">Follow Us</h3>
+                <h3 className="text-sm sm:text-base font-semibold text-black dark:text-white mb-3">Follow Us</h3>
                 <div className="flex gap-3">
-                  <a href="#" className="w-9 h-9 rounded-lg bg-[#00C389]/10 flex items-center justify-center text-[#00C389] hover:bg-[#00C389] hover:text-white transition">
-                    <FaLinkedin className="text-lg" />
+                  <a href="#" className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#00C389]/10 flex items-center justify-center text-[#00C389] hover:bg-[#00C389] hover:text-white transition">
+                    <FaLinkedin className="text-base sm:text-lg" />
                   </a>
-                  <a href="#" className="w-9 h-9 rounded-lg bg-[#00C389]/10 flex items-center justify-center text-[#00C389] hover:bg-[#00C389] hover:text-white transition">
-                    <FaTwitter className="text-lg" />
+                  <a href="#" className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#00C389]/10 flex items-center justify-center text-[#00C389] hover:bg-[#00C389] hover:text-white transition">
+                    <FaTwitter className="text-base sm:text-lg" />
                   </a>
-                  <a href="#" className="w-9 h-9 rounded-lg bg-[#00C389]/10 flex items-center justify-center text-[#00C389] hover:bg-[#00C389] hover:text-white transition">
-                    <FaGithub className="text-lg" />
+                  <a href="#" className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#00C389]/10 flex items-center justify-center text-[#00C389] hover:bg-[#00C389] hover:text-white transition">
+                    <FaGithub className="text-base sm:text-lg" />
                   </a>
                 </div>
               </div>
@@ -163,7 +163,7 @@ const Contact = () => {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="bg-gradient-to-br from-white to-gray-50 dark:from-dark-bg-secondary dark:to-dark-bg-tertiary rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-gradient-to-br from-white to-gray-50 dark:from-dark-bg-secondary dark:to-dark-bg-tertiary rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300"
             >
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -176,7 +176,7 @@ const Contact = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-tertiary text-black dark:text-white focus:ring-2 focus:ring-[#00C389] focus:outline-none"
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-tertiary text-black dark:text-white focus:ring-2 focus:ring-[#00C389] focus:outline-none text-sm sm:text-base"
                     required
                   />
                 </div>
@@ -191,7 +191,7 @@ const Contact = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-tertiary text-black dark:text-white focus:ring-2 focus:ring-[#00C389] focus:outline-none"
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-tertiary text-black dark:text-white focus:ring-2 focus:ring-[#00C389] focus:outline-none text-sm sm:text-base"
                     required
                   />
                 </div>
@@ -206,7 +206,7 @@ const Contact = () => {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-tertiary text-black dark:text-white focus:ring-2 focus:ring-[#00C389] focus:outline-none"
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-tertiary text-black dark:text-white focus:ring-2 focus:ring-[#00C389] focus:outline-none text-sm sm:text-base"
                     required
                   />
                 </div>
@@ -220,30 +220,27 @@ const Contact = () => {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    rows="3"
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-tertiary text-black dark:text-white focus:ring-2 focus:ring-[#00C389] focus:outline-none"
+                    rows="4"
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-tertiary text-black dark:text-white focus:ring-2 focus:ring-[#00C389] focus:outline-none resize-none text-sm sm:text-base"
                     required
-                  ></textarea>
+                  />
                 </div>
 
                 <button
                   type="submit"
-
                   disabled={loading}
-                  className="group relative inline-flex items-center justify-center w-full px-6 py-3 font-bold text-white transition-all duration-300 ease-out transform bg-[#00C389] hover:bg-[#009C6B] rounded-lg hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2 sm:py-3 bg-[#00C389] text-white rounded-lg hover:bg-[#00C389]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base font-medium"
                 >
                   {loading ? (
-                    <div className="flex items-center gap-2">
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                       Sending...
-                    </div>
+                    </>
                   ) : (
-                    <span className="flex items-center justify-center gap-2">
-                      Send Message
-                      <FaArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                    </span>
+                    <>
+                      Send Message <FaArrowRight className="text-sm sm:text-base" />
+                    </>
                   )}
-
                 </button>
               </form>
             </motion.div>

@@ -197,9 +197,9 @@ function Home() {
         ))}
 
         {/* Hero content */}
-        <div className="relative z-10 flex flex-col justify-center items-center text-center h-full px-6 max-w-4xl mx-auto">
+        <div className="relative z-10 flex flex-col justify-center items-center text-center h-full px-4 sm:px-6 max-w-4xl mx-auto">
                 <motion.h1 
-            className="text-6xl font-extrabold text-white drop-shadow-lg mt-48"
+            className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white drop-shadow-lg mt-20 sm:mt-32"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -207,15 +207,15 @@ function Home() {
             Think Fast. <span className="text-[#00C389]">Think IPv6.</span>
                 </motion.h1>
                 <motion.p 
-            className="mt-6 text-xl max-w-xl text-white"
+            className="mt-4 sm:mt-6 text-base sm:text-lg md:text-xl max-w-4xl text-white leading-relaxed px-2 sm:px-0"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            Join the global movement to future-proof the internet
+            IPv6 Ethiopia is an initiative aimed at raising awareness about IPv6, its importance, and its adoption across the country. As the foundation of the future internet, IPv6 ensures scalability, security, and connectivity for the next generation of digital services and innovation.
                 </motion.p>
             <motion.div 
-              className="mt-10 flex gap-6"
+              className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-6"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
@@ -224,13 +224,13 @@ function Home() {
                 href="https://test-ipv6.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-primary"
+                className="btn btn-primary text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3"
               >
                 Test Your IPv6
               </a>
               <Link
                 to="/AboutIPv6"
-                className="btn btn-outline"
+                className="btn btn-outline text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3"
               >
                 Learn More
               </Link>
@@ -238,7 +238,7 @@ function Home() {
 
           {/* Global Stats - Moved further down with enhanced styling */}
           <motion.div
-            className="mt-32 grid grid-cols-2 md:grid-cols-4 gap-8 w-full max-w-4xl"
+            className="mt-12 sm:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 w-full max-w-4xl"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
@@ -246,14 +246,14 @@ function Home() {
             {globalStats.map((stat, index) => (
               <motion.div
                 key={index}
-                className="text-center bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:bg-black/40 transition-all duration-300"
+                className="text-center bg-black/30 backdrop-blur-sm rounded-xl p-3 sm:p-6 border border-white/10 hover:bg-black/40 transition-all duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 + index * 0.1 }}
               >
-                <div className="text-[#00C389] mb-3">{stat.icon}</div>
-                <div className="text-4xl font-bold text-white mb-2">{stat.value}</div>
-                <div className="text-sm text-gray-300 font-medium">{stat.label}</div>
+                <div className="text-[#00C389] mb-2 sm:mb-3 text-2xl sm:text-4xl">{stat.icon}</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1 sm:mb-2">{stat.value}</div>
+                <div className="text-xs sm:text-sm text-gray-300 font-medium">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>

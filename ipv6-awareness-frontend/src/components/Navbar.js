@@ -38,21 +38,18 @@ function Navbar() {
     }`}>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20">
-          <Link to="/" className="flex items-center space-x-3 group">
+          <Link to="/" className="flex items-center space-x-2 group">
           <img 
   src={logo} 
   alt="IPv6 Logo" 
-  className="h-[80px] w-auto object-contain transform group-hover:scale-110 transition-transform duration-300"
+  className="h-[90px] w-auto object-contain transform group-hover:scale-110 transition-transform duration-300 -mt-2"
 />
-
-            {/* <div className="flex flex-col">
-              <span className="text-xl font-bold text-primary dark:text-dark-text-primary group-hover:text-[#228B22] transition-colors">
-                IPv6
+            <div className="flex items-center">
+              <span className="text-xl font-bold text-black dark:text-white transition-colors">
+                <span className="text-[#00b741]">IPv6</span>{' '}
+                <span className="text-[#c99a06]">ETHIOPIA</span>
               </span>
-              <span className="text-sm text-primary/80 dark:text-dark-text-secondary group-hover:text-[#228B22] transition-colors">
-                Awareness
-              </span>
-            </div> */}
+            </div>
           </Link>
 
           {/* Desktop Nav */}

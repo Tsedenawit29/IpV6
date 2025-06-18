@@ -86,7 +86,7 @@ function Events() {
   return (
     <div className="min-h-screen bg-white dark:bg-black pt-20">
       {/* Hero Section */}
-      <div className="relative bg-black py-16 md:py-20 overflow-hidden">
+      <div className="relative bg-black py-12 sm:py-16 md:py-20 overflow-hidden">
         {/* NEW background image suited for conferences */}
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1531058020387-3be344556be6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80')] bg-cover bg-center opacity-60"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 to-black/70"></div>
@@ -97,10 +97,10 @@ function Events() {
             transition={{ duration: 0.6 }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-white">
               IPv6 <span className="text-[#00C389]">Events</span>
             </h1>
-            <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-gray-300 mb-6 sm:mb-8 max-w-2xl mx-auto">
               Discover networking events and learning opportunities about IPv6 technology.
             </p>
             <div className="flex flex-wrap justify-center gap-2">
@@ -110,14 +110,14 @@ function Events() {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setActiveCategory(category.id)}
-                  className={`flex items-center px-4 py-2 rounded-lg transition-all ${
+                  className={`flex items-center px-3 sm:px-4 py-2 rounded-lg transition-all text-sm sm:text-base ${
                     activeCategory === category.id
                       ? 'bg-[#00C389] text-black font-medium shadow-sm'
                       : 'bg-white/10 text-white border border-white/20 hover:border-[#00C389]'
                   }`}
                 >
                   <category.icon
-                    className={`h-5 w-5 mr-2 ${
+                    className={`h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2 ${
                       activeCategory === category.id ? 'text-black' : 'text-[#00C389]'
                     }`}
                   />
@@ -130,18 +130,18 @@ function Events() {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
+      <div className="container mx-auto px-4 py-8 sm:py-12">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-2 sm:gap-0">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
             {eventCategories.find((c) => c.id === activeCategory)?.name}
           </h2>
-          <span className="text-sm px-3 py-1 bg-[#00C389]/10 text-[#00C389] rounded-full">
+          <span className="text-xs sm:text-sm px-2 sm:px-3 py-1 bg-[#00C389]/10 text-[#00C389] rounded-full">
             {filteredEvents.length} {filteredEvents.length === 1 ? 'event' : 'events'}
           </span>
         </div>
 
         {filteredEvents.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredEvents.map((event, index) => (
               <EventCard key={event.id} event={event} index={index} />
             ))}
@@ -167,7 +167,7 @@ const EventCard = ({ event, index }) => (
   >
       <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm dark:shadow-none border border-gray-100 dark:border-gray-800 h-full flex flex-col overflow-hidden hover:shadow-md transition-all duration-300">
         {event.image_url && (
-          <div className="relative h-48 w-full overflow-hidden">
+          <div className="relative h-40 sm:h-48 w-full overflow-hidden">
             <img
               src={event.image_url}
               alt={event.title}
@@ -177,19 +177,19 @@ const EventCard = ({ event, index }) => (
           </div>
         )}
 
-        <div className="p-5 flex-grow">
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-[#00C389] transition-colors">
+        <div className="p-4 sm:p-5 flex-grow">
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3 group-hover:text-[#00C389] transition-colors">
             {event.title}
           </h3>
-          <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
+          <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2">
           {event.short_description}
           </p>
 
-          <div className="space-y-3 mt-auto">
+          <div className="space-y-2 sm:space-y-3 mt-auto">
             <div className="flex items-start">
-              <CalendarIcon className="h-5 w-5 mr-3 mt-0.5 text-[#00C389]" />
+              <CalendarIcon className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 mt-0.5 text-[#00C389] flex-shrink-0" />
               <div>
-                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                <p className="text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
                   {new Date(event.event_date).toLocaleDateString('en-US', {
                     weekday: 'short',
                     month: 'short',
@@ -201,29 +201,29 @@ const EventCard = ({ event, index }) => (
               </div>
             </div>
             <div className="flex items-start">
-              <MapPinIcon className="h-5 w-5 mr-3 mt-0.5 text-[#00C389]" />
-              <p className="text-sm text-gray-600 dark:text-gray-400">{event.location}</p>
+              <MapPinIcon className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 mt-0.5 text-[#00C389] flex-shrink-0" />
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{event.location}</p>
             </div>
           </div>
         </div>
 
-        <div className="px-5 py-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800">
-          <div className="flex justify-between items-center">
+        <div className="px-4 sm:px-5 py-3 sm:py-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0">
           <a
             href={event.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center text-sm font-medium text-[#00C389] group-hover:underline"
+            className="inline-flex items-center text-xs sm:text-sm font-medium text-[#00C389] group-hover:underline"
           >
             View more
-              <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-1.5" />
+              <ArrowTopRightOnSquareIcon className="h-3 w-3 sm:h-4 sm:w-4 ml-1 sm:ml-1.5" />
           </a>
             {event.registration_url && (
               <a
                 href={event.registration_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-3 py-1.5 text-xs font-medium bg-[#00C389] text-white rounded hover:bg-[#00C389]/90 transition-colors shadow-sm"
+                className="inline-flex items-center px-2 sm:px-3 py-1 sm:py-1.5 text-xs font-medium bg-[#00C389] text-white rounded hover:bg-[#00C389]/90 transition-colors shadow-sm"
               >
                 Register
               </a>
