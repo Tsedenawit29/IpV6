@@ -1,7 +1,7 @@
 // === src/components/Footer.js ===
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaTwitter, FaLinkedinIn, FaYoutube, FaGithub } from 'react-icons/fa';
+import { FaTwitter, FaLinkedinIn, FaYoutube, FaGithub, FaFacebookF } from 'react-icons/fa';
 import logo from '../assets/images/Ipv6.jpg.png';
 
 function Footer() {
@@ -31,10 +31,8 @@ function Footer() {
   };
 
   const socialLinks = [
-    { name: 'Twitter', url: 'https://twitter.com/ipv6forum', icon: <FaTwitter size={24} /> },
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/company/ipv6-forum', icon: <FaLinkedinIn size={24} /> },
-    { name: 'YouTube', url: 'https://www.youtube.com/@ipv6forum', icon: <FaYoutube size={24} /> },
-    { name: 'GitHub', url: 'https://github.com/ipv6', icon: <FaGithub size={24} /> },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/ipv6-ethiopia-a37367371/', icon: <FaLinkedinIn size={24} /> },
+    { name: 'Facebook', url: 'https://web.facebook.com/people/IP-Ethiopia/pfbid0KzrtjAg2agW1PiiTGF8fvswwLsLvXpWZ7VEMqGuwpBgKYi9ARn7tAjtQUnSCD4Fml/', icon: <FaFacebookF size={24} /> },
   ];
 
   return (
@@ -58,12 +56,12 @@ function Footer() {
             <p className="text-lg text-black dark:text-dark-text-secondary mb-8">
             Promoting IPv6 adoption and education in Ethiopia through comprehensive resources, training, and community engagement.
             </p>
-            <div className="flex space-x-6">
+            <div className="flex gap-3">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
                   href={social.url}
-                  className="text-black dark:text-dark-text-secondary hover:text-[#00C389] dark:hover:text-[#00C389] transform hover:scale-110 transition-all duration-300"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#00C389]/10 flex items-center justify-center text-[#00C389] hover:bg-[#00C389] hover:text-white transition"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.name}
@@ -113,7 +111,7 @@ function Footer() {
 
       <div className="mt-12 border-t border-primary/10 dark:border-dark-border pt-6 text-center">
         <p className="text-sm text-black dark:text-dark-text-secondary">
-          &copy; {currentYear} IPv6 Awareness. All rights reserved.
+          &copy; {currentYear} IPv6 Ethiopia. All rights reserved.
         </p>
       </div>
     </footer>

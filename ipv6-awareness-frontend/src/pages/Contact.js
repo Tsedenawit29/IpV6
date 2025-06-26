@@ -1,7 +1,7 @@
 // === src/pages/Contact.js ===
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaArrowRight, FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin, FaTwitter, FaGithub } from 'react-icons/fa';
+import { FaArrowRight, FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin, FaFacebookF } from 'react-icons/fa';
 import { supabase } from '../lib/supabaseClient';
 import toast from 'react-hot-toast';
 
@@ -116,7 +116,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="text-sm sm:text-base font-semibold text-black dark:text-white mb-0.5">Email</h3>
-                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">contact@rasbyte.com</p>
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">contact@ipv6et.org</p>
                   </div>
                 </div>
 
@@ -126,7 +126,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="text-sm sm:text-base font-semibold text-black dark:text-white mb-0.5">Phone</h3>
-                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">+1 (571) 388-9886</p>
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">+251-911-677-096</p>
                   </div>
                 </div>
 
@@ -136,8 +136,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="text-sm sm:text-base font-semibold text-black dark:text-white mb-0.5">Location</h3>
-                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">16708 Richmond Hwy,
-                    Suite 111 Dumfries, VA 22026</p>
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">Addis Ababa, Ethiopia</p>
                   </div>
                 </div>
               </div>
@@ -145,14 +144,11 @@ const Contact = () => {
               <div className="pt-4">
                 <h3 className="text-sm sm:text-base font-semibold text-black dark:text-white mb-3">Follow Us</h3>
                 <div className="flex gap-3">
-                  <a href="#" className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#00C389]/10 flex items-center justify-center text-[#00C389] hover:bg-[#00C389] hover:text-white transition">
+                  <a href="https://www.linkedin.com/in/ipv6-ethiopia-a37367371/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#00C389]/10 flex items-center justify-center text-[#00C389] hover:bg-[#00C389] hover:text-white transition" aria-label="LinkedIn">
                     <FaLinkedin className="text-base sm:text-lg" />
                   </a>
-                  <a href="#" className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#00C389]/10 flex items-center justify-center text-[#00C389] hover:bg-[#00C389] hover:text-white transition">
-                    <FaTwitter className="text-base sm:text-lg" />
-                  </a>
-                  <a href="#" className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#00C389]/10 flex items-center justify-center text-[#00C389] hover:bg-[#00C389] hover:text-white transition">
-                    <FaGithub className="text-base sm:text-lg" />
+                  <a href="https://web.facebook.com/people/IP-Ethiopia/pfbid0KzrtjAg2agW1PiiTGF8fvswwLsLvXpWZ7VEMqGuwpBgKYi9ARn7tAjtQUnSCD4Fml/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#00C389]/10 flex items-center justify-center text-[#00C389] hover:bg-[#00C389] hover:text-white transition" aria-label="Facebook">
+                    <FaFacebookF className="text-base sm:text-lg" />
                   </a>
                 </div>
               </div>

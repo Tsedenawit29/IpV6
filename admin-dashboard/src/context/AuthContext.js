@@ -33,8 +33,15 @@ export const AuthProvider = ({ children }) => {
     if (error) throw error;
   };
 
+  // Change password for the current user
+  const changePassword = async (oldPassword, newPassword) => {
+    // Supabase requires the user to be signed in; oldPassword is not used in the API, but you can verify it by re-authenticating if needed
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    if (error) throw error;
+  };
+
   return (
-    <AuthContext.Provider value={{ user, signIn, signOut, loading }}>
+    <AuthContext.Provider value={{ user, signIn, signOut, changePassword, loading }}>
       {!loading && children}
     </AuthContext.Provider>
   );
