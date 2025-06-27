@@ -116,7 +116,7 @@ function Resources() {
                 <img
                   src={resource.image_url}
                   alt={resource.title}
-                  className="w-full h-48 object-contain rounded-t-xl block"
+                  className="w-full h-64 object-contain rounded-t-xl block"
                 />
               )}
               <div className="p-4 sm:p-6">
