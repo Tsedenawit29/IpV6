@@ -386,7 +386,7 @@ function Resources() {
               <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-dark-border border-dashed rounded-lg hover:border-primary dark:hover:border-primary transition-colors">
                 <div className="space-y-1 text-center">
                   {formData.image_url ? (
-                    <img src={formData.image_url} alt="Resource" className="mx-auto h-32 w-auto object-cover rounded-md mb-2" />
+                    <img src={formData.image_url} alt="Resource" className="mx-auto max-h-32 w-auto object-contain rounded-md mb-2" />
                   ) : (
                     <PhotoIcon className="mx-auto h-12 w-12 text-gray-400" />
                   )}
@@ -544,89 +544,90 @@ function Resources() {
         {resources.map((resource) => (
           <div
             key={resource.id}
-            className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg p-6 border border-gray-100 dark:border-dark-border"
+            className="bg-box-bg dark:bg-box-bg-dark rounded-xl shadow-lg p-0 border border-gray-100 dark:border-dark-border"
           >
-            <div className="flex justify-between items-start mb-4">
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  {resource.title}
-                </h3>
-                <p className="text-sm text-gray-500 dark:text-dark-text-secondary">
-                  {resource.category}
-                </p>
-              </div>
-              <div className="flex space-x-2">
-                <button
-                  onClick={() => {
-                    setSelectedResource(resource);
-                    setFormData(resource);
-                    setIsFormOpen(true);
-                  }}
-                  className="p-2 text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"
-                >
-                  <PencilIcon className="h-5 w-5" />
-                </button>
-                <button
-                  onClick={() => handleDeleteClick(resource)}
-                  className="p-2 text-gray-400 hover:text-red-500 dark:hover:text-red-500 transition-colors"
-                >
-                  <TrashIcon className="h-5 w-5" />
-                </button>
-              </div>
-            </div>
-
-            <p className="text-gray-600 dark:text-dark-text-secondary mb-4">
-              {resource.description}
-            </p>
-
             {resource.image_url && (
               <img
                 src={resource.image_url}
                 alt={resource.title}
-                className="w-full h-48 object-cover rounded-lg mb-4"
+                className="w-full h-48 object-contain rounded-lg block"
               />
             )}
-
-            <div className="flex flex-wrap gap-2 mb-4">
-              {resource.tags && resource.tags.map((tag, index) => (
-                <span
-                  key={index}
-                  className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            <div className="flex items-center justify-between text-sm text-gray-500 dark:text-dark-text-secondary">
-              <div className="flex items-center">
-                <UserIcon className="h-4 w-4 mr-1" />
-                {resource.author}
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    {resource.title}
+                  </h3>
+                  <p className="text-sm text-gray-500 dark:text-dark-text-secondary">
+                    {resource.category}
+                  </p>
+                </div>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => {
+                      setSelectedResource(resource);
+                      setFormData(resource);
+                      setIsFormOpen(true);
+                    }}
+                    className="p-2 text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"
+                  >
+                    <PencilIcon className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteClick(resource)}
+                    className="p-2 text-gray-400 hover:text-red-500 dark:hover:text-red-500 transition-colors"
+                  >
+                    <TrashIcon className="h-5 w-5" />
+                  </button>
+                </div>
               </div>
-              <div className="flex items-center">
-                <CalendarIcon className="h-4 w-4 mr-1" />
-                {new Date(resource.date).toLocaleDateString()}
-              </div>
-            </div>
 
-            <div className="mt-4 flex items-center justify-between">
-              <div className="flex items-center">
-                <StarIcon className="h-5 w-5 text-yellow-400 mr-1" />
-                <span className="text-sm text-gray-600 dark:text-dark-text-secondary">
-                  {resource.rating || 0} ({resource.downloads || 0} downloads)
-                </span>
+              <p className="text-gray-600 dark:text-dark-text-secondary mb-4">
+                {resource.description}
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-4">
+                {resource.tags && resource.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
-              {resource.file_url && (
-                <a
-                  href={resource.file_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center text-primary hover:text-primary-dark"
-                >
-                  <DocumentTextIcon className="h-5 w-5 mr-1" />
-                  Download
-                </a>
-              )}
+
+              <div className="flex items-center justify-between text-sm text-gray-500 dark:text-dark-text-secondary">
+                <div className="flex items-center">
+                  <UserIcon className="h-4 w-4 mr-1" />
+                  {resource.author}
+                </div>
+                <div className="flex items-center">
+                  <CalendarIcon className="h-4 w-4 mr-1" />
+                  {new Date(resource.date).toLocaleDateString()}
+                </div>
+              </div>
+
+              <div className="mt-4 flex items-center justify-between">
+                <div className="flex items-center">
+                  <StarIcon className="h-5 w-5 text-yellow-400 mr-1" />
+                  <span className="text-sm text-gray-600 dark:text-dark-text-secondary">
+                    {resource.rating || 0} ({resource.downloads || 0} downloads)
+                  </span>
+                </div>
+                {resource.file_url && (
+                  <a
+                    href={resource.file_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center text-primary hover:text-primary-dark"
+                  >
+                    <DocumentTextIcon className="h-5 w-5 mr-1" />
+                    Download
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         ))}

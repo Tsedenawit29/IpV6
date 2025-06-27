@@ -110,13 +110,13 @@ function Resources() {
           {filteredResources.map(resource => (
             <div
               key={resource.id}
-              className="bg-white dark:bg-dark-bg-tertiary rounded-xl shadow-md hover:shadow-xl transition-transform transform hover:-translate-y-1"
+              className="bg-white dark:bg-dark-bg-tertiary rounded-xl shadow-md hover:shadow-xl transition-transform transform hover:-translate-y-1 p-0"
             >
               {resource.image_url && (
                 <img
                   src={resource.image_url}
                   alt={resource.title}
-                  className="w-full h-40 sm:h-48 object-cover rounded-t-xl"
+                  className="w-full h-48 object-contain rounded-t-xl block"
                 />
               )}
               <div className="p-4 sm:p-6">
